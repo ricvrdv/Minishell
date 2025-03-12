@@ -17,5 +17,6 @@ struct execcmd
     int type;
     char *argv[MAXARGS];    //Ptr to start of string
     char *earg[MAXARGS];    //Ptr to end of string to put '\0'
-     
+    
 };
+#endif
