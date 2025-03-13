@@ -9,10 +9,12 @@
 
 typedef enum s_toke_type
 {
-    PIPE,
-    REDIRECT,
-    HERE_DOC,
-    EXEC,
+    TOKEN_END,
+    TOKEN_WORD,
+    TOKEN_PIPE,
+    
+
+
 }t_token_type;
 
 typedef struct s_cmd
