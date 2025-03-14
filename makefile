@@ -47,4 +47,13 @@ fclean: clean
 
 re: fclean all
 
+################################################################################
+#                                  Valgrind Command                             #
+################################################################################
+
+VALGRIND = valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes
+
+run: $(NAME)
+	@$(VALGRIND) ./$(NAME) || true
+
 .PHONY: all clean fclean re

@@ -22,18 +22,28 @@ PWD
 
 the grammar : 
    The Grammar
-   ------------------------------------------------------- */
+
 %start program
-%%
-program          : linebreak complete_commands linebreak
-                 | linebreak
-                 ;
-complete_commands: complete_commands newline_list complete_command
-                 |                                complete_command
-                 ;
-complete_command : list separator_op
-                 | list
-                 ;
+
+program
+{ 
+   linebreak 
+   complete_commands 
+   linebreak
+};
+
+complete_commands
+{
+ complete_commands 
+ newline_list 
+ complete_command
+};
+
+complete_command : 
+{  
+   list 
+   separator_op
+};
 list             : list separator_op and_or
                  |                   and_or
                  ;

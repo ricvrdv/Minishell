@@ -30,10 +30,10 @@ void	*safe_malloc(size_t bytes)
 void	free_struct(s_minishell *mini)
 {
 	
-	/*free(mini->full_cmd);*/  //not initialized yet
+	free(mini->full_cmd);
 	free(mini->cur_dir);
 	/*clear_token(&mini->tokens);*/  //not initialized yet
-	/*clear_env(&mini->env);*/   //not initialized yet
+	clear_env(&mini->env);   //not initialized yet
 }
 
 
@@ -43,14 +43,13 @@ void	clear_env(s_env **env)
 
 	if (!*env)
 		return ;
-	if(env)
+	while (*env)
 	{
-		while (*env)
-		{
-			temp = (*env)->next;
-        	free(*env);
-        	*env = temp;
-		}
+		temp = (*env)->next;
+		free((*env)->key);
+       	free((*env)->value);
+		free(*env);
+    	*env = temp;
 	}
 }
 

@@ -42,10 +42,9 @@ typedef struct t_token
 
 typedef struct t_env
 {
-    s_type  type;
-    char    value;
+    char    *key;
+    char    *value;
     s_env   *next;
-    s_env   *previous;
 }s_env;
 
 typedef struct t_minishell
@@ -65,6 +64,10 @@ void	free_struct(s_minishell *mini);
 void	clear_token(s_token **token);
 void	clear_env(s_env **env);
 void    init_struct(s_minishell *mini);
+void    get_env(s_minishell *mini, char **envp);
+void    add_env_node(s_env **env_list, char *key, char *value);
+void    print_env_list(s_env *env_list);
+
 
 char    *get_dir();
 
