@@ -1,38 +1,72 @@
-#include "minishell.h"
+#include "../inc/minishell.h"
 
-int is_nbr(char *str)
+void	error_exit(char *error)  //used before creating struct
 {
-    int i = 0;
-    int token = 0;
-    while(str[i])
-    {
-        if(str[i] >= '0' && str[i] <= '9')
-            token++;
-        i++;
-    }
-    return token;
+	printf(RED"%s\n"RESET, error);
+	exit(1);
 }
-int is_char(char *str)
+
+void	mini_exit(s_minishell *mini, char *error)
 {
-    int i = 0;
-    int token = 0;
-    while(str[i])
-    {
-        if(str[i] >= 65 && str[i] <= 122)
-            token++;
-        i++;
-    }
-    return token; 
+	if(mini->created)
+		free_struct(&(*mini));
+	if(error)
+		printf(RED"%s\n"RESET, error);
+	clear_history();
+	free(mini);
+	exit(1);
 }
-int is_pipe(char *str)
+
+void	*safe_malloc(size_t bytes)
 {
-    int i = 0;
-    int token = 0;
-    while(str[i])
-    {
-        if(str[i] == 124)
-            token++;
-        i++;
-    }
-    return token; 
+	void	*ret;
+
+	ret = malloc(bytes);
+	if (!ret)
+		error_exit("Error with Malloc!");
+	return (ret);
+}
+
+void	free_struct(s_minishell *mini)
+{
+	
+	/*free(mini->full_cmd);*/  //not initialized yet
+	free(mini->cur_dir);
+	/*clear_token(&mini->tokens);*/  //not initialized yet
+	/*clear_env(&mini->env);*/   //not initialized yet
+}
+
+
+void	clear_env(s_env **env)
+{
+	s_env	*temp = NULL;
+
+	if (!*env)
+		return ;
+	if(env)
+	{
+		while (*env)
+		{
+			temp = (*env)->next;
+        	free(*env);
+        	*env = temp;
+		}
+	}
+}
+
+void	clear_token(s_token **token)
+{
+	s_token	*temp = NULL;
+
+	if (!*token)
+		return ;
+	if(token)
+	{
+		while (*token)
+		{
+			temp = (*token)->next;
+        	free(*token);
+        	*token = temp;
+		}
+	}
 }

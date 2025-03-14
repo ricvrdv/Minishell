@@ -1,21 +1,15 @@
-#include "minishell.h"
+#include "../inc/minishell.h"
+
 
 int main()
 {
-    char *line;
-    char buffer[256];
-    char *currentdir;
-    
-    currentdir = getcwd(NULL, 1024);
-    while((line = readline("> ")) != NULL)
-    {
-        strncpy(buffer, line, 256);
-        get_token(buffer);
-        printf("%s\n", buffer);
-        add_history(line);
+    s_minishell *mini;
 
-    }
-    free(line);
-    clear_history();
+    mini = safe_malloc(sizeof(s_minishell));  //allocate space for struct
+    init_struct(mini);                       //init values on struc
+    printf("Value of teste atm : %i\n", mini->created);
+    printf("Current dir: %s\n", mini->cur_dir);
+
+    mini_exit(mini, NULL);
     return 0;
 }
