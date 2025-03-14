@@ -44,9 +44,15 @@ complete_command :
    list 
    separator_op
 };
-list             : list separator_op and_or
-                 |                   and_or
-                 ;
+
+list : 
+{
+   list 
+   separator_op 
+   and_or
+};
+   
+
 and_or           :                         pipeline
                  | and_or AND_IF linebreak pipeline
                  | and_or OR_IF  linebreak pipeline

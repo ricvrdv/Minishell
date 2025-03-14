@@ -31,7 +31,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@echo "\033[0;32mCompilation Successful!\033[0m"
-	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) $(MYLIB) -o $(NAME) -s
+	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) $(MYLIB) -o $(NAME) 
 
 $(MYLIB): $(MYLIB_DIR)
 	@make -C $(MYLIB_DIR) -s
