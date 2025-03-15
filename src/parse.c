@@ -16,6 +16,8 @@ void    start_prompt(s_minishell **mini)
         get_token(*mini, buffer);
         if(ft_strncmp(buffer, "print", 5) == 0)
             print_tokens(*mini);
+        if(ft_strncmp(buffer, "env", 3) == 0)
+            print_env_list((*mini)->env);
         free(line);
     }
     
@@ -46,6 +48,61 @@ void   get_token(s_minishell *mini, char *str)
             value = "|";
             add_token_node(&(mini->tokens), key, value);
         }
+        if(ft_strncmp(str, "<", 1) == 0)
+        {
+            key = "redirect_left";
+            value = "<";
+            add_token_node(&(mini->tokens), key, value);
+        }
+        if(ft_strncmp(str, ">", 1) == 0)
+        {
+            key = "redirect_right";
+            value = ">";
+            add_token_node(&(mini->tokens), key, value);
+        }
+        if(ft_strncmp(str, "&", 1) == 0)
+        {
+            key = "ampersand";
+            value = "&";
+            add_token_node(&(mini->tokens), key, value);
+        }
+        if(ft_strncmp(str, ";", 1) == 0)
+        {
+            key = "semicolon";
+            value = ";";
+            add_token_node(&(mini->tokens), key, value);
+        }
+        if(ft_strncmp(str, "(", 1) == 0)
+        {
+            key = "left_parenthesis";
+            value = "(";
+            add_token_node(&(mini->tokens), key, value);
+        }
+        if(ft_strncmp(str, ")", 1) == 0)
+        {
+            key = "right_parenthesis";
+            value = ")";
+            add_token_node(&(mini->tokens), key, value);
+        }
+        if(ft_strncmp(str, "$", 1) == 0)
+        {
+            key = "dollar_sign";
+            value = "$";
+            add_token_node(&(mini->tokens), key, value);
+        }
+        if(ft_strncmp(str, "/", 1) == 0)
+        {
+            key = "slash";
+            value = "/";
+            add_token_node(&(mini->tokens), key, value);
+        }
+        if(ft_strncmp(str, "env", 3) == 0)
+        {
+            key = "envp";
+            value = "env";
+            add_token_node(&(mini->tokens), key, value);
+        }
         str++;
     }
 }
+
