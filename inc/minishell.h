@@ -34,10 +34,9 @@ typedef enum t_type
 
 typedef struct t_token
 {
-    s_type  type;
-    char    value;
+    char    *type;
+    char    *value;
     s_token *next;
-    s_token *previous;
 }s_token;
 
 typedef struct t_env
@@ -67,7 +66,10 @@ void    init_struct(s_minishell *mini);
 void    get_env(s_minishell *mini, char **envp);
 void    add_env_node(s_env **env_list, char *key, char *value);
 void    print_env_list(s_env *env_list);
-
+void    start_prompt(s_minishell **mini);
+void    get_token(s_minishell *mini, char *str);
+void    add_token_node(s_token **token_list, char *key, char *code);
+void    print_tokens(s_minishell *mini);
 
 char    *get_dir();
 

@@ -19,7 +19,9 @@ MYLIB = ./inc/Mylib/libft.a
 
 SRCS = main.c \
        utils.c \
-	   init.c
+	   init.c \
+	   parse.c \
+	   add.c
 
 OBJS = $(addprefix src/, $(SRCS:.c=.o))
 

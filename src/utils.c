@@ -32,7 +32,7 @@ void	free_struct(s_minishell *mini)
 	
 	free(mini->full_cmd);
 	free(mini->cur_dir);
-	/*clear_token(&mini->tokens);*/  //not initialized yet
+	clear_token(&mini->tokens);  //not initialized yet
 	clear_env(&mini->env);   //not initialized yet
 }
 
@@ -68,4 +68,37 @@ void	clear_token(s_token **token)
         	*token = temp;
 		}
 	}
+}
+
+void print_tokens(s_minishell *mini)
+{
+    s_token *current = mini->tokens;
+    
+    if (!current)
+    {
+        printf("No tokens found.\n");
+        return;
+    }
+    
+    while (current)
+    {
+        printf("Type: %s, Value: %s\n", current->type, current->value);
+        current = current->next;
+    }
+}
+
+void print_env_list(s_env *env_list)  //for testing
+{
+    while (env_list)
+    {
+        printf("%s=%s\n", env_list->key, env_list->value);
+        env_list = env_list->next;
+    }
+}
+
+char    *get_dir()
+{
+    char *currentdir = NULL;
+    currentdir = getcwd(NULL, 1024);
+    return currentdir;
 }
