@@ -21,7 +21,7 @@
 typedef struct t_token	s_token;
 typedef struct t_env	s_env;
 typedef struct t_minishell	s_minishell;
-
+typedef struct t_args       s_args;
 
 typedef enum t_type
 {
@@ -31,6 +31,12 @@ typedef enum t_type
     REDIRECT_R,
     TRASH,
 }   s_type;
+
+typedef struct t_args
+{   
+    char *value;
+    s_args  *next;
+}s_args;
 
 typedef struct t_token
 {
@@ -54,24 +60,39 @@ typedef struct t_minishell
     /*int     pid;*/
     s_env   *env;
     s_token *tokens;
+    s_args  *args;
 }s_minishell;
 
-void	error_exit(char *error);
-void	mini_exit(s_minishell *mini, char *error);
-void	*safe_malloc(size_t bytes);
 void	free_struct(s_minishell *mini);
-void	clear_token(s_token **token);
-void	clear_env(s_env **env);
 void    init_struct(s_minishell *mini);
-void    get_env(s_minishell *mini, char **envp);
-void    add_env_node(s_env **env_list, char *key, char *value);
-void    print_env_list(s_env *env_list);
-void    start_prompt(s_minishell **mini);
 void    get_token(s_minishell *mini, char *str);
 void    add_token_node(s_token **token_list, char *key, char *code);
-void    print_tokens(s_minishell *mini);
+void    get_env(s_minishell *mini, char **envp);
+void    add_env_node(s_env **env_list, char *key, char *value);
+void	clear_token(s_token **token);
+void	clear_env(s_env **env);
+void    add_args_node(s_args **args_list, char *key);
 
+void    print_tokens(s_minishell *mini);
+void    check_cmds(char *str, char **key, char **value);
+void    check_signs(char *str, char **key, char **value);
+void    check_redirect(char *str, char **key, char **value);
+
+
+void	mini_exit(s_minishell *mini, char *error);
+void	*safe_malloc(size_t bytes);
+void	free_stuff(char *str[]);
 char    *get_dir();
 
+
+
+void    print_env_list(s_env *env_list);
+void    print_args(s_minishell *mini);
+
+
+void    start_prompt(s_minishell **mini);
+void	ft_cmd(s_minishell *mini, char *av, int *fd);
+char	*find_dir(s_minishell *mini, char *cmd);
+void	error_exit(char *error);
 
 #endif

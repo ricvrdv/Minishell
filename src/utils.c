@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-void	error_exit(char *error)  //used before creating struct
+void	error_exit(char *error)
 {
 	printf(RED"%s\n"RESET, error);
 	exit(1);
@@ -82,7 +82,23 @@ void print_tokens(s_minishell *mini)
     
     while (current)
     {
-        printf("Type: %s, Value: %s\n", current->type, current->value);
+        printf("Cmd: %s\n", current->type);
+        current = current->next;
+    }
+}
+void print_args(s_minishell *mini)
+{
+    s_args *current = mini->args;
+    
+    if (!current)
+    {
+        printf("No args found.\n");
+        return;
+    }
+    
+    while (current)
+    {
+        printf("Args: %s\n", current->value);
         current = current->next;
     }
 }
@@ -101,4 +117,13 @@ char    *get_dir()
     char *currentdir = NULL;
     currentdir = getcwd(NULL, 1024);
     return currentdir;
+}
+void	free_stuff(char *str[])
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(str);
 }

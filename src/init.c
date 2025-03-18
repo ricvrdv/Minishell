@@ -10,6 +10,7 @@ void    init_struct(s_minishell *mini)
     mini->full_cmd = NULL;
     mini->env = NULL;
     mini->tokens = NULL;
+    mini->args = NULL;
     
 }
 

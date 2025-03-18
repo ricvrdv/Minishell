@@ -21,3 +21,12 @@ void    add_token_node(s_token **token_list, char *key, char *code)
     new_node->next = *token_list;
     *token_list = new_node;
 }
+void    add_args_node(s_args **args_list, char *key)
+{
+    s_args  *new_node;
+
+    new_node = safe_malloc(sizeof(s_args));
+    new_node->value = key;
+    new_node->next = *args_list;
+    *args_list = new_node;
+}
