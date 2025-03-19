@@ -76,7 +76,7 @@ void    add_args_node(s_args **args_list, char *key);
 void    print_tokens(s_minishell *mini);
 void    check_cmds(char *str, char **key, char **value);
 void    check_signs(char *str, char **key, char **value);
-void    check_redirect(char *str, char **key, char **value);
+
 
 
 void	mini_exit(s_minishell *mini, char *error);
@@ -92,7 +92,21 @@ void    print_args(s_minishell *mini);
 
 void    start_prompt(s_minishell **mini);
 void	ft_cmd(s_minishell *mini, char *av, int *fd);
-char	*find_dir(s_minishell *mini, char *cmd);
+char    *find_dir(s_minishell *mini, char *cmd);
 void	error_exit(char *error);
+
+char    *s_spaces(char *str);
+int     is_space(char *str);
+int     check_str(char **line);
+int     check_quotes(char *str);
+int     invalid_str(char **str);
+int     invalid_position(char **str);
+int     invalid_operator(char **str);
+int     full_check(char *str);
+char    *jump_spaces(char *str);
+int     check_doubles(char *str);
+int     check_redirect(char *str);
+int     check_pipe(char *str);
+int     space(int c);
 
 #endif

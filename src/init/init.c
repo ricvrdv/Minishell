@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void    init_struct(s_minishell *mini)
 {

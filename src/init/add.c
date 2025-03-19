@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void    add_env_node(s_env **env_list, char *key, char *value)
 {

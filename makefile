@@ -11,20 +11,18 @@ RLFLAGS = -lreadline
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
 
-vpath %.h includes
-vpath %.c src
-
 MYLIB_DIR = ./inc/Mylib/
 MYLIB = ./inc/Mylib/libft.a
 
-SRCS = main.c \
-       utils.c \
-	   init.c \
-	   parse.c \
-	   add.c \
-	   cmds.c
+SRC_DIRS = src/init src/parse src/utils
+SRCS = src/init/init.c \
+       src/init/add.c \
+       src/init/main.c \
+       src/parse/parse.c \
+       src/parse/parse.utils.c \
+       src/utils/utils.c
 
-OBJS = $(addprefix src/, $(SRCS:.c=.o))
+OBJS = $(SRCS:.c=.o)
 
 ################################################################################
 #                                  Makefile objs                               #
@@ -39,7 +37,8 @@ $(NAME): $(OBJS)
 $(MYLIB): $(MYLIB_DIR)
 	@make -C $(MYLIB_DIR) -s
 
-src/%.o: %.c
+# Rule to compile .c files into .o files
+src/%.o: src/%.c
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:

@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	error_exit(char *error)
 {
@@ -126,4 +126,9 @@ void	free_stuff(char *str[])
 	while (str[i])
 		free(str[i++]);
 	free(str);
+}
+
+int space(int c)
+{
+	return(c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r');
 }
