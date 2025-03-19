@@ -20,7 +20,8 @@ SRCS = src/init/init.c \
        src/init/main.c \
        src/parse/parse.c \
        src/parse/parse.utils.c \
-       src/utils/utils.c
+       src/utils/utils.c \
+	   src/utils/clear.c
 
 OBJS = $(SRCS:.c=.o)
 

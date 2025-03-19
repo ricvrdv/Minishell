@@ -57,56 +57,42 @@ typedef struct t_minishell
     int     created;
     char    *cur_dir;
     char    *full_cmd;
-    /*int     pid;*/
     s_env   *env;
     s_token *tokens;
     s_args  *args;
 }s_minishell;
 
-void	free_struct(s_minishell *mini);
-void    init_struct(s_minishell *mini);
-void    get_token(s_minishell *mini, char *str);
-void    add_token_node(s_token **token_list, char *key, char *code);
-void    get_env(s_minishell *mini, char **envp);
+
+//for init
 void    add_env_node(s_env **env_list, char *key, char *value);
-void	clear_token(s_token **token);
-void	clear_env(s_env **env);
+void    add_token_node(s_token **token_list, char *key, char *code);
 void    add_args_node(s_args **args_list, char *key);
+void    init_struct(s_minishell *mini);
+void    get_env(s_minishell *mini, char **envp);
+void    start_prompt(s_minishell **mini);
+int     check_str(char **line);
 
-void    print_tokens(s_minishell *mini);
-void    check_cmds(char *str, char **key, char **value);
-void    check_signs(char *str, char **key, char **value);
+//for parse
+int     full_check(char *str);
+int     check_redirect(char *str);
+int     check_doubles(char *str);
+int     check_pipe(char *str);
+int     check_quotes(char *str);
+int     invalid_operator(char **str);
+int     is_space(char *str);
+int     invalid_position(char **str);
+char    *jump_spaces(char *str);
+char    *s_spaces(char *str);
 
-
-
+//for utils
+void	clear_env(s_env **env);
+void	clear_token(s_token **token);
 void	mini_exit(s_minishell *mini, char *error);
+void	error_exit(char *error);
 void	*safe_malloc(size_t bytes);
+void	free_struct(s_minishell *mini);
 void	free_stuff(char *str[]);
 char    *get_dir();
-
-
-
-void    print_env_list(s_env *env_list);
-void    print_args(s_minishell *mini);
-
-
-void    start_prompt(s_minishell **mini);
-void	ft_cmd(s_minishell *mini, char *av, int *fd);
-char    *find_dir(s_minishell *mini, char *cmd);
-void	error_exit(char *error);
-
-char    *s_spaces(char *str);
-int     is_space(char *str);
-int     check_str(char **line);
-int     check_quotes(char *str);
-int     invalid_str(char **str);
-int     invalid_position(char **str);
-int     invalid_operator(char **str);
-int     full_check(char *str);
-char    *jump_spaces(char *str);
-int     check_doubles(char *str);
-int     check_redirect(char *str);
-int     check_pipe(char *str);
 int     space(int c);
 
 #endif

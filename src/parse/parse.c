@@ -1,38 +1,5 @@
 #include "../../inc/minishell.h"
 
-void    start_prompt(s_minishell **mini)
-{
-    char    *line;
-    (void)mini;
-    while(1)    //infinite loop to get input from user
-    {
-        line = readline(">");
-        if(!line)
-            break;       
-        if(check_str(&line))
-            continue;   //if returns 1 skips and start loop again.
-        add_history(line);
-        full_check(line);  //parse str //has unclose quotes? / has invalid redirections /  
-        //parse tokens
-        //if tokens ok make tree
-        //update env()
-        if(ft_strncmp(line, "exit", 4) == 0)  //just to be able to exit
-            mini_exit(*mini, NULL);
-        free(line);                         //avoid leaks atm
-    }
-    
-}
-
-int check_str(char **line)
-{
-    if(*line[0] == '\0' || ft_strncmp(*line, "\n", 2) == 0|| is_space(*line)) //if empty line /only contains spaces/only contains \n
-    {
-        free(*line);
-        return (1);  //reach continue and restart loop
-    }
-    return (0);
-}
-
 int full_check(char *str)
 {
     if(check_doubles(str))
@@ -105,4 +72,23 @@ int check_pipe(char *str)
     if(flag)                        //positive flag means we still miss a cmd (exemple : cdm | )
         return (1);
     return (0);
+}
+
+int     check_quotes(char *str)
+{
+    char type;
+
+    type = 0;
+    while(*str)
+    {
+        if(*str == '\'' || *str == '\"')
+        {
+            if(type == *str)
+                type = 0;
+            else if(!type)
+                type = *str;
+        }
+        str++;
+    }
+    return (type != 0);
 }

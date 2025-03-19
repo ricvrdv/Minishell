@@ -21,26 +21,6 @@ int invalid_operator(char **str)   //starts at > or <
     return (0);
 }
 
-int     check_quotes(char *str)
-{
-    char type;
-
-    type = 0;
-    while(*str)
-    {
-        if(*str == '\'' || *str == '\"')
-        {
-            if(type == *str)
-                type = 0;
-            else if(!type)
-                type = *str;
-        }
-        str++;
-    }
-    return (type != 0);
-}
-
-
 int is_space(char *str)
 {
     int i;
