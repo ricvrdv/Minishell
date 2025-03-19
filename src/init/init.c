@@ -31,8 +31,20 @@ void   get_env(s_minishell *mini, char **envp)
         {
             key = ft_substr(envp[i], 0, (sign - envp[i]));   //everything from start until = included
             value = ft_strdup(sign + 1);                    //everything after =
-            add_env_node(&(mini->env), key, value);         //add_node and put key and value
+            add_env_node(&mini->env, key, value);         //add_node and put key and value
         }   
         i++;
     }
+
+}
+
+s_token *new_token(int type)
+{
+    s_token *token = malloc(sizeof(s_token));
+    if (!token)
+        return NULL;
+    token->type = type;
+    token->value = NULL;
+    token->next = NULL;
+    return token;
 }

@@ -18,10 +18,10 @@
 # define RED    "\033[1;31m"
 # define GREEN  "\033[1;32m"
 
-typedef struct t_token	s_token;
-typedef struct t_env	s_env;
-typedef struct t_minishell	s_minishell;
-typedef struct t_args       s_args;
+typedef struct s_token	s_token;
+typedef struct s_env	s_env;
+typedef struct s_minishell	s_minishell;
+typedef struct s_args       s_args;
 
 typedef enum t_type
 {
@@ -30,47 +30,49 @@ typedef enum t_type
     REDIRECT_L,
     REDIRECT_R,
     TRASH,
+    TOKEN,
 }   s_type;
 
-typedef struct t_args
+typedef struct s_args
 {   
     char *value;
     s_args  *next;
 }s_args;
 
-typedef struct t_token
+typedef struct s_token
 {
-    char    *type;
-    char    *value;
-    s_token *next;
+    s_type    type;
+    char      *value;
+    struct s_token   *next;
 }s_token;
 
-typedef struct t_env
+typedef struct s_env
 {
     char    *key;
     char    *value;
-    s_env   *next;
+    struct s_env   *next;
 }s_env;
 
-typedef struct t_minishell
+typedef struct s_minishell
 {
     int     created;
     char    *cur_dir;
     char    *full_cmd;
-    s_env   *env;
-    s_token *tokens;
-    s_args  *args;
+    struct s_env   *env;
+    struct s_token *tokens;
+    struct s_args  *args;
 }s_minishell;
 
 
 //for init
 void    add_env_node(s_env **env_list, char *key, char *value);
-void    add_token_node(s_token **token_list, char *key, char *code);
+void    add_token_node(s_token **tokens, s_token *new_token);
 void    add_args_node(s_args **args_list, char *key);
 void    init_struct(s_minishell *mini);
 void    get_env(s_minishell *mini, char **envp);
 void    start_prompt(s_minishell **mini);
 int     check_str(char **line);
+s_token *new_token(int type);
 
 //for parse
 int     full_check(char *str);
@@ -83,6 +85,9 @@ int     is_space(char *str);
 int     invalid_position(char **str);
 char    *jump_spaces(char *str);
 char    *s_spaces(char *str);
+s_token     *get_token(char *str);
+s_token     *make_token(char **str, s_token **tokens);
+void handle_word(char **str, s_token **tokens);
 
 //for utils
 void	clear_env(s_env **env);
@@ -94,5 +99,9 @@ void	free_struct(s_minishell *mini);
 void	free_stuff(char *str[]);
 char    *get_dir();
 int     space(int c);
+
+
+//for testing
+void print_token_list(s_token *token_list);
 
 #endif

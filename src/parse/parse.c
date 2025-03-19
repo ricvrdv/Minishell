@@ -2,22 +2,25 @@
 
 int full_check(char *str)
 {
-    if(check_doubles(str))
+    char *temp;
+
+    temp = ft_strtrim(str, " \t\n\v\f\r");
+    if(check_doubles(temp))
     {
         ft_putstr_fd("Logical opertators are not suported.\n", 2);
         return (1);
     }
-    if(check_pipe(str))
+    if(check_pipe(temp))
     {
         ft_putstr_fd("Misplaced operator.\n", 2);
         return (1);
     }
-    if(check_quotes(str))
+    if(check_quotes(temp))
     {
         ft_putstr_fd("Unclosed quote.\n", 2);
         return (1);
     }
-    if(check_redirect(str))
+    if(check_redirect(temp))
     {
         ft_putstr_fd("Invalid redirect.\n", 2);
         return (1);
@@ -57,6 +60,10 @@ int check_pipe(char *str)
     int flag;                      // tracker to check if pipe already used and now expecting cmd not another pipe
 
     flag = 0;
+    while(*str && *str == ' ')     //skip spaces
+        str++;
+    if(*str == '|')
+        return 1;
     while(*str)
     {
         if(*str == '|')
@@ -92,3 +99,4 @@ int     check_quotes(char *str)
     }
     return (type != 0);
 }
+
