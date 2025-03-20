@@ -59,6 +59,7 @@ typedef struct s_minishell
     int     created;
     char    *cur_dir;
     char    *full_cmd;
+    char    **env_array;
     struct s_env   *env;
     struct s_token *tokens;
     struct s_args  *args;
@@ -92,6 +93,11 @@ void    handle_sign(char **str, s_token **tokens);
 void    handle_word(char **str, s_token **tokens);
 s_token *make_token(char **str, s_token **tokens);
 s_token *get_token(char *str);
+
+//for builtin
+void    mini_env(char **env_array);
+void    mini_cd(s_minishell *mini, char **args);
+void    execute_command(s_minishell *mini, char **cmd);
 
 //for utils
 void	clear_env(s_env **env);
