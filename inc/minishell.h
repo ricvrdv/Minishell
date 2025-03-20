@@ -31,6 +31,7 @@ typedef enum t_type
     REDIRECT_R,
     TRASH,
     TOKEN,
+    OPERATOR,
 }   s_type;
 
 typedef struct s_args
@@ -85,9 +86,12 @@ int     is_space(char *str);
 int     invalid_position(char **str);
 char    *jump_spaces(char *str);
 char    *s_spaces(char *str);
-s_token     *get_token(char *str);
-s_token     *make_token(char **str, s_token **tokens);
-void handle_word(char **str, s_token **tokens);
+
+//for tokens
+void    handle_sign(char **str, s_token **tokens);
+void    handle_word(char **str, s_token **tokens);
+s_token *make_token(char **str, s_token **tokens);
+s_token *get_token(char *str);
 
 //for utils
 void	clear_env(s_env **env);
@@ -99,7 +103,6 @@ void	free_struct(s_minishell *mini);
 void	free_stuff(char *str[]);
 char    *get_dir();
 int     space(int c);
-
 
 //for testing
 void print_token_list(s_token *token_list);

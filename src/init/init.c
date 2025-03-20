@@ -40,9 +40,7 @@ void   get_env(s_minishell *mini, char **envp)
 
 s_token *new_token(int type)
 {
-    s_token *token = malloc(sizeof(s_token));
-    if (!token)
-        return NULL;
+    s_token *token = safe_malloc(sizeof(s_token));
     token->type = type;
     token->value = NULL;
     token->next = NULL;

@@ -21,7 +21,8 @@ SRCS = src/init/init.c \
        src/parse/parse.c \
        src/parse/parse.utils.c \
        src/utils/utils.c \
-	   src/utils/clear.c
+	   src/utils/clear.c \
+	   src/tokens/token.utils.c
 
 OBJS = $(SRCS:.c=.o)
 
