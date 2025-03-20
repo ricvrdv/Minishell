@@ -31,20 +31,26 @@ void    start_prompt(s_minishell **mini)
         add_history(line);
         buffer = ft_split(line, ' ');
         tokens = make_token(&line, &tokens); //parse str //has unclose quotes? / has invalid redirections /    //parse tokens 
-        if(ft_strncmp(line, "exit", 4) == 0)  //just to be able to exit and avoid necessary parsing exit code
-            mini_exit(*mini, NULL);
-        else if(ft_strncmp(*buffer, "cd", 2) == 0)
-            mini_cd(*mini, buffer);
-        else if(ft_strncmp(*buffer, "env", 3) == 0)
-            mini_env((*mini)->env_array);
-        else 
+        if(tokens)
         {
-            if (fork() == 0)
-                execute_command(*mini, buffer);
-            wait(NULL);
+            while(tokens)
+            {
+                if(ft_strncmp(*buffer, "cd", 2) == 0)
+                    mini_cd(*mini, buffer);
+                else if(ft_strncmp(*buffer, "env", 3) == 0)
+                    mini_env((*mini)->env_array);
+                else 
+                {
+                    if (fork() == 0)
+                        execute_command(*mini, buffer);
+                    wait(NULL);
+                }
+                print_token_list(tokens);
+                clear_token(&tokens);
+                print_token_list(tokens);
+            }
         }
-        printf("curdir : %s\n", (*mini)->cur_dir);
-        print_token_list(tokens);
+        /*printf("curdir : %s\n", (*mini)->cur_dir);*/
         //if tokens ok make tree
         //update env()
         free(line);                         //avoid leaks atm */
