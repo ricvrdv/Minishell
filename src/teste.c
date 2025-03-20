@@ -1,2 +1,3 @@
-int main() P
+int main() {
+	printf"Haisdjoasidjaosidja'soijdapsoid jaosidj 
 
