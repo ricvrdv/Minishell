@@ -58,6 +58,9 @@ void    start_prompt(s_minishell **mini)
 
 int check_str(char **line)
 {
+    char *ptr;
+
+    ptr = *line;
     if(*line[0] == '\0' || 
         ft_strncmp(*line, "\n", 2) == 0 ||
         is_space(*line) ||
@@ -68,7 +71,21 @@ int check_str(char **line)
         printf("Empty command. Please enter a valid command\n");
         return (1);  //reach continue and restart loop
     }
-    return (0);
+    else
+    {
+        while (*ptr) 
+        {
+            if ((*ptr == '"' || *ptr == '\'') && is_space(ptr + 1)) 
+            {
+                free(*line);
+                *line = NULL; // Set to NULL to avoid dangling pointer
+                printf("Not a valid command\n");
+                return 1; // Indicate an error
+            }
+            ptr++;
+        }
+    }
+    return 0; // No errors
 }
 
 

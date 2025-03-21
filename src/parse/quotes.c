@@ -16,6 +16,6 @@ void    update_quotes(char c, int *inside, char *quote)
         *inside = 1;                ///we are inside quotes ' ""
         *quote = c;
     }
-    else if(*inside && c == *quote) //we found the closing quote
+    if(*inside && c == *quote) //we found the closing quote
         *inside = 0;
 }
