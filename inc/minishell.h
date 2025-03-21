@@ -23,6 +23,8 @@ typedef struct s_env	s_env;
 typedef struct s_minishell	s_minishell;
 typedef struct s_args       s_args;
 
+extern int g_sig;
+
 typedef enum s_type
 {
     PIPE,
@@ -113,6 +115,11 @@ void	free_struct(s_minishell *mini);
 void	free_stuff(char *str[]);
 char    *get_dir();
 int     space(int c);
+
+//for sigaction
+void handle_sigint();
+void setup_signal_handling(void);
+
 
 //for testing
 void print_token_list(s_token *token_list);

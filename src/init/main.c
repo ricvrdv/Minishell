@@ -1,16 +1,17 @@
 #include "../../inc/minishell.h"
 
+int g_sig = 0;
 
 int main(int ac, char *av[], char **envp)
 {
     s_minishell *mini;
     (void)ac;
     (void)av;
-    
+
     mini = safe_malloc(sizeof(s_minishell));  //allocate space for struct
     init_struct(mini);                        //init values on struc -created-curdir-full_cmd/s_env/s_token
     get_env(mini, envp);                      //iterates env structs / splits and makes new node(linked list) where it puts info
-
+    setup_signal_handling();
     start_prompt(&mini);                       //asks user for input in infinite loop 
     return 0;
 }
@@ -24,11 +25,19 @@ void    start_prompt(s_minishell **mini)
     while(1)    //infinite loop to get input from user
     {
         line = readline(">");
-        if(!line)
-            break;       
+        if (line == NULL) 
+        {
+            printf("exiting...\n");
+            mini_exit(*mini, NULL); // Call mini_exit to clean up
+            break; // Exit the loop
+        }      
         if(check_str(&line))
+        {
+            free(line);
             continue;   //if returns 1 skips and start loop again.
-        add_history(line);
+        }
+        if(ft_strlen(line) > 0)
+            add_history(line);
         buffer = ft_split(line, ' ');
         tokens = make_token(&line, &tokens); //parse str //has unclose quotes? / has invalid redirections /    //parse tokens 
         if(tokens)
@@ -42,7 +51,10 @@ void    start_prompt(s_minishell **mini)
                 else 
                 {
                     if (fork() == 0)
+                    {
                         execute_command(*mini, buffer);
+                        exit(0);
+                    }
                     wait(NULL);
                 }
                 print_token(tokens);
@@ -75,7 +87,7 @@ int check_str(char **line)
     {
         while (*ptr) 
         {
-            if ((*ptr == '"' || *ptr == '\'') && is_space(ptr + 1)) 
+            if ((*ptr == '"' || *ptr == '\'') && is_space(ptr + 1))   ///need remake maybe?
             {
                 free(*line);
                 *line = NULL; // Set to NULL to avoid dangling pointer
