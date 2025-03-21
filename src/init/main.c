@@ -45,14 +45,12 @@ void    start_prompt(s_minishell **mini)
                         execute_command(*mini, buffer);
                     wait(NULL);
                 }
-                print_token_list(tokens);
+                print_token(tokens);
                 clear_token(&tokens);
-                print_token_list(tokens);
+                print_token(tokens);
             }
         }
         /*printf("curdir : %s\n", (*mini)->cur_dir);*/
-        //if tokens ok make tree
-        //update env()
         free(line);                         //avoid leaks atm */
     }
     
@@ -68,14 +66,6 @@ int check_str(char **line)
     return (0);
 }
 
-void print_token_list(s_token *token_list)
-{
-    while (token_list)
-    {
-        if (token_list->value && *token_list->value)  
-            printf("Token: [%s]\n", token_list->value);
-        token_list = token_list->next;
-    }
-}
+
 
 

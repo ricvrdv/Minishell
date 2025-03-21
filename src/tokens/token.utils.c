@@ -30,39 +30,63 @@ s_token     *get_token(char *str)
 
 void    handle_word(char **str, s_token **tokens)
 {
-    char *start;
-    s_token *new_tok;
-    int len;
+    char    *start;
+    char    quote;
+    int     inside;                 //if inside a quote = 1 else = 0
 
-    len = 0;
-    while(**str == ' ' || **str == '\t')                                                          
-        (*str)++;
     start = *str;
-    while (**str && **str != ' ')                // Read till space
+    quote = 0;
+    inside = 0;
+    while(**str)
     {
-        (*str)++;  
-        len++;                                   //len is equal to end of word 
+        update_quotes(**str, &inside, &quote);
+        if(inside == 0 && ft_strchr(" \t\n><|", **str))     //if not inside quotes and found operator, space or eof 
+            break;                                          //leave loop . put token
+        (*str)++;
     }
-    new_tok = new_token(TOKEN);                  //allocates space and starts the struct
-    new_tok->value = ft_substr(start, 0, len);   //assign value = substring = full word
-    if(len > 0)                                  //only make token if there is something. avoid token spaces
-    {
-        new_tok = new_token(TOKEN);
-        new_tok->value = ft_substr(start, 0, len);
-        add_token_node(tokens, new_tok);
-    }
+    put_word(&start, str, tokens);                        //str is has end of word
+
 }
 
 void    handle_sign(char **str, s_token **tokens)
 {
-    s_token *new_tok;
-    int len;
-
-    len = 1;
-    if ((*str)[1] == '>' || (*str)[1] == '<') // Handle ">>" or "<<"  heredoc
-        len = 2;                                // if we find >> len 2 to make sure to substr correctly
-    new_tok = new_token(OPERATOR);
-    new_tok->value = ft_substr(*str, 0, len);
-    add_token_node(tokens, new_tok);
-    *str += len;
+    if(**str == '>')
+    {
+        if ((*str)[1] == '>')
+        {
+            add_token_node(tokens, new_token(APPEND, ">>"));                //tokens the struct where we put , new token makes new node there
+            (*str)++;                                                       //to skip extra sign
+        }
+        else
+            add_token_node(tokens, new_token(REDIRECT_R, ">"));
+    }
+    else if(**str == '<')
+    {
+        if ((*str)[1] == '<')
+        {
+            add_token_node(tokens, new_token(HEREDOC, "<<"));
+            (*str)++;
+        }
+        else
+            add_token_node(tokens, new_token(REDIRECT_L, "<"));
+    }
+    else if(**str == '|')
+        add_token_node(tokens,new_token(PIPE, "|"));     
+    (*str)++;
 }
+
+void    put_word(char **start, char **end, s_token **tokens)
+{
+    char    *input;
+
+    if(*end > *start)
+    {
+       input = ft_strndup(*start, *end - *start);        //allocate memory for end - start = len;
+       if(input)
+       {
+            add_token_node(tokens, new_token(WORD, input));
+            free(input);
+       }
+    }
+}
+

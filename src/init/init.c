@@ -75,37 +75,22 @@ void    get_env(s_minishell *mini, char **envp)
         i++;
     }
 }
-/*
-void   get_env(s_minishell *mini, char **envp)
+
+
+s_token *new_token(s_type type, char *value)
 {
-    char        *sign;
-    char        *value;
-    char        *key;
-    int         i;
+    s_token *token;
 
-    i = 0;
-    if(!envp || !envp[i] || !mini)
-        error_exit("No envp!");
-    while(envp[i])
-    {
-        sign = ft_strchr(envp[i], '=');    // ptr to where = is
-        if(sign)
-        {
-            key = ft_substr(envp[i], 0, (sign - envp[i]));   //everything from start until = included
-            value = ft_strdup(sign + 1);                    //everything after =
-            add_env_node(&mini->env, key, value);         //add_node and put key and value
-        }   
-        i++;
-    }
-
-}
-*/
-
-s_token *new_token(int type)
-{
-    s_token *token = safe_malloc(sizeof(s_token));
+    token = safe_malloc(sizeof(s_token));
+    if(!token)
+        return (NULL);
     token->type = type;
-    token->value = NULL;
+    token->value = ft_strdup(value);
+    if(!token->value)
+    {
+        free(token);
+        return (NULL);
+    }
     token->next = NULL;
-    return token;
+    return (token);
 }

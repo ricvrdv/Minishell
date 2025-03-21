@@ -23,15 +23,15 @@ typedef struct s_env	s_env;
 typedef struct s_minishell	s_minishell;
 typedef struct s_args       s_args;
 
-typedef enum t_type
+typedef enum s_type
 {
     PIPE,
-    CMD,
     REDIRECT_L,
     REDIRECT_R,
-    TRASH,
+    WORD,
     TOKEN,
-    OPERATOR,
+    APPEND,
+    HEREDOC,
 }   s_type;
 
 typedef struct s_args
@@ -74,7 +74,6 @@ void    init_struct(s_minishell *mini);
 void    get_env(s_minishell *mini, char **envp);
 void    start_prompt(s_minishell **mini);
 int     check_str(char **line);
-s_token *new_token(int type);
 
 //for parse
 int     full_check(char *str);
@@ -87,12 +86,17 @@ int     is_space(char *str);
 int     invalid_position(char **str);
 char    *jump_spaces(char *str);
 char    *s_spaces(char *str);
+void    quote_counter(char c, int *s_counter, int *d_counter);
+bool are_counts_even(int d_count, int s_count);
 
 //for tokens
 void    handle_sign(char **str, s_token **tokens);
 void    handle_word(char **str, s_token **tokens);
+void    update_quotes(char c, int *inside, char *quote);
+void    put_word(char **start, char **end, s_token **tokens);
 s_token *make_token(char **str, s_token **tokens);
 s_token *get_token(char *str);
+s_token *new_token(s_type type, char *value);
 
 //for builtin
 void    mini_env(char **env_array);
@@ -112,5 +116,7 @@ int     space(int c);
 
 //for testing
 void print_token_list(s_token *token_list);
+void print_token(s_token *tokens);
+const char *token_name(s_type type);
 
 #endif
