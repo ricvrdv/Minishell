@@ -39,7 +39,7 @@ int check_doubles(char *str)   //checks for && or ||  also check if inside quote
     while(*str)
     {
         quote_counter(*str, &s_counter, &d_counter);
-        if(are_counts_even(d_counter,s_counter) &&  ((*str == '&' && *(str + 1) == '&') || (*str == '|' && *(str + 1) == '|')))
+        if(are_counts_odd(d_counter,s_counter) &&  ((*str == '&' && *(str + 1) == '&') || (*str == '|' && *(str + 1) == '|')))
             return (1);
         str++;
     }
@@ -56,7 +56,7 @@ int check_redirect(char *str)
     while(*str)
     {
         quote_counter(*str, &s_count, &d_count);
-        if(are_counts_even(d_count,s_count) && (*str == '<' || *str == '>'))
+        if(are_counts_odd(d_count,s_count) && (*str == '<' || *str == '>'))
         {
             if(invalid_operator(&str))
                 return (1);
@@ -81,7 +81,7 @@ int check_pipe(char *str)
     while(*str)
     {
         quote_counter(*str, &s_count, &d_count);
-        if(*str == '|' && are_counts_even(d_count, s_count))
+        if(*str == '|' && are_counts_odd(d_count, s_count))
         {
             if(flag)
                 return(1);       //expecting a cmd

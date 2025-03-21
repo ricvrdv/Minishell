@@ -47,7 +47,7 @@ int space(int c)
 	return(c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r');
 }
 
-bool are_counts_even(int d_count, int s_count)
+bool are_counts_odd(int d_count, int s_count)
 {
 	return(!(d_count % 2) && !(s_count % 2));       //returns true if we have even nbr of quotes on counter
 }

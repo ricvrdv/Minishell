@@ -87,7 +87,7 @@ int     invalid_position(char **str);
 char    *jump_spaces(char *str);
 char    *s_spaces(char *str);
 void    quote_counter(char c, int *s_counter, int *d_counter);
-bool are_counts_even(int d_count, int s_count);
+bool    are_counts_odd(int d_count, int s_count);
 
 //for tokens
 void    handle_sign(char **str, s_token **tokens);
