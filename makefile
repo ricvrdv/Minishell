@@ -17,7 +17,7 @@ MYLIB = ./inc/Mylib/libft.a
 SRC_DIRS = src/init src/parse src/utils
 SRCS = src/init/init.c \
        src/init/add.c \
-       src/init/main.c \
+       src/main.c \
        src/parse/parse.c \
        src/parse/parse.utils.c \
        src/utils/utils.c \
@@ -26,7 +26,8 @@ SRCS = src/init/init.c \
 	   src/builtin/builtin.c \
 	   src/tokens/print.c \
 	   src/parse/quotes.c \
-	   src/signal/signal.c
+	   src/signal/signal.c \
+	   src/init/prompt.c
 
 OBJS = $(SRCS:.c=.o)
 

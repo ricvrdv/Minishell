@@ -86,6 +86,7 @@ int     check_quotes(char *str);
 int     invalid_operator(char **str);
 int     is_space(char *str);
 int     invalid_position(char **str);
+int     empty_quotes(const char *str);
 char    *jump_spaces(char *str);
 char    *s_spaces(char *str);
 void    quote_counter(char c, int *s_counter, int *d_counter);
