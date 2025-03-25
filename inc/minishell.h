@@ -29,13 +29,13 @@ extern int g_sig;
 
 typedef enum s_type
 {
-    PIPE,
-    REDIRECT_L,
-    REDIRECT_R,
     WORD,
-    TOKEN,
+    PIPE,
+    REDIRECT_L,  //redirect_in
+    REDIRECT_R,  //redirect_out
     APPEND,
     HEREDOC,
+    TOKEN,
 }   s_type;
 
 typedef struct s_args
@@ -103,6 +103,14 @@ char    *jump_spaces(char *str);
 char    *s_spaces(char *str);
 void    quote_counter(char c, int *s_counter, int *d_counter);
 bool    are_counts_odd(int d_count, int s_count);
+s_tree  *parse_token(s_token **tokens);
+s_tree  *parse_redirect(s_token **tokens);
+s_tree  *parse_pipe(s_token **tokens);
+s_tree	*create_arg_node(s_token *token);
+s_tree  *create_redirection_node(s_token **tokens, s_token *temp);
+int	count_arguments(s_token *current);
+void	fill_command_arguments(s_tree *command_node, s_token **tokens, int arg_count);
+s_tree	 *parse_command(s_token **tokens);
 
 //for tokens
 void    handle_sign(char **str, s_token **tokens);
@@ -138,5 +146,6 @@ void setup_signal_handling(void);
 void print_token_list(s_token *token_list);
 void print_token(s_token *tokens);
 const char *token_name(s_type type);
+void ft_print_tree(s_tree *tree);
 
 #endif
