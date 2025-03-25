@@ -17,11 +17,13 @@
 # define RESET  "\033[0m"
 # define RED    "\033[1;31m"
 # define GREEN  "\033[1;32m"
+# define MAXARGS 10
 
 typedef struct s_token	s_token;
 typedef struct s_env	s_env;
 typedef struct s_minishell	s_minishell;
 typedef struct s_args       s_args;
+
 
 extern int g_sig;
 
@@ -41,6 +43,15 @@ typedef struct s_args
     char *value;
     s_args  *next;
 }s_args;
+
+typedef struct s_tree
+{
+    s_type  type;
+    int     file_type;
+    char    **args;
+    struct s_tree *left;
+    struct s_tree *right;
+}s_tree;
 
 typedef struct s_token
 {
@@ -76,6 +87,7 @@ void    init_struct(s_minishell *mini);
 void    get_env(s_minishell *mini, char **envp);
 void    start_prompt(s_minishell **mini);
 int     check_str(char **line);
+s_tree  *new_tree_node(s_type type);
 
 //for parse
 int     full_check(char *str);

@@ -94,3 +94,15 @@ s_token *new_token(s_type type, char *value)
     token->next = NULL;
     return (token);
 }
+
+s_tree *new_tree_node(s_type type)
+{
+    s_tree *node;
+    
+    node = safe_malloc(sizeof(s_tree));
+    node->type = type;
+    node->args = NULL;
+    node->left = NULL;
+    node->right = NULL;
+    return (node);
+}

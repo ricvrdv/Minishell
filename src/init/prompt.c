@@ -17,7 +17,7 @@ void    start_prompt(s_minishell **mini)
         if(check_str(&line) || empty_quotes(line))
         {
             free(line);
-            printf("Empty command. Please enter a valid command\n");
+            printf(" : Command not found\n");
             continue;   //if returns 1 skips and start loop again.
         }
         if(ft_strlen(line) > 0)
