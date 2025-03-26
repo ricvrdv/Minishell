@@ -12,42 +12,43 @@ s_tree  *parse_pipe(s_token **tokens)  // if first call parse_pipe to check if t
         next_token = (*tokens)->next;
         if((*tokens)->next->type == PIPE)   //FOUND A PIPE IN OUR CMD LIST
         {
-            pipe = new_tree_node((*tokens)->next->type);
-            (*tokens)->next = NULL;
-            pipe->left = parse_redirect(&temp);
-            pipe->right = parse_pipe(&(next_token->next));
+            pipe = new_tree_node((*tokens)->next->type);    //allocate and define type
+            (*tokens)->next = NULL;                         // break the str into left and right side
+            pipe->left = parse_redirect(&temp);             //check for redirect if not parse cmd
+            pipe->right = parse_pipe(&(next_token->next));      //starts after pipe token (right side), check again for pipe if pipe not found leaves and goes for parse redirect
             free(next_token->value);
             free(next_token);
             return (pipe);
-        } 
+        }
         *tokens = next_token;
     }
     return (parse_redirect(&temp));
 }
 
-s_tree  *parse_redirect(s_token **tokens)    //  will check for < << > >> 
+s_tree  *parse_redirect(s_token **tokens)    //  will check for < << > >>
 {
     s_token *temp;
     s_token *next_token;
     s_tree  *redirect_node;
 
     temp = *tokens;   //used to keep track of original position
-    if((*tokens)->type >= REDIRECT_L && (*tokens)->type <= HEREDOC)  //if our first token is redirect token 
-        return (create_redirection_node(tokens, temp));    // we create a redirection node on our s_Tree 
+    if((*tokens)->type >= REDIRECT_L && (*tokens)->type <= HEREDOC)  //if our first token is redirect token
+        return (create_redirection_node(tokens, temp));    // we create a redirection node on our s_Tree
     while(*tokens && (*tokens)->next)
     {
-        next_token = (*tokens)->next;
-        if((*tokens)->type >= REDIRECT_L && (*tokens)->type <= HEREDOC) 
+        next_token = (*tokens)->next;                       //get next token
+        if ((*tokens)->type >= REDIRECT_L && (*tokens)->type <= HEREDOC)
         {
-            redirect_node = new_tree_node((*tokens)->next->type);
-            (*tokens)->next = next_token->next->next;
-            redirect_node->left = parse_redirect(&temp);
-            redirect_node->right = create_arg_node((next_token->next));  //need to do
+            redirect_node = new_tree_node((*tokens)->next->type); // Create a new tree node for the redirection
+            (*tokens)->next = next_token->next->next; // Skip the current redirection token and the next token (which is the argument)
+            redirect_node->left = parse_redirect(&temp); // Recursively parse for any additional redirection tokens
+            redirect_node->right = create_arg_node((next_token->next));  // Create a node for the argument associated with the redirection
+            // Free the memory for the next token and return the redirect node
             return (free(next_token->value), free(next_token), redirect_node);
         }
-        *tokens = next_token;
+        *tokens = next_token; // Move to the next token
     }
-    return(parse_command(&temp));
+    return (parse_command(&temp)); // If no redirection tokens are found, parse the command
 }
 
 s_tree  *parse_token(s_token **tokens)
