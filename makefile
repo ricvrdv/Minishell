@@ -28,7 +28,8 @@ SRCS = src/init/init.c \
 	   src/parse/quotes.c \
 	   src/signal/signal.c \
 	   src/init/prompt.c \
-	   src/parse/parser.c
+	   src/tree/tree_parse.c \
+	   src/tree/tree_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

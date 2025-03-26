@@ -90,3 +90,22 @@ void    put_word(char **start, char **end, s_token **tokens)
     }
 }
 
+s_token *new_token(s_type type, char *value)
+{
+    s_token *token;
+
+    token = safe_malloc(sizeof(s_token));
+    if(!token)
+        return (NULL);
+    token->type = type;
+    token->value = ft_strdup(value);
+    if(!token->value)
+    {
+        free(token);
+        return (NULL);
+    }
+    token->next = NULL;
+    return (token);
+}
+
+

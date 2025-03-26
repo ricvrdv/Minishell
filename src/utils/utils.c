@@ -51,3 +51,13 @@ bool are_counts_odd(int d_count, int s_count)
 {
 	return(!(d_count % 2) && !(s_count % 2));       //returns true if we have even nbr of quotes on counter
 }
+
+void print_env_list(s_env *env)
+{
+    while (env != NULL)
+    {
+        if (env->key && env->value) // Check if key and value are not NULL
+            printf("%s=%s\n", env->key, env->value);
+        env = env->next; // Move to the next node
+    }
+}

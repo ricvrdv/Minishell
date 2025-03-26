@@ -84,10 +84,11 @@ void    add_env_node(s_env **env_list, char *key, char *value);
 void    add_token_node(s_token **tokens, s_token *new_token);
 void    add_args_node(s_args **args_list, char *key);
 void    init_struct(s_minishell *mini);
-void    get_env(s_minishell *mini, char **envp);
-void    start_prompt(s_minishell **mini);
+void    get_env(s_env **env_list, char **envp);
+void    start_prompt(s_minishell **mini, s_env *original_env, s_env *flexible_env);
 int     check_str(char **line);
-s_tree  *new_tree_node(s_type type);
+s_env   *create_original_env(char **envp);
+s_env   *create_env_node(const char *key, const char *value);
 
 //for parse
 int     full_check(char *str);
@@ -103,14 +104,8 @@ char    *jump_spaces(char *str);
 char    *s_spaces(char *str);
 void    quote_counter(char c, int *s_counter, int *d_counter);
 bool    are_counts_odd(int d_count, int s_count);
-s_tree  *parse_token(s_token **tokens);
-s_tree  *parse_redirect(s_token **tokens);
-s_tree  *parse_pipe(s_token **tokens);
-s_tree	*create_arg_node(s_token *token);
-s_tree  *create_redirection_node(s_token **tokens, s_token *temp);
-int	count_arguments(s_token *current);
+int	    count_arguments(s_token *current);
 void	fill_command_arguments(s_tree *command_node, s_token **tokens, int arg_count);
-s_tree	 *parse_command(s_token **tokens);
 
 //for tokens
 void    handle_sign(char **str, s_token **tokens);
@@ -138,8 +133,17 @@ char    *get_dir();
 int     space(int c);
 
 //for sigaction
-void handle_sigint();
-void setup_signal_handling(void);
+void    handle_sigint(int sig);
+void    setup_signal_handling(void);
+
+//for tree
+s_tree	*parse_command(s_token **tokens);
+s_tree  *parse_token(s_token **tokens);
+s_tree  *parse_redirect(s_token **tokens);
+s_tree  *parse_pipe(s_token **tokens);
+s_tree	*create_arg_node(s_token *token);
+s_tree  *create_redirection_node(s_token **tokens, s_token *temp);
+s_tree  *new_tree_node(s_type type);
 
 
 //for testing
@@ -147,5 +151,6 @@ void print_token_list(s_token *token_list);
 void print_token(s_token *tokens);
 const char *token_name(s_type type);
 void ft_print_tree(s_tree *tree);
+void print_env_list(s_env *env);
 
 #endif
