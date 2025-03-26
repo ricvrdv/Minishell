@@ -28,15 +28,6 @@ void add_token_node(s_token **tokens, s_token *new_token)
         last->next = new_token;
     }
 }
-void    add_args_node(s_args **args_list, char *key)   ///may delete i guess lets see
-{
-    s_args  *new_node;
-
-    new_node = safe_malloc(sizeof(s_args));
-    new_node->value = key;
-    new_node->next = *args_list;
-    *args_list = new_node;
-}
 
 s_env *create_env_node(const char *key, const char *value)
 {

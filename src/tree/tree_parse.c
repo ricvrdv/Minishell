@@ -43,8 +43,9 @@ s_tree  *parse_redirect(s_token **tokens)    //  will check for < << > >>
             (*tokens)->next = next_token->next->next; // Skip the current redirection token and the next token (which is the argument)
             redirect_node->left = parse_redirect(&temp); // Recursively parse for any additional redirection tokens
             redirect_node->right = create_arg_node((next_token->next));  // Create a node for the argument associated with the redirection
-            // Free the memory for the next token and return the redirect node
-            return (free(next_token->value), free(next_token), redirect_node);
+            free(next_token->value);
+            free(next_token);
+            return (redirect_node);
         }
         *tokens = next_token; // Move to the next token
     }

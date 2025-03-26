@@ -1,10 +1,10 @@
 #include "../../inc/minishell.h"
 
-void    start_prompt(s_minishell **mini, s_env *original_env, s_env *flexible_env)
+void    start_prompt(s_minishell **mini)
 {
     char    *line;
     s_token *tokens;
-    //s_tree  *tree;
+    s_tree  *tree;
     (void)mini;
     while(1)    //infinite loop to get input from user
     {
@@ -23,22 +23,21 @@ void    start_prompt(s_minishell **mini, s_env *original_env, s_env *flexible_en
         }
         if(ft_strlen(line) > 0)
             add_history(line);
-        tokens = make_token(&line, &tokens); //parse str //has unclose quotes? / has invalid redirections /    //parse tokens
-        print_token(tokens);
-        if (ft_strncmp(line, "og", 2) == 0)
+        /*if (ft_strncmp(line, "og", 2) == 0)
         {
-            print_env_list(original_env);
+            print_env_list(*mini);
             free(line); // Free the line after processing
             continue; // Continue to the next iteration
         }
         if (ft_strncmp(line, "flex", 4) == 0)
         {
-            print_env_list(flexible_env);
+            print_env_list(*mini);
             free(line); // Free the line after processing
             continue; // Continue to the next iteration
-        }
-        //tree = parse_token(&tokens);  //check if tokens exist // if it does enteres parse_pipe and parse_redirect
-        /*ft_print_tree(tree);*/
+        }*/                                                 //just to check if env are done
+        tokens = make_token(&line, &tokens); //parse str //has unclose quotes? / has invalid redirections /    //parse tokens
+        tree = parse_token(&tokens);  //check if tokens exist // if it does enteres parse_pipe and parse_redirect
+        ft_print_tree(tree);
         free(line);
     }
 }

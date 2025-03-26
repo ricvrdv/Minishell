@@ -16,13 +16,18 @@ void	*safe_malloc(size_t bytes)
 	return (ret);
 }
 
-void	free_struct(s_minishell *mini)
+void free_struct(s_minishell *mini)
 {
-	
-	free(mini->full_cmd);
-	free(mini->cur_dir);
-	clear_token(&mini->tokens);  //not initialized yet
-	clear_env(&mini->env);   //not initialized yet
+    if(mini->cur_dir)
+    	free(mini->cur_dir);
+    if(mini->env_array)
+    	clear_env_array(&mini->env_array);   //todo
+    if(mini->env) 
+    	clear_env(&mini->env);            //todo
+    if(mini->tokens) 
+		clear_token(&mini->tokens);
+	if(mini->tree)
+		clear_tree(&mini->tree);   
 }
 
 
@@ -52,12 +57,14 @@ bool are_counts_odd(int d_count, int s_count)
 	return(!(d_count % 2) && !(s_count % 2));       //returns true if we have even nbr of quotes on counter
 }
 
-void print_env_list(s_env *env)
+void print_env_list(s_minishell *mini) 
 {
-    while (env != NULL)
-    {
-        if (env->key && env->value) // Check if key and value are not NULL
-            printf("%s=%s\n", env->key, env->value);
-        env = env->next; // Move to the next node
+    s_env *current = mini->env; // Start from the head of the environment list
+
+    while (current != NULL) 
+	{
+        if (current->key && current->value) 
+            printf("%s=%s\n", current->key, current->value);
+        current = current->next; // Move to the next node
     }
 }

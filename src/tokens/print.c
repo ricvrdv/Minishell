@@ -48,7 +48,6 @@ void ft_print_tree(s_tree *tree)
 
     // Print the type (you can customize this based on the actual types of s_type)
     printf("Tree node:\n");
-    printf("  Type: %d\n", tree->type);
     // Print the args (assuming it's a null-terminated array of strings)
     if (tree->args != NULL)
     {

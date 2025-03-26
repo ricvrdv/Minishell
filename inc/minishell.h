@@ -38,12 +38,6 @@ typedef enum s_type
     TOKEN,
 }   s_type;
 
-typedef struct s_args
-{   
-    char *value;
-    s_args  *next;
-}s_args;
-
 typedef struct s_tree
 {
     s_type  type;
@@ -69,52 +63,48 @@ typedef struct s_env
 
 typedef struct s_minishell
 {
-    int     created;
-    char    *cur_dir;
-    char    *full_cmd;
-    char    **env_array;
-    struct s_env   *env;
-    struct s_token *tokens;
-    struct s_args  *args;
+    int     created;                                    //just to check if struct is started
+    char    *cur_dir;                                   //cur dir
+    char    **env_array;                                //will hold env in array of array for execvp (try to keep updated)
+    struct s_env   *env;                                //where our flexible env will be stored
+    struct s_token *tokens;                             //where are tokes are stored after parsing
+    struct s_tree  *tree;                               //where we put our tree after checking for pipe or redirects
+
 }s_minishell;
 
 
-//for init
+//for init folder
 void    add_env_node(s_env **env_list, char *key, char *value);
 void    add_token_node(s_token **tokens, s_token *new_token);
-void    add_args_node(s_args **args_list, char *key);
-void    init_struct(s_minishell *mini);
-void    get_env(s_env **env_list, char **envp);
-void    start_prompt(s_minishell **mini, s_env *original_env, s_env *flexible_env);
-int     check_str(char **line);
-s_env   *create_original_env(char **envp);
 s_env   *create_env_node(const char *key, const char *value);
+void    init_struct(s_minishell *mini);
+void    get_env(s_minishell *mini, char **envp);
+void    start_prompt(s_minishell **mini);
 
-//for parse
+
+//for parse folder
 int     full_check(char *str);
-int     check_redirect(char *str);
 int     check_doubles(char *str);
+int     check_redirect(char *str);
 int     check_pipe(char *str);
 int     check_quotes(char *str);
+char    *s_spaces(char *str);
 int     invalid_operator(char **str);
 int     is_space(char *str);
 int     invalid_position(char **str);
-int     empty_quotes(const char *str);
 char    *jump_spaces(char *str);
-char    *s_spaces(char *str);
 void    quote_counter(char c, int *s_counter, int *d_counter);
-bool    are_counts_odd(int d_count, int s_count);
-int	    count_arguments(s_token *current);
-void	fill_command_arguments(s_tree *command_node, s_token **tokens, int arg_count);
+void    update_quotes(char c, int *inside, char *quote);
+int     check_str(char **line);
+int     empty_quotes(const char *str);
 
 //for tokens
-void    handle_sign(char **str, s_token **tokens);
-void    handle_word(char **str, s_token **tokens);
-void    update_quotes(char c, int *inside, char *quote);
-void    put_word(char **start, char **end, s_token **tokens);
 s_token *make_token(char **str, s_token **tokens);
 s_token *get_token(char *str);
 s_token *new_token(s_type type, char *value);
+void    handle_word(char **str, s_token **tokens);
+void    handle_sign(char **str, s_token **tokens);
+void    put_word(char **start, char **end, s_token **tokens);
 
 //for builtin
 void    mini_env(char **env_array);
@@ -122,15 +112,11 @@ void    mini_cd(s_minishell *mini, char **args);
 void    execute_command(s_minishell *mini, char **cmd);
 
 //for utils
-void	clear_env(s_env **env);
-void	clear_token(s_token **token);
-void	mini_exit(s_minishell *mini, char *error);
 void	error_exit(char *error);
 void	*safe_malloc(size_t bytes);
-void	free_struct(s_minishell *mini);
-void	free_stuff(char *str[]);
 char    *get_dir();
 int     space(int c);
+bool    are_counts_odd(int d_count, int s_count);
 
 //for sigaction
 void    handle_sigint(int sig);
@@ -144,13 +130,23 @@ s_tree  *parse_pipe(s_token **tokens);
 s_tree	*create_arg_node(s_token *token);
 s_tree  *create_redirection_node(s_token **tokens, s_token *temp);
 s_tree  *new_tree_node(s_type type);
+int	    count_arguments(s_token *current);
+void	fill_command_arguments(s_tree *command_node, s_token **tokens, int arg_count);
 
+//for clear
+void	free_struct(s_minishell *mini);
+void	clear_tree(s_tree **tree);
+void	clear_env_array(char ***env_array);
+void	free_stuff(char *str[]);
+void	mini_exit(s_minishell *mini, char *error);
+void	clear_token(s_token **token);
+void	clear_env(s_env **env);
 
-//for testing
+//for printing
+void print_env_list(s_minishell *mini);
 void print_token_list(s_token *token_list);
 void print_token(s_token *tokens);
-const char *token_name(s_type type);
 void ft_print_tree(s_tree *tree);
-void print_env_list(s_env *env);
+const char *token_name(s_type type);
 
 #endif
