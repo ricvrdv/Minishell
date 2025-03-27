@@ -33,38 +33,57 @@ void print_token(s_token *tokens)
     }
 }
 
-void print_token_list(s_token *token_list)
+void ft_print_tree(s_tree *tree, int depth) 
 {
-    while (token_list)
-    {
-        if (token_list->value && *token_list->value)  
-            printf("Token: [%s]\n", token_list->value);
-        token_list = token_list->next;
+
+    if (tree == NULL) 
+        return; // Base case: if the tree is empty, do nothing
+    // Print the current node's type with indentation based on depth
+    for (int i = 0; i < depth; i++) 
+        printf("  "); // Indentation for depth
+    // Print the type of the node based on the s_type enumeration
+    switch (tree->type) {
+        case WORD:
+            printf("Word Node:\n");
+            break;
+        case PIPE:
+            printf("Pipe Node:\n");
+            break;
+        case REDIRECT_L:
+            printf("Redirect In Node:\n");
+            break;
+        case REDIRECT_R:
+            printf("Redirect Out Node:\n");
+            break;
+        case APPEND:
+            printf("Append Node:\n");
+            break;
+        case HEREDOC:
+            printf("Here Document Node:\n");
+            break;
+        case TOKEN:
+            printf("Token Node:\n");
+            break;
+        default:
+            printf("Unknown Node Type:\n");
+            break;
     }
-}
-
-void ft_print_tree(s_tree *tree)
-{
-
-    // Print the type (you can customize this based on the actual types of s_type)
-    printf("Tree node:\n");
+    // Print the file type if applicable (for redirection nodes)
+    if (tree->type == REDIRECT_L || tree->type == REDIRECT_R || tree->type == APPEND) 
+        printf("  File Type: %d\n", tree->file_type); // Print file type for relevant nodes
     // Print the args (assuming it's a null-terminated array of strings)
-    if (tree->args != NULL)
-    {
-        printf("  Args: ");
-        for (int i = 0; tree->args[i] != NULL; i++)
-            printf("'%s' ", tree->args[i]);
-        printf("\n");
+    if (tree->args != NULL) {
+        for (int i = 0; tree->args[i] != NULL; i++) 
+        {
+            for (int j = 0; j < depth + 1; j++) 
+                printf("  "); // Indentation for args
+            printf("Arg: '%s'\n", tree->args[i]);
+        }
     }
     // Recursively print left and right subtrees if they exist
-    if (tree->left != NULL)
-    {
-        printf("  Left subtree:\n");
-        ft_print_tree(tree->left);
-    }
-    if (tree->right != NULL)
-    {
-        printf("  Right subtree:\n");
-        ft_print_tree(tree->right);
-    }
+    if (tree->left != NULL) 
+        ft_print_tree(tree->left, depth + 1); // Increase depth for left subtree
+    if (tree->right != NULL) 
+        ft_print_tree(tree->right, depth + 1); // Increase depth for right subtree
+    
 }

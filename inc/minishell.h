@@ -42,6 +42,7 @@ typedef struct s_tree
 {
     s_type  type;
     int     file_type;
+    int     argcount;
     char    **args;
     struct s_tree *left;
     struct s_tree *right;
@@ -146,7 +147,7 @@ void	clear_env(s_env **env);
 void print_env_list(s_minishell *mini);
 void print_token_list(s_token *token_list);
 void print_token(s_token *tokens);
-void ft_print_tree(s_tree *tree);
+void ft_print_tree(s_tree *tree, int depth);
 const char *token_name(s_type type);
 
 #endif

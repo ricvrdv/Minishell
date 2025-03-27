@@ -6,6 +6,7 @@ s_tree *new_tree_node(s_type type)
     
     node = safe_malloc(sizeof(s_tree));
     node->type = type;
+    node->argcount = 0;
     node->args = NULL;
     node->left = NULL;
     node->right = NULL;
@@ -18,6 +19,7 @@ s_tree	*create_arg_node(s_token *token)
 
     node = safe_malloc(sizeof(s_tree));
     node->type = token->type;
+    node->argcount = 0;
     node->args = safe_malloc(sizeof(char *) * 2);
     node->args[0] = token->value;
     node->args[1] = NULL;
@@ -35,6 +37,7 @@ s_tree  *create_redirection_node(s_token **tokens, s_token *temp)
     *tokens = (*tokens)->next->next;
     redi_node->left = parse_redirect(tokens);
     redi_node->right = create_arg_node(temp->next);
+    redi_node->argcount = 0;
     free(temp->value);
     free(temp);
     return (redi_node);
