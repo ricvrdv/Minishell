@@ -54,6 +54,7 @@ s_tree  *parse_redirect(s_token **tokens)   //used to check for redirects after 
     return (parse_command(&temp)); // If no redirection tokens are found, parse the command
 }
 
+
 s_tree  *parse_token(s_token **tokens)
 {
     if(!tokens || !*tokens)

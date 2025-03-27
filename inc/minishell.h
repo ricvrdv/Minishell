@@ -68,8 +68,8 @@ typedef struct s_minishell
     char    *cur_dir;                                   //cur dir
     char    **env_array;                                //will hold env in array of array for execvp (try to keep updated)
     struct s_env   *env;                                //where our flexible env will be stored
-    struct s_token *tokens;                             //where are tokes are stored after parsing
-    struct s_tree  *tree;                               //where we put our tree after checking for pipe or redirects
+    struct s_token *tokens;                             //where are tokes are stored after parsing  /// ignore not being used
+    struct s_tree  *tree;                               //where we put our tree after checking for pipe or redirects  /// ignored not being used
 
 }s_minishell;
 
