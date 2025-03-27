@@ -12,17 +12,17 @@ int full_check(char *str)
     }
     if(check_redirect(temp))
     {
-        ft_putstr_fd("Invalid redirect.\n", 2);
-        return (1);
-    }
-    if(check_pipe(temp))
-    {
-        ft_putstr_fd("Misplaced operator.\n", 2);
+        ft_putstr_fd("minishell : syntax error near unexpected token `newline'.\n", 2);
         return (1);
     }
     if(check_doubles(temp))
     {
         ft_putstr_fd("Logical opertators are not suported.\n", 2);
+        return (1);
+    }
+    if(check_pipe(temp))
+    {
+        ft_putstr_fd("Misplaced operator.\n", 2);
         return (1);
     }
     return (0);     // all good with the str

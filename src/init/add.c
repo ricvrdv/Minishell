@@ -17,7 +17,6 @@ void add_token_node(s_token **tokens, s_token *new_token)
 
     if (!new_token) // Always check if new_token is valid
         return;
-
     if (!*tokens)   // Check if the token list is empty
         *tokens = new_token;
     else
@@ -31,8 +30,9 @@ void add_token_node(s_token **tokens, s_token *new_token)
 
 s_env *create_env_node(const char *key, const char *value)
 {
-    s_env *new_node = malloc(sizeof(s_env));
+    s_env *new_node;
     
+    new_node = malloc(sizeof(s_env));
     if (!new_node)
         return NULL; // Handle memory allocation failure
     new_node->key = strdup(key);

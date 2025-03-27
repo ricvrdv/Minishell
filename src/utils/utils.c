@@ -29,7 +29,8 @@ void free_struct(s_minishell *mini)
 
 char    *get_dir()
 {
-    char *currentdir = NULL;
+    char *currentdir;
+
     currentdir = getcwd(NULL, 1024);
     return currentdir;
 }
