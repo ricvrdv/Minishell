@@ -24,10 +24,6 @@ void free_struct(s_minishell *mini)
     	clear_env_array(&mini->env_array);   //todo
     if(mini->env) 
     	clear_env(&mini->env);            //todo
-    if(mini->tokens) 
-		clear_token(&mini->tokens);
-	if(mini->tree)
-		clear_tree(&mini->tree);   
 }
 
 

@@ -9,8 +9,6 @@ void    init_struct(s_minishell *mini)
     mini->cur_dir = curdir; 
     mini->env_array = NULL;
     mini->env = NULL;
-    mini->tokens = NULL;
-    mini->tree = NULL;
 }
 
 static  char    **create_env_array(char    **envp)
