@@ -11,6 +11,8 @@ static s_env   *find_env_var(s_env *env, const char *key)
     return (NULL);
 }
 
+
+
 static void    update_env_var(s_env **env, const char *key, const char *value)
 {
     s_env   *var;
@@ -113,39 +115,4 @@ void    mini_cd(s_minishell *mini, char **args)
     }
 }
 
-void    execute_command(s_minishell *mini, char **cmd)
-{
-    s_env   *env;
-    char    **full_path;
-    char    *path;
-    char    *half_path;
-    int     i;
-    
-    env = mini->env;
-    while (env && ft_strncmp(env->key, "PATH", 4) != 0)
-        env = env->next;
-    full_path = ft_split(env->value + 5, ':');
-    if (!full_path)
-        return ;
-    i = 0;
-    while (full_path[i])
-    {
-        half_path = ft_strjoin(full_path[i], "/");
-        if (!half_path)
-            return ;
-        path = ft_strjoin(half_path, cmd[0]);
-        free(half_path);
-        if (!path)
-            return ;
-        if (access(path, F_OK | X_OK) == 0)
-        {
-            if (execve(path, cmd, mini->env_array) == -1)
-            {
-                perror("Error: execve failed");
-                exit(EXIT_FAILURE);
-            }
-        }
-        free(path);
-        i++;
-    }
-}
+

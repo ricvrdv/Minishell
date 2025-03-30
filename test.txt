@@ -1,0 +1,13 @@
+This is a sample log file.
+
+Everything is running smoothly.
+
+Error: Unable to connect to the database.
+
+Warning: Low disk space.
+
+Error: File not found.
+
+This line is just an informational message.
+
+Error: Access denied.

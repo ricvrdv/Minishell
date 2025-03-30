@@ -107,7 +107,7 @@ void    put_word(char **start, char **end, s_token **tokens);
 //for builtin
 void    mini_env(char **env_array);
 void    mini_cd(s_minishell *mini, char **args);
-void    execute_command(s_minishell *mini, char **cmd);
+void    execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd);
 
 //for utils
 void	error_exit(char *error);
@@ -146,5 +146,14 @@ void print_token_list(s_token *token_list);
 void print_token(s_token *tokens);
 void ft_print_tree(s_tree *tree, int depth);
 const char *token_name(s_type type);
+
+
+//for exec
+void    prepare_cmd(s_tree *tree);
+void    counter_pipes_redirect(s_tree *tree, int *pipes, int *redirect);
+void    execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
+void    execute_cmd_path(s_minishell *mini, char **cmd, const char *full_path);
+char    *find_cmd_path(const char *cmd, const char *path);
+char    *find_path_varibale(s_minishell *mini);
 
 #endif
