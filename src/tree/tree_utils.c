@@ -18,7 +18,7 @@ s_tree	*create_arg_node(s_token *token)
     s_tree  *node;
 
     node = safe_malloc(sizeof(s_tree));
-    node->type = token->type;
+    node->type = FILE_ARG;
     node->argcount = 0;
     node->args = safe_malloc(sizeof(char *) * 2);
     node->args[0] = token->value;

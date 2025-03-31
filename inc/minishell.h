@@ -36,6 +36,8 @@ typedef enum s_type
     APPEND,      //>> append to file
     HEREDOC,    //
     TOKEN,
+    FILE_ARG,
+    CMD,
 }   s_type;
 
 typedef struct s_tree
@@ -131,6 +133,7 @@ s_tree  *new_tree_node(s_type type);
 int	    count_arguments(s_token *current);
 void	fill_command_arguments(s_tree *command_node, s_token **tokens, int arg_count);
 
+
 //for clear
 void	free_struct(s_minishell *mini);
 void	clear_tree(s_tree **tree);
@@ -149,11 +152,11 @@ const char *token_name(s_type type);
 
 
 //for exec
-void    prepare_cmd(s_tree *tree);
-void    counter_pipes_redirect(s_tree *tree, int *pipes, int *redirect);
 void    execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 void    execute_cmd_path(s_minishell *mini, char **cmd, const char *full_path);
 char    *find_cmd_path(const char *cmd, const char *path);
 char    *find_path_varibale(s_minishell *mini);
+void    execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
+void    execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 
 #endif
