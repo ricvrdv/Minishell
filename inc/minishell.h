@@ -18,6 +18,7 @@
 # define RED    "\033[1;31m"
 # define GREEN  "\033[1;32m"
 # define MAXARGS 10
+# define FILE_REDIRECT 10
 
 typedef struct s_token	s_token;
 typedef struct s_env	s_env;

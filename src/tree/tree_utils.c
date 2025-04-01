@@ -6,6 +6,7 @@ s_tree *new_tree_node(s_type type)
     
     node = safe_malloc(sizeof(s_tree));
     node->type = type;
+    node->file_type = FILE_REDIRECT;
     node->argcount = 0;
     node->args = NULL;
     node->left = NULL;
