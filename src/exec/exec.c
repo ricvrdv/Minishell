@@ -91,6 +91,7 @@ void execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
             close(out_fd);
         }
         full_path = find_cmd_path(node->args[0], find_path_varibale(mini));     //looks for cdm in in env linked list in mini
+        //if full path equal to our cmds exec our else continue
         if (full_path == NULL)                                                  //if we dont find dir cmd is not  valid{
            error_exit("cmd not found!");
         if (execve(full_path, node->args, mini->env_array) == -1)               //exec cmd        {

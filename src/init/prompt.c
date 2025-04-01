@@ -33,6 +33,8 @@ void    start_prompt(s_minishell **mini)
     }
 }
 
+
+/*
 void exec_tree(s_tree *tree)                            //add later *mini to get env
 {
     int pipes[12];                                        // pipes[0] = | / pipes[1] = > / pipes[2] = >> / pipes[3] = < / pipes[4] = <<
@@ -103,3 +105,4 @@ void rename_nodes(s_tree *tree)
     if(tree->right)
         rename_nodes(tree->right);
 }
+*/

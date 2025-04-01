@@ -18,7 +18,7 @@ s_token     *get_token(char *str)
     tokens = NULL;
     while(*str)
     {
-        if(*str == ' ')  //skip spaces
+        if(*str == ' ' || *str == '\t')  //skip spaces
             str++;
         if (*str == '>' || *str == '<' || *str == '|')       //if we find a operator use handle signs
             handle_sign(&str, &tokens);
