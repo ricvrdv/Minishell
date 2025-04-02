@@ -27,6 +27,8 @@ void free_struct(s_minishell *mini)
 }
 
 
+
+
 char    *get_dir()
 {
     char *currentdir;

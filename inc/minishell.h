@@ -74,10 +74,10 @@ typedef struct s_env
 
 typedef struct s_minishell
 {
-    int     created;                                    //just to check if struct is started
-    char    *cur_dir;                                   //cur dir
-    char    **env_array;                                //will hold env in array of array for execvp (try to keep updated)
-    struct s_env   *env;                                //where our flexible env will be stored
+    int     created;                                    
+    char    *cur_dir;                                  
+    char    **env_array;                               
+    struct s_env   *env;                                
 }s_minishell;
 
 
@@ -85,7 +85,7 @@ typedef struct s_minishell
 void    add_env_node(s_env **env_list, char *key, char *value);
 void    add_token_node(s_token **tokens, s_token *new_token);
 void    init_struct(s_minishell *mini);
-void    get_env(s_minishell *mini, char **envp);
+int     get_env(s_minishell *mini, char **envp);
 void    start_prompt(s_minishell **mini);
 s_env   *create_env_node(const char *key, const char *value);
 
@@ -98,7 +98,6 @@ int     check_pipe(char *str);
 int     check_quotes(char *str);
 int     invalid_operator(char **str);
 int     is_space(char *str);
-int     invalid_position(char **str);
 int     check_str(char **line);
 int     empty_quotes(const char *str);
 char    *s_spaces(char *str);
@@ -106,7 +105,7 @@ char    *jump_spaces(char *str);
 void    quote_counter(char c, int *s_counter, int *d_counter);
 void    update_quotes(char c, int *inside, char *quote);
 
-//for tokens
+//for tokens folder
 void    handle_word(char **str, s_token **tokens);
 void    handle_sign(char **str, s_token **tokens);
 void    put_word(char **start, char **end, s_token **tokens);
@@ -114,12 +113,12 @@ s_token *make_token(char **str, s_token **tokens);
 s_token *get_token(char *str);
 s_token *new_token(s_type type, char *value);
 
-//for builtin
+//for builtin folder
 void    mini_env(char **env_array);
 void    mini_cd(s_minishell *mini, char **args);
 void    execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd);
 
-//for utils
+//for utils folder
 void	error_exit(char *error);
 void	*safe_malloc(size_t bytes);
 char    *get_dir();
@@ -127,11 +126,11 @@ int     space(int c);
 bool    are_counts_odd(int d_count, int s_count);
 int     str_size(char *str, char end); 
 
-//for sigaction
+//for signals
 void    handle_sigint(int sig);
 void    setup_signal_handling(void);
 
-//for tree
+//for tree folder
 s_tree	*parse_command(s_token **tokens);
 s_tree  *parse_token(s_token **tokens);
 s_tree  *parse_redirect(s_token **tokens);
@@ -146,6 +145,8 @@ void    init_pipes_array(int *pipes, int flag);
 void    rename_nodes(s_tree *tree);
 int	    count_arguments(s_token *current);
 void    print_tree_status(int *pipes, s_tree *tree);
+int     check_cmd(char *cmd);
+
 
 //for clear
 void	free_struct(s_minishell *mini);
@@ -165,6 +166,5 @@ void    execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 void    execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 
 
-int check_cmd(char *cmd);
 
 #endif

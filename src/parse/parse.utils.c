@@ -33,20 +33,6 @@ int is_space(char *str)
     return (0);         //else if has spaces but then something else returns 0
 }
 
-int invalid_position(char **str)
-{
-    char    *start;
-
-    start = *str;    //begining of string 
-    (*str)++;
-    if(*start == **str)
-        (*str)++;
-    *str = jump_spaces(*str);
-    if(**str == '\0' || **str == '>' || **str == '<' || **str == '|')
-        return (1);   //if we find one of these before anything else return 1 (invalid position of sign)
-    return (0);       //else we are fine
-}
-
 char *jump_spaces(char *str)
 {
     while(*str && (*str == ' ' || *str == '\t'))

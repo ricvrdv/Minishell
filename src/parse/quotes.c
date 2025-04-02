@@ -65,7 +65,10 @@ int empty_quotes(const char *str)
                 if (has_non_space) 
                     return 0;  // Found text inside quotes
                 else 
+                {
+                    printf(" : Command not found\n");
                     return 1;  // Only spaces inside quotes
+                }
             }
         }
         str++;

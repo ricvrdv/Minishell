@@ -1,11 +1,11 @@
 #include "../../inc/minishell.h"
 
-void prep_tree(s_tree *tree, s_minishell *mini)                            //add later *mini to get env
+void prep_tree(s_tree *tree)                            //add later *mini to get env
 {
     int pipes[12];                                        // pipes[0] = | / pipes[1] = > / pipes[2] = >> / pipes[3] = < / pipes[4] = <<
-    int flag;
+    //int flag;
 
-    flag = 0;
+    //flag = 0;
     init_pipes_array(pipes, 1);                          //set pipes[0->12 to 0]
     count_pipes_redir(tree, pipes);                      //increment nbr of pipes or redirects
     init_pipes_array(pipes, 0);                                //check for nbr of pipes and puts on pipes[0]
@@ -80,7 +80,7 @@ void print_tree_status(int *pipes, s_tree *tree)
     if(pipes[3])
     printf("nbr of < or << : %d\n", pipes[3]);
 }
-
+ 
 int check_cmd(char *cmd)        ///will check if cmd is built in or not  // its working
 {
     char *temp;
@@ -104,6 +104,7 @@ int check_cmd(char *cmd)        ///will check if cmd is built in or not  // its 
     return(flag);
 }
 
+/*
 int is_valid_file(s_tree *tree, s_minishell *mini)                        
 {
     int flag;
@@ -123,5 +124,5 @@ int is_valid_file(s_tree *tree, s_minishell *mini)
         }
 
 }
-
+*/
 
