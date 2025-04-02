@@ -18,7 +18,14 @@
 # define RED    "\033[1;31m"
 # define GREEN  "\033[1;32m"
 # define MAXARGS 10
-# define FILE_REDIRECT 10
+# define TREE_READY 100
+# define FILE_REDIRECT 200
+# define WRITE_FILE 300
+# define APPEND_FILE 400
+# define READ_FILE 500
+# define HEREDOC_FILE 600
+# define CMD_READY 700
+
 
 typedef struct s_token	s_token;
 typedef struct s_env	s_env;
@@ -77,10 +84,10 @@ typedef struct s_minishell
 //for init folder
 void    add_env_node(s_env **env_list, char *key, char *value);
 void    add_token_node(s_token **tokens, s_token *new_token);
-s_env   *create_env_node(const char *key, const char *value);
 void    init_struct(s_minishell *mini);
 void    get_env(s_minishell *mini, char **envp);
 void    start_prompt(s_minishell **mini);
+s_env   *create_env_node(const char *key, const char *value);
 
 
 //for parse folder
@@ -89,23 +96,23 @@ int     check_doubles(char *str);
 int     check_redirect(char *str);
 int     check_pipe(char *str);
 int     check_quotes(char *str);
-char    *s_spaces(char *str);
 int     invalid_operator(char **str);
 int     is_space(char *str);
 int     invalid_position(char **str);
+int     check_str(char **line);
+int     empty_quotes(const char *str);
+char    *s_spaces(char *str);
 char    *jump_spaces(char *str);
 void    quote_counter(char c, int *s_counter, int *d_counter);
 void    update_quotes(char c, int *inside, char *quote);
-int     check_str(char **line);
-int     empty_quotes(const char *str);
 
 //for tokens
-s_token *make_token(char **str, s_token **tokens);
-s_token *get_token(char *str);
-s_token *new_token(s_type type, char *value);
 void    handle_word(char **str, s_token **tokens);
 void    handle_sign(char **str, s_token **tokens);
 void    put_word(char **start, char **end, s_token **tokens);
+s_token *make_token(char **str, s_token **tokens);
+s_token *get_token(char *str);
+s_token *new_token(s_type type, char *value);
 
 //for builtin
 void    mini_env(char **env_array);
@@ -118,6 +125,7 @@ void	*safe_malloc(size_t bytes);
 char    *get_dir();
 int     space(int c);
 bool    are_counts_odd(int d_count, int s_count);
+int     str_size(char *str, char end); 
 
 //for sigaction
 void    handle_sigint(int sig);
@@ -131,9 +139,13 @@ s_tree  *parse_pipe(s_token **tokens);
 s_tree	*create_arg_node(s_token *token);
 s_tree  *create_redirection_node(s_token **tokens, s_token *temp);
 s_tree  *new_tree_node(s_type type);
-int	    count_arguments(s_token *current);
 void	fill_command_arguments(s_tree *command_node, s_token **tokens, int arg_count);
-
+void    prep_tree(s_tree *tree);
+void    count_pipes_redir(s_tree *tree, int *pipes);
+void    init_pipes_array(int *pipes, int flag);
+void    rename_nodes(s_tree *tree);
+int	    count_arguments(s_token *current);
+void    print_tree_status(int *pipes, s_tree *tree);
 
 //for clear
 void	free_struct(s_minishell *mini);
@@ -144,20 +156,15 @@ void	mini_exit(s_minishell *mini, char *error);
 void	clear_token(s_token **token);
 void	clear_env(s_env **env);
 
-//for printing
-void print_env_list(s_minishell *mini);
-void print_token_list(s_token *token_list);
-void print_token(s_token *tokens);
-void ft_print_tree(s_tree *tree, int depth);
-const char *token_name(s_type type);
-
-
-//for exec
+//for exec   //need redo
 void    execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 void    execute_cmd_path(s_minishell *mini, char **cmd, const char *full_path);
 char    *find_cmd_path(const char *cmd, const char *path);
 char    *find_path_varibale(s_minishell *mini);
 void    execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 void    execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
+
+
+int check_cmd(char *cmd);
 
 #endif

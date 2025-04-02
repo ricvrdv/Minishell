@@ -2,7 +2,6 @@
 
 void execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
 {          
-    
     if (tree->type == PIPE)                                         //we found pipe node
         execute_pipe(tree, mini, in_fd, out_fd);                                         // Close the read end after forking
     else if(tree->type == REDIRECT_L || tree->type == REDIRECT_R || tree->type == HEREDOC )

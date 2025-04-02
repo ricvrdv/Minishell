@@ -54,14 +54,12 @@ bool are_counts_odd(int d_count, int s_count)
 	return(!(d_count % 2) && !(s_count % 2));       //returns true if we have even nbr of quotes on counter
 }
 
-void print_env_list(s_minishell *mini) 
+int str_size(char *str, char end)                  //will check str_size using end to defined the end
 {
-    s_env *current = mini->env; // Start from the head of the environment list
+	int i;
 
-    while (current != NULL) 
-	{
-        if (current->key && current->value) 
-            printf("%s=%s\n", current->key, current->value);
-        current = current->next; // Move to the next node
-    }
+	i = 0;
+	while(*str && str[i] != '\0' && str[i] != end)
+		i += 1;
+	return (i);
 }

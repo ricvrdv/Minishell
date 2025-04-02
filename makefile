@@ -24,14 +24,14 @@ SRCS = src/init/init.c \
 	   src/utils/clear.c \
 	   src/tokens/token.utils.c \
 	   src/builtin/builtin.c \
-	   src/tokens/print.c \
 	   src/parse/quotes.c \
 	   src/signal/signal.c \
 	   src/init/prompt.c \
 	   src/tree/tree_parse.c \
 	   src/tree/tree_utils.c \
 	   src/tokens/tokens.c \
-	   src/exec/exec.c
+	   src/exec/exec.c \
+	   src/tree/prep_tree.c
 
 OBJS = $(SRCS:.c=.o)
 
