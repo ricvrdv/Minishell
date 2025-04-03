@@ -16,7 +16,7 @@ void	*safe_malloc(size_t bytes)
 	return (ret);
 }
 
-void free_struct(s_minishell *mini)
+void free_mini_struct(s_minishell *mini)
 {
     if(mini->cur_dir)
     	free(mini->cur_dir);
@@ -25,9 +25,6 @@ void free_struct(s_minishell *mini)
     if(mini->env) 
     	clear_env(&mini->env);            //todo
 }
-
-
-
 
 char    *get_dir()
 {

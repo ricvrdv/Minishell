@@ -70,7 +70,7 @@ void	clear_env_array(char ***env_array)
 void mini_exit(s_minishell *mini, char *error)
 {
     if (mini->created)
-        free_struct(mini);  
+        free_mini_struct(mini);
     if (error)
         printf(RED "%s\n" RESET, error);  // Print any error message
     clear_history();  // Clear history, if applicable

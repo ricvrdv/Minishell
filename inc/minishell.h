@@ -139,7 +139,7 @@ s_tree	*create_arg_node(s_token *token);
 s_tree  *create_redirection_node(s_token **tokens, s_token *temp);
 s_tree  *new_tree_node(s_type type);
 void	fill_command_arguments(s_tree *command_node, s_token **tokens, int arg_count);
-void    prep_tree(s_tree *tree);
+void    prep_tree(s_tree *tree, s_minishell *mini);  
 void    count_pipes_redir(s_tree *tree, int *pipes);
 void    init_pipes_array(int *pipes, int flag);
 void    rename_nodes(s_tree *tree);
@@ -149,11 +149,11 @@ int     check_cmd(char *cmd);
 
 
 //for clear
-void	free_struct(s_minishell *mini);
+void    free_mini_struct(s_minishell *mini);
 void	clear_tree(s_tree **tree);
 void	clear_env_array(char ***env_array);
 void	free_stuff(char *str[]);
-void	mini_exit(s_minishell *mini, char *error);
+void    mini_exit(s_minishell *mini, char *error);
 void	clear_token(s_token **token);
 void	clear_env(s_env **env);
 
@@ -165,6 +165,6 @@ char    *find_path_varibale(s_minishell *mini);
 void    execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 void    execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 
-
+int     is_valid_file(s_tree *tree, s_minishell *mini);   
 
 #endif

@@ -13,7 +13,7 @@ int main(int ac, char *av[], char **envp)
     if(ac == 1 && get_env(mini, envp))
     {
         start_prompt(&mini);
-        mini_exit(mini, "Leaving");    
+        mini_exit(mini, "LEAVING");    
     }
     mini_exit(mini, "No arguments plz");
     return 0;

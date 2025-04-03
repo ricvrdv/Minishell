@@ -4,7 +4,7 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g 
 RLFLAGS = -lreadline
 
 ################################################################################
@@ -14,24 +14,24 @@ RLFLAGS = -lreadline
 MYLIB_DIR = ./inc/Mylib/
 MYLIB = ./inc/Mylib/libft.a
 
-SRC_DIRS = src/init src/parse src/utils
+SRC_DIRS = src/init src/parse src/utils src/tokens src/builtin src/signal src/tree src/exec
 SRCS = src/init/init.c \
        src/init/add.c \
        src/main.c \
        src/parse/parse.c \
        src/parse/parse.utils.c \
        src/utils/utils.c \
-	   src/utils/clear.c \
-	   src/tokens/token.utils.c \
-	   src/builtin/builtin.c \
-	   src/parse/quotes.c \
-	   src/signal/signal.c \
-	   src/init/prompt.c \
-	   src/tree/tree_parse.c \
-	   src/tree/tree_utils.c \
-	   src/tokens/tokens.c \
-	   src/exec/exec.c \
-	   src/tree/prep_tree.c
+       src/utils/clear.c \
+       src/tokens/token.utils.c \
+       src/builtin/builtin.c \
+       src/parse/quotes.c \
+       src/signal/signal.c \
+       src/init/prompt.c \
+       src/tree/tree_parse.c \
+       src/tree/tree_utils.c \
+       src/tokens/tokens.c \
+       src/exec/exec.c \
+       src/tree/prep_tree.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -49,7 +49,7 @@ $(MYLIB): $(MYLIB_DIR)
 	@make -C $(MYLIB_DIR) -s
 
 # Rule to compile .c files into .o files
-src/%.o: src/%.c
+%.o: %.c
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
@@ -64,9 +64,14 @@ re: fclean all
 #                                  Valgrind Command                             #
 ################################################################################
 
-VALGRIND = valgrind --leak-check=full --show-leak-kinds=definite --track-origins=yes
+SUPPRESSION_FILE = readline.supp
+
+SUPPRESSION_FILE = readline.supp
+
+valgrind: $(NAME) $(SUPPRESSION_FILE)
+	@/usr/bin/valgrind --suppressions=$(SUPPRESSION_FILE) --leak-check=full -s --show-leak-kinds=definite,indirect,possible ./$(NAME) || true
 
 run: $(NAME)
-	@$(VALGRIND) ./$(NAME) || true
+	@./$(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re valgrind run

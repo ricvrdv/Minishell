@@ -1,17 +1,22 @@
 #include "../../inc/minishell.h"
 
-void prep_tree(s_tree *tree)                            //add later *mini to get env
+void prep_tree(s_tree *tree, s_minishell *mini)                            //add later *mini to get env
 {
     int pipes[12];                                        // pipes[0] = | / pipes[1] = > / pipes[2] = >> / pipes[3] = < / pipes[4] = <<
-    //int flag;
+    int flag;
 
-    //flag = 0;
+    flag = 0;
     init_pipes_array(pipes, 1);                          //set pipes[0->12 to 0]
     count_pipes_redir(tree, pipes);                      //increment nbr of pipes or redirects
     init_pipes_array(pipes, 0);                                //check for nbr of pipes and puts on pipes[0]
     rename_nodes(tree);                                 //rename nodes to make it easier
+    flag = is_valid_file(tree, mini);
+    if(flag)
+    {
+        printf("Not a valid cmd\n");
+        return;
+    }
     print_tree_status(pipes, tree);
-    //check_file permission                             //for > >> < << on our cmds (cd , echo)  
     //expand check 
 }
 
@@ -104,25 +109,30 @@ int check_cmd(char *cmd)        ///will check if cmd is built in or not  // its 
     return(flag);
 }
 
-/*
+
 int is_valid_file(s_tree *tree, s_minishell *mini)                        
 {
-    int flag;
     char *path;
+    int flag;
+    int flag_left;
+    int flag_right;
 
     flag = 0;
-    if(tree->args && !check_cmd(tree->args[0]) && tree->file_type == READ_FILE)           //if cmd is builtin 
+    if(!tree)
+        return flag;
+    if(tree->args && !check_cmd(tree->args[0]))           //if cmd is builtin 
+    {
+        path = find_cmd_path(tree->args[0], find_path_varibale(mini));                //check for valid path
+        if(!path)
         {
-            path = find_cmd_path(tree->args[0], find_path_varibale(mini));                //check for valid path   
-            if(!path)
-                flag = 0;                                                             //no valid path or cmd does not exist / return 0
-            else
-            {
-                check_permissions(path, tree->args[0], &flag);                        //will check for permission on file and dirs and update flag
-            }
-
+            flag = 1;
         }
-
+    }
+    flag_left = is_valid_file(tree->left, mini);
+    flag_right = is_valid_file(tree->right, mini);
+    if(flag_left || flag_right)
+        flag = 1;
+    return flag;
 }
-*/
+
 
