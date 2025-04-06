@@ -62,3 +62,4 @@ int str_size(char *str, char end)                  //will check str_size using e
 		i += 1;
 	return (i);
 }
+

@@ -19,11 +19,11 @@
 # define GREEN  "\033[1;32m"
 # define MAXARGS 10
 # define TREE_READY 100
-# define FILE_REDIRECT 200
-# define WRITE_FILE 300
-# define APPEND_FILE 400
-# define READ_FILE 500
-# define HEREDOC_FILE 600
+# define WRITE_FILE 200
+# define APPEND_FILE 300
+# define READ_FILE 400
+# define HEREDOC_FILE 500
+# define PIPE_FILE 600
 # define CMD_READY 700
 
 

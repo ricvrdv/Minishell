@@ -20,10 +20,9 @@ void        start_prompt(s_minishell **mini)
         {
             tree = parse_token(&tokens);  
             prep_tree(tree, *mini); 
-            //todo 
-            //exec_cmd
             //clear tokens / tree            
         }
+        //update mini on env
         free(line);
     }
 }

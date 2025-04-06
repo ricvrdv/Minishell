@@ -67,7 +67,7 @@ s_tree	 *parse_command(s_token **tokens)
 	s_tree		*command_node;
 	int				arg_count;
 
-	command_node = new_tree_node(CMD);
+	command_node = new_tree_node(WORD);
 	arg_count = count_arguments(*tokens);
 	command_node->args = safe_malloc(sizeof(char *) * (arg_count + 1));
     command_node->argcount = arg_count;
