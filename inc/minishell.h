@@ -139,7 +139,7 @@ s_tree	*create_arg_node(s_token *token);
 s_tree  *create_redirection_node(s_token **tokens, s_token *temp);
 s_tree  *new_tree_node(s_type type);
 void	fill_command_arguments(s_tree *command_node, s_token **tokens, int arg_count);
-void    prep_tree(s_tree *tree, s_minishell *mini);  
+void prep_tree(s_tree *tree, s_minishell *mini, int *status);
 void    count_pipes_redir(s_tree *tree, int *pipes);
 void    init_pipes_array(int *pipes, int flag);
 void    rename_nodes(s_tree *tree);
@@ -161,10 +161,23 @@ void	clear_env(s_env **env);
 void    execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 void    execute_cmd_path(s_minishell *mini, char **cmd, const char *full_path);
 char    *find_cmd_path(const char *cmd, const char *path);
-char    *find_path_varibale(s_minishell *mini);
+char *find_cmd_path(const char *cmd, const char *path);
 void    execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 void    execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 
-int     is_valid_file(s_tree *tree, s_minishell *mini);   
+int     is_valid_file(s_tree *tree, s_minishell *mini);  
+int exec_tree(s_tree *tree, int *counter, s_minishell *mini);
+int exec_cmd_node(s_tree *node, int *fd, int *counter, s_minishell *mini);
+int execute_basic_cmd(s_tree *node, int *fd, s_minishell *mini, int *counter);
+int handle_redirection(s_tree *node, int *counter, s_minishell *mini, int *fd);
+void close_pipes(int fd1, int fd2);
+int handle_pipe(s_tree *tree, int *counter, s_minishell *mini, int *fd);
+int open_redirection(s_tree *node, int *counter, s_minishell *mini, int status);
+int wait_node(int status, int *counter);
+void manage_child(int *counter, int *fd, int *fd_);
+void manage_parent(int *counter, int *fd, int *fd_);
+int execute_redirection_cmd(s_tree *node, int *fd, s_minishell *mini, int *counter);
+char *find_path_variable(s_minishell *mini);
+int	fd_identifier(int *counter, int index, int index_2, int con);
 
 #endif

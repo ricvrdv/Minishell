@@ -8,9 +8,11 @@ void prep_tree(s_tree *tree, s_minishell *mini, int *status)                    
     count_pipes_redir(tree, counter);           //increment nbr of pipes or redirects
     init_pipes_array(counter, 0);                     //check for nbr of pipes and puts on pipes[0]
     rename_nodes(tree);                                 //rename nodes to make it easier
-    print_tree_status(counter, tree);
-    execute_tree(tree, counter, mini);
-    //expand check 
+    //print_tree_status(counter, tree);
+    execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
+    //exec_tree(tree, counter, mini);
+    printf("Status = %ls\n", status);
+    //expand check     ///todo
 }
 
 void    count_pipes_redir(s_tree *tree, int *counter) 

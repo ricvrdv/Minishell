@@ -77,3 +77,19 @@ void mini_exit(s_minishell *mini, char *error)
     free(mini);  // Finally, free the struct itself
     exit(1);  // Exit with status 1 (indicating an error)
 }
+
+int	fd_identifier(int *counter, int index, int index_2, int con)
+{
+	if (con)
+	{
+		if (counter[index])
+			close(counter[index_2]);
+		counter[index] = 1;
+	}
+	else
+	{
+		ft_putendl_fd("err: file not found", 2);
+		counter[6] = 0;
+	}
+	return (1);
+}

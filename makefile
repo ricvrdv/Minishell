@@ -4,7 +4,7 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g 
+CFLAGS = -Wall -Wextra -g 
 RLFLAGS = -lreadline
 
 ################################################################################
@@ -31,7 +31,8 @@ SRCS = src/init/init.c \
        src/tree/tree_utils.c \
        src/tokens/tokens.c \
        src/exec/exec.c \
-       src/tree/prep_tree.c
+       src/tree/prep_tree.c \
+       src/exec/exec_tree.c
 
 OBJS = $(SRCS:.c=.o)
 

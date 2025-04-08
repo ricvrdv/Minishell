@@ -5,6 +5,7 @@ void        start_prompt(s_minishell **mini)
     char    *line;
     s_token *tokens;
     s_tree  *tree;
+    int status;
 
     (void)mini;
     while(1)   
@@ -19,9 +20,10 @@ void        start_prompt(s_minishell **mini)
         if(tokens)
         {
             tree = parse_token(&tokens);  
-            prep_tree(tree, *mini); 
+            prep_tree(tree, *mini, &status); 
             //clear tokens / tree            
         }
+
         //update mini on env
         free(line);
     }
