@@ -4,7 +4,7 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -g 
+CFLAGS = -Wall -Wextra -Werror -g 
 RLFLAGS = -lreadline
 
 ################################################################################

@@ -2,16 +2,14 @@
 
 void prep_tree(s_tree *tree, s_minishell *mini, int *status)                            //add later *mini to get env
 {
-    int counter[12];                                   // pipes[0] = | / pipes[1] = > / pipes[2] = >> / pipes[3] = < / pipes[4] = <<
+    //int counter[12];                                   // pipes[0] = | / pipes[1] = > / pipes[2] = >> / pipes[3] = < / pipes[4] = <<
     
-    init_pipes_array(counter, 1);            //set pipes[0->12 to 0]
-    count_pipes_redir(tree, counter);           //increment nbr of pipes or redirects
-    init_pipes_array(counter, 0);                     //check for nbr of pipes and puts on pipes[0]
     rename_nodes(tree);                                 //rename nodes to make it easier
-    //print_tree_status(counter, tree);
-    execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
-    //exec_tree(tree, counter, mini);
-    printf("Status = %ls\n", status);
+    *status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
+    printf("Status : %d\n", *status);
+    //init_pipes_array(counter, 1);            //set pipes[0->12 to 0]
+    //count_pipes_redir(tree, counter);           //increment nbr of pipes or redirects
+    //init_pipes_array(counter, 0);                     //check for nbr of pipes and puts on pipes[0]
     //expand check     ///todo
 }
 
@@ -104,30 +102,4 @@ int check_cmd(char *cmd)        ///will check if cmd is built in or not  // its 
     return(flag);
 }
 
-/*
-int is_valid_file(s_tree *tree, s_minishell *mini)                        
-{
-    char *path;
-    int flag;
-    int flag_left;
-    int flag_right;
-
-    flag = 0;
-    if(!tree)
-        return flag;
-    if(tree->args && !check_cmd(tree->args[0]) && tree->file_type == READ_FILE)           //if cmd is builtin 
-    {
-        path = find_cmd_path(tree->args[0], find_path_varibale(mini));                //check for valid path
-        if(!path)
-        {
-            flag = 1;
-        }
-    }
-    flag_left = is_valid_file(tree->left, mini);
-    flag_right = is_valid_file(tree->right, mini);
-    if(flag_left || flag_right)
-        flag = 1;
-    return flag;
-}
-*/
 
