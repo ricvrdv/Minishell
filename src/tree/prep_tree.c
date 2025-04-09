@@ -6,7 +6,7 @@ void prep_tree(s_tree *tree, s_minishell *mini, int *status)                    
     
     rename_nodes(tree);                                 //rename nodes to make it easier
     *status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
-    printf("Status : %d\n", *status);
+    //printf("Status : %d\n", *status);
     //init_pipes_array(counter, 1);            //set pipes[0->12 to 0]
     //count_pipes_redir(tree, counter);           //increment nbr of pipes or redirects
     //init_pipes_array(counter, 0);                     //check for nbr of pipes and puts on pipes[0]

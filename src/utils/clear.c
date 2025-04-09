@@ -67,7 +67,7 @@ void	clear_env_array(char ***env_array)
 }
 
 
-void mini_exit(s_minishell *mini, char *error)
+void ft_exit(s_minishell *mini, char *error)
 {
     if (mini->created)
         free_mini_struct(mini);

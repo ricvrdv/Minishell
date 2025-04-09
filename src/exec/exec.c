@@ -59,6 +59,7 @@ int execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
     return status;
 }
 
+
 int handle_redirect_l(s_tree *tree)
 {
     int fd;
@@ -102,34 +103,58 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 {
     pid_t pid;
     char *full_path;
+    int saved_stdin;
+    int saved_stdout;
     int status;
 
     status = 0;
+    saved_stdin = dup(STDIN_FILENO);
+    saved_stdout = dup(STDOUT_FILENO);
+    // Handle input/output redirection for built-ins
+    if (in_fd != STDIN_FILENO) 
+    {
+        dup2(in_fd, STDIN_FILENO);
+        close(in_fd);
+    }
+    if (out_fd != STDOUT_FILENO) 
+    {
+        dup2(out_fd, STDOUT_FILENO);
+        close(out_fd);
+    }
+
+    // Check if it's a built-in command
+    if (is_builtin(node->args[0]))
+    {
+        execute_builtin(node, mini);
+        // Restore original file descriptors
+        dup2(saved_stdin, STDIN_FILENO);
+        dup2(saved_stdout, STDOUT_FILENO);
+        close(saved_stdin);
+        close(saved_stdout);
+        return 0;
+    }
+    // For non-built-in commands, fork and execute
     pid = fork();
     if (pid == -1) 
         return report_error(127);
     if (pid == 0) 
     {
-        if (in_fd != STDIN_FILENO) 
-        {
-            dup2(in_fd, STDIN_FILENO);
-            close(in_fd);
-        }
-        if (out_fd != STDOUT_FILENO) 
-        {
-            dup2(out_fd, STDOUT_FILENO);
-            close(out_fd);
-        }
         full_path = find_cmd_path(node->args[0], find_path_variable(mini));
-        if (full_path == NULL)
+        if (full_path == NULL) 
             return report_error(127);
         if (execve(full_path, node->args, mini->env_array) == -1)
             return report_error(127);
     } 
-    else  // Parent process
+    else 
+    {
         waitpid(pid, NULL, 0); // Wait for the child process to finish
+        // Restore original file descriptors
+        dup2(saved_stdin, STDIN_FILENO);
+        dup2(saved_stdout, STDOUT_FILENO);
+        close(saved_stdin);
+        close(saved_stdout);
+    }
     return status;
-
 }
 
 char *find_path_variable(s_minishell *mini)
@@ -172,3 +197,43 @@ int report_error(int status)
     return status;
 }
 
+int is_builtin(char *cmd)
+{
+    if (!cmd)
+        return (0);
+    return (ft_strcmp(cmd, "cd") == 0 ||
+            ft_strcmp(cmd, "echo") == 0 ||
+            ft_strcmp(cmd, "pwd") == 0 ||
+            ft_strcmp(cmd, "export") == 0 ||
+            ft_strcmp(cmd, "unset") == 0 ||
+            ft_strcmp(cmd, "env") == 0 ||
+            ft_strcmp(cmd, "exit") == 0);
+}
+
+void execute_builtin(s_tree *node, s_minishell *mini)
+{
+    if (ft_strcmp(node->args[0], "cd") == 0)
+        mini_cd(mini, node);
+    else if (ft_strcmp(node->args[0], "echo") == 0)
+        mini_echo(node);
+    else if (ft_strcmp(node->args[0], "pwd") == 0)
+        mini_pwd(mini);
+    else if (ft_strcmp(node->args[0], "export") == 0)
+        mini_export(mini, node);
+    else if (ft_strcmp(node->args[0], "unset") == 0)
+        mini_unset(mini, node);
+    else if (ft_strcmp(node->args[0], "env") == 0)
+        mini_env(mini, node);
+    else if (ft_strcmp(node->args[0], "exit") == 0)
+        mini_exit(mini, node);
+}
+
+void free_struct(s_minishell *mini)
+{
+    if(mini->cur_dir)
+    	free(mini->cur_dir);
+    if(mini->env_array)
+    	clear_env_array(&mini->env_array);   //todo
+    if(mini->env) 
+    	clear_env(&mini->env);            //todo
+}

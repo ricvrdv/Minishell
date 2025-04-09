@@ -32,7 +32,17 @@ SRCS = src/init/init.c \
        src/tokens/tokens.c \
        src/exec/exec.c \
        src/tree/prep_tree.c \
-       src/exec/exec_tree.c
+       src/builtin/cd_utils.c \
+       src/builtin/cd.c \
+       src/builtin/echo.c \
+       src/builtin/env.c \
+       src/builtin/exit.c \
+       src/builtin/exit_utils.c \
+       src/builtin/export.c \
+       src/builtin/export_utils.c \
+       src/builtin/pwd.c \
+       src/builtin/unset.c \
+       src/builtin/builtin_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

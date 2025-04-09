@@ -12,7 +12,8 @@
 #include <dirent.h>
 #include <stdbool.h>
 #include <signal.h>
-# include "Mylib/libft.h"
+#include "Mylib/libft.h"
+#include <limits.h>
 
 # define RESET  "\033[0m"
 # define RED    "\033[1;31m"
@@ -75,7 +76,8 @@ typedef struct s_env
 typedef struct s_minishell
 {
     int     created;                                    
-    char    *cur_dir;                                  
+    char    *cur_dir;
+    int     exit_status;                                  
     char    **env_array;                               
     struct s_env   *env;                                
 }s_minishell;
@@ -114,8 +116,27 @@ s_token *get_token(char *str);
 s_token *new_token(s_type type, char *value);
 
 //for builtin folder
-void    mini_env(char **env_array);
-void    mini_cd(s_minishell *mini, char **args);
+int     is_builtin(char *cmd);
+void    execute_builtin(s_tree *node, s_minishell *mini);
+s_env   *find_env_var(s_env *env, const char *key);
+void    update_env_var(s_env **env, const char *key, const char *value);
+int     ft_strcmp(const char *s1, const char *s2);
+void    mini_pwd(s_minishell *mini);
+void    mini_env(s_minishell *mini, s_tree *node);
+void    mini_cd(s_minishell *mini, s_tree *node);
+char    *get_target_dir(s_minishell *mini, char *arg);
+void    mini_echo(s_tree *node);
+void    mini_export(s_minishell *mini, s_tree *node);
+void    mini_exit(s_minishell *mini, s_tree *node);
+int     is_valid_long(const char *str);
+long    ft_atol(const char *nptr);
+void    sync_env_array(s_minishell *mini);
+void    free_array(char **array);
+void    mini_unset(s_minishell *mini, s_tree *node);
+int     is_valid_identifier(const char *str);
+void    print_sorted_env(s_env *env);
+int     execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd);
+void    free_struct(s_minishell *mini);
 
 //for utils folder
 void	error_exit(char *error);
@@ -152,7 +173,7 @@ void    free_mini_struct(s_minishell *mini);
 void	clear_tree(s_tree **tree);
 void	clear_env_array(char ***env_array);
 void	free_stuff(char *str[]);
-void    mini_exit(s_minishell *mini, char *error);
+void    ft_exit(s_minishell *mini, char *error);
 void	clear_token(s_token **token);
 void	clear_env(s_env **env);
 
@@ -160,13 +181,12 @@ void	clear_env(s_env **env);
 int     execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 int     execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 int     execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
-int     execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd);
 char    *find_path_variable(s_minishell *mini);
 char    *find_cmd_path(const char *cmd, const char *path);
 
 int     report_error(int status);
-int handle_redirect_r(s_tree *tree);
-int handle_redirect_l(s_tree *tree);
-int handle_append(s_tree *tree);
+int     handle_redirect_r(s_tree *tree);
+int     handle_redirect_l(s_tree *tree);
+int     handle_append(s_tree *tree);
 
 #endif

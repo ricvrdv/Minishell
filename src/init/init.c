@@ -6,6 +6,7 @@ void    init_struct(s_minishell *mini)
 
     mini->created = 1;     
     curdir = get_dir(mini);
+    mini->exit_status = 0;
     mini->cur_dir = curdir; 
     mini->env_array = NULL;
     mini->env = NULL;
