@@ -189,4 +189,7 @@ int     handle_redirect_r(s_tree *tree);
 int     handle_redirect_l(s_tree *tree);
 int     handle_append(s_tree *tree);
 
+void    restore_fd(int saved_stdin, int saved_stdout);
+int     redirect_fds(int in_fd, int out_fd);
+
 #endif
