@@ -70,7 +70,7 @@ int handle_redirect_l(s_tree *tree)
     if (fd == -1) 
     {
         perror("Input redirection failed");
-        return 1;
+        return -1;
     }
     return fd;
 }
@@ -83,7 +83,7 @@ int handle_redirect_r(s_tree *tree)
     if (fd == -1) 
     {
         perror("Output redirection failed");
-        return 1;
+        return -1;
     }
     return fd;
 }
@@ -96,7 +96,7 @@ int handle_append(s_tree *tree)
     if (fd == -1) 
     {
        perror("Output redirection failed");
-       return 1;
+       return -1;
     }
     return fd;
 }
@@ -130,7 +130,7 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
                 exit(127);
         }
         else 
-            waitpid(pid, &status, 0);
+            waitpid(pid, &status, 0); 
     }
     restore_fd(saved_stdin, saved_stdout);
     return status;
@@ -258,7 +258,7 @@ void remove_quotes(char *arg)
         arg[len - 1] = '\0';
         ft_memmove(arg, arg + 1, len - 1); 
     }
-    else if(len > 1 && arg[0] == '"' && arg[len - 1] == '"')
+    else if(len > 1 && arg[0] == '"' && arg[len - 1] == '"') 
     {
         arg[len - 1] = '\0';
         ft_memmove(arg, arg + 1, len - 1);

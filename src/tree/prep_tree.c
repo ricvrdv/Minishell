@@ -5,10 +5,14 @@ void prep_tree(s_tree *tree, s_minishell *mini, int *status)                    
     //int counter[12];                                   // pipes[0] = | / pipes[1] = > / pipes[2] = >> / pipes[3] = < / pipes[4] = <<
     
     rename_nodes(tree);                                 //rename nodes to make it easier
-    *status = check_cmd_permission(tree, mini);
-    printf("Status : %d\n", *status);
+    //*status = check_cmd_permission(tree, mini);
+    //if(*status != 0)
+    //{   
+    //    printf("Status : %d\n", *status);
+    //    return;
+    //}
+    //printf("Status : %d\n", *status);
     *status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
-    
     //printf("Status : %d\n", *status);
     //init_pipes_array(counter, 1);            //set pipes[0->12 to 0]
     //count_pipes_redir(tree, counter);           //increment nbr of pipes or redirects
@@ -22,25 +26,29 @@ int check_cmd_permission(s_tree *node , s_minishell *mini)
     char *path;
 
     status = 0;
-    if(node->args && !is_builtin(node->args[0]))
+    if(node->args && !is_builtin(node->args[0]))                              //cmd not builtin
     {
-        if(node->file_type == READ_FILE)
+        if(node->file_type == READ_FILE || node->file_type == APPEND_FILE)      //need to check if dir is valid
         {
             path = fetch_file_path(node->args[0], mini);
             if(!path)
+            {
                 status = 1;   //error path not found
+                return status;
+            }
             else
             {
                 status = check_file_acces(path);
                 free(path);
             }
         }
-        if(ft_strcmp(node->args[0], "cd") == 0)                     //if we have a cd cmd
+    }
+    if(ft_strcmp(node->args[0], "cd") == 0)                     //if we have a cd cmd
+    {
+        if(node->args[1])                                       //if we have a second arg check for permission
         {
-            if(node->args[1])                                       //if we have a second arg check for permission
-            {
-                status = check_dir_acess(node->args[1]);
-            }
+            status = check_dir_acess(node->args[1]);
+            return status;
         }
     }
     if(!status && node->left)
@@ -148,6 +156,11 @@ int check_file_acces(const char *file)
         perror("Can't acess this file");
         return 1;
     }
+    if(S_ISDIR(s.st_mode))
+    {
+        printf("Error: '%s' is a directory, not a file.\n", file);
+        return 1;
+    }
     if(!S_ISREG(s.st_mode))
     {
         printf("Not a valid file");
@@ -155,7 +168,7 @@ int check_file_acces(const char *file)
     }
     if(!(s.st_mode & S_IRUSR))
     {
-        printf("No read permission for this file");
+        printf("No read permission for this file\n");
         return 1;
     }
     return 0;
@@ -180,9 +193,23 @@ int check_dir_acess(const char *str)
 char *fetch_file_path(const char *command, s_minishell *mini) 
 {
     char *path;
+    char *full_path;
     
-    path = find_path_variable(mini); // Get the PATH variable
-    if (!path) 
-        return NULL; // PATH not set
-    return find_cmd_path(command, path); // Find the command path
+    if(command[0] == '/'  || (command[0] == '.' && command[1] == '/'))           //absolute or relative path
+        full_path = ft_strdup(command);
+    else
+    {
+        path = find_path_variable(mini);
+        if(!path)
+            return NULL;
+        full_path = find_cmd_path(command, path);
+    }
+    if (full_path && access (full_path, F_OK) == 0)
+        return full_path;
+    else
+    {
+        printf("No such file or directory\n");
+        free(full_path);
+        return NULL;
+    }
 }
