@@ -43,3 +43,16 @@ s_tree  *create_redirection_node(s_token **tokens, s_token *temp)
     free(temp);
     return (redi_node);
 }
+
+s_tree *especial_node(s_token **tokens, s_token *temp)
+{
+    s_tree *redi_node;
+
+    redi_node = new_tree_node((*tokens)->type);
+    *tokens = (*tokens)->next->next;
+    redi_node->left = parse_redirect(tokens);
+    redi_node->right = create_arg_node(temp->next);
+    free(temp->value);
+    free(temp);
+    return (redi_node);
+}

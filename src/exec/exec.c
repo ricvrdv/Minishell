@@ -19,8 +19,10 @@ int execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
 
     if (pipe(pipefd) == -1) 
         error_exit("Pipe failed!");
+    if(tree->left)
     status = execute_node(tree->left, mini, in_fd, pipefd[1]);
-    close(pipefd[1]); 
+    close(pipefd[1]);
+    if(tree->right)
     status = execute_node(tree->right, mini, pipefd[0], out_fd);
     close(pipefd[0]);
     return (status); 
@@ -37,6 +39,7 @@ int execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
         fd = handle_redirect_l(tree);
         if (fd == -1) 
             return report_error(127);
+        if(tree->left)
         status = execute_node(tree->left, mini, fd, out_fd); // Execute the command with the input redirection
         close(fd);
     } 
@@ -109,8 +112,8 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
     status = 0;
     saved_stdin = dup(STDIN_FILENO);
     saved_stdout = dup(STDOUT_FILENO);
-    
     redirect_fds(in_fd, out_fd);
+    clean_args(node->args, node->argcount);
     if (is_builtin(node->args[0]))
         execute_builtin(node, mini);
     else
@@ -244,4 +247,32 @@ int redirect_fds(int in_fd, int out_fd)
         close(out_fd);
     }
     return 0;
+}
+void remove_quotes(char *arg)
+{
+    int len;
+
+    len = ft_strlen(arg);
+    if(len > 1 && arg[0] == '\'' && arg[len - 1] == '\'')     // need to do check for expansions 
+    {
+        arg[len - 1] = '\0';
+        ft_memmove(arg, arg + 1, len - 1); 
+    }
+    else if(len > 1 && arg[0] == '"' && arg[len - 1] == '"')
+    {
+        arg[len - 1] = '\0';
+        ft_memmove(arg, arg + 1, len - 1);
+    }
+}
+
+void clean_args(char **args, int arg_count)
+{
+    int index;
+
+    index = 0;
+    while(index < arg_count)
+    {
+        remove_quotes(args[index]);
+        index++;
+    }
 }

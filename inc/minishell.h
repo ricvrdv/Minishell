@@ -166,6 +166,7 @@ void    rename_nodes(s_tree *tree);
 int	    count_arguments(s_token *current);
 void    print_tree_status(int *pipes, s_tree *tree);
 int     check_cmd(char *cmd);
+s_tree  *especial_node(s_token **tokens, s_token *temp);
 
 
 //for clear
@@ -191,5 +192,11 @@ int     handle_append(s_tree *tree);
 
 void    restore_fd(int saved_stdin, int saved_stdout);
 int     redirect_fds(int in_fd, int out_fd);
+void    clean_args(char **args, int arg_count);
+int     check_cmd_permission(s_tree *node , s_minishell *mini);
+int     check_file_acces(const char *file);
+int     check_dir_acess(const char *str);
+char    *fetch_file_path(const char *command, s_minishell *mini); 
+
 
 #endif

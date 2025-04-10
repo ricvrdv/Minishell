@@ -35,7 +35,7 @@ s_tree  *parse_redirect(s_token **tokens)   //used to check for redirects after 
         return (NULL);
     temp = *tokens;                                                             //used to keep track of original position
     if((*tokens)->type >= REDIRECT_L && (*tokens)->type <= HEREDOC)             //if our first token is redirect token     exemple : > echo "hello"
-        redirect_node = new_tree_node((*tokens)->type);                          // we create a redirection node on our s_Tree
+        return redirect_node = especial_node(tokens, temp);                          // we create a redirection node on our s_Tree
     while(*tokens && (*tokens)->next)                                           //while we check the tokens 1 by 1
     {
         next_token = (*tokens)->next;                                           //*next token
