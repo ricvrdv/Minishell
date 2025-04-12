@@ -42,7 +42,9 @@ SRCS = src/init/init.c \
        src/builtin/export_utils.c \
        src/builtin/pwd.c \
        src/builtin/unset.c \
-       src/builtin/builtin_utils.c
+       src/builtin/builtin_utils.c \
+       src/exec/exec_utils.c \
+       src/exec/quotes.c
 
 OBJS = $(SRCS:.c=.o)
 

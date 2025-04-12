@@ -21,17 +21,34 @@ void update_quotes(char c, int *inside, char *quote) {
         }
     }
 }
+
+
 int check_str(char **line)
 {
-    if(*line[0] == '\0' || 
-        ft_strncmp(*line, "\n", 2) == 0 ||
-        is_space(*line) ||
-        (line[0][0] == '"' && line[0][1] == '"') || 
-        (line[0][0] == '\'' && line[0][1] == '\'')) 
-        return (1);  //reach continue and restart loop
-    return 0; // No errors
+    if(*line[0] == '\0' || (ft_strncmp(*line, "\n", 2) == 0) || is_space(*line))
+    {
+        free(*line);
+        return (1);
+    }
+    return 0;
 }
 
+/*
+int check_str(char **line) 
+{    
+    if (*line == NULL || **line == '\0') 
+        return 1; // Skip this line
+    if (ft_strncmp(*line, "\n", 2) == 0)
+        return 1; // Skip this line
+    if (is_space(*line))
+        return 1; // Skip this line
+    if ((line[0][0] == '"' && line[0][1] == '"') || 
+        (line[0][0] == '\'' && line[0][1] == '\'')) 
+        return 1; // Skip this line
+    if (line[0][0] == '"' && line[0][1] == '"')                     // If the line starts with an empty string, check the next part
+        return 1; // Skip this line
+    return 0; // No errors
+}
 
 int empty_quotes(const char *str) 
 {
@@ -75,3 +92,4 @@ int empty_quotes(const char *str)
     }
     return 0;  // No non-space characters found inside quotes
 }
+*/

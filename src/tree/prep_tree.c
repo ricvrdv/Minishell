@@ -2,61 +2,17 @@
 
 void prep_tree(s_tree *tree, s_minishell *mini, int *status)                            //add later *mini to get env
 {
-    //int counter[12];                                   // pipes[0] = | / pipes[1] = > / pipes[2] = >> / pipes[3] = < / pipes[4] = <<
+    int counter[12];                                                             // pipes[0] = | / pipes[1] = > / pipes[2] = >> / pipes[3] = < / pipes[4] = <<
     
-    rename_nodes(tree);                                 //rename nodes to make it easier
-    //*status = check_cmd_permission(tree, mini);
-    //if(*status != 0)
-    //{   
-    //    printf("Status : %d\n", *status);
-    //    return;
-    //}
-    //printf("Status : %d\n", *status);
+    rename_nodes(tree);                                                     //rename nodes to make it easier
+    init_pipes_array(counter, 1);                                           //set pipes[0->12 to 0]
     *status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
-    //printf("Status : %d\n", *status);
-    //init_pipes_array(counter, 1);            //set pipes[0->12 to 0]
-    //count_pipes_redir(tree, counter);           //increment nbr of pipes or redirects
-    //init_pipes_array(counter, 0);                     //check for nbr of pipes and puts on pipes[0]
+    
+    count_pipes_redir(tree, counter);           //increment nbr of pipes or redirects
+    init_pipes_array(counter, 0);                     //check for nbr of pipes and puts on pipes[0]
     //expand check     ///todo
 }
 
-int check_cmd_permission(s_tree *node , s_minishell *mini)
-{
-    int status;
-    char *path;
-
-    status = 0;
-    if(node->args && !is_builtin(node->args[0]))                              //cmd not builtin
-    {
-        if(node->file_type == READ_FILE || node->file_type == APPEND_FILE)      //need to check if dir is valid
-        {
-            path = fetch_file_path(node->args[0], mini);
-            if(!path)
-            {
-                status = 1;   //error path not found
-                return status;
-            }
-            else
-            {
-                status = check_file_acces(path);
-                free(path);
-            }
-        }
-    }
-    if(ft_strcmp(node->args[0], "cd") == 0)                     //if we have a cd cmd
-    {
-        if(node->args[1])                                       //if we have a second arg check for permission
-        {
-            status = check_dir_acess(node->args[1]);
-            return status;
-        }
-    }
-    if(!status && node->left)
-        status = check_cmd_permission(node->left, mini);
-    if(!status && node->right)
-        status = check_cmd_permission(node->right, mini);
-    return status;
-}
 
 void    count_pipes_redir(s_tree *tree, int *counter) 
 {
@@ -113,16 +69,6 @@ void rename_nodes(s_tree *tree)
     if(tree->right)
         rename_nodes(tree->right);
 }
-void print_tree_status(int *counter, s_tree *tree)
-{
-    printf("status of main node : %d\n", tree->file_type);
-    if(counter[5])
-    printf("nbr of pipes : %d\n", counter[5]);
-    if(counter[4])
-    printf("nbr of > or >> : %d\n", counter[4]);
-    if(counter[3])
-    printf("nbr of < or << : %d\n", counter[3]);
-}
  
 int check_cmd(char *cmd)        ///will check if cmd is built in or not  // its working
 {
@@ -146,7 +92,6 @@ int check_cmd(char *cmd)        ///will check if cmd is built in or not  // its 
     free(temp);
     return(flag);
 }
-
 
 int check_file_acces(const char *file)
 {

@@ -27,12 +27,10 @@
 # define PIPE_FILE 600
 # define CMD_READY 700
 
-
 typedef struct s_token	s_token;
 typedef struct s_env	s_env;
 typedef struct s_minishell	s_minishell;
 typedef struct s_args       s_args;
-
 
 extern int g_sig;
 
@@ -111,7 +109,7 @@ void    update_quotes(char c, int *inside, char *quote);
 void    handle_word(char **str, s_token **tokens);
 void    handle_sign(char **str, s_token **tokens);
 void    put_word(char **start, char **end, s_token **tokens);
-s_token *make_token(char **str, s_token **tokens);
+s_token *make_token(char *str, s_token **tokens);
 s_token *get_token(char *str);
 s_token *new_token(s_type type, char *value);
 
@@ -178,25 +176,25 @@ void    ft_exit(s_minishell *mini, char *error);
 void	clear_token(s_token **token);
 void	clear_env(s_env **env);
 
-//for exec   //need redo
+//for exec   
 int     execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 int     execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
 int     execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 char    *find_path_variable(s_minishell *mini);
 char    *find_cmd_path(const char *cmd, const char *path);
-
 int     report_error(int status);
 int     handle_redirect_r(s_tree *tree);
 int     handle_redirect_l(s_tree *tree);
 int     handle_append(s_tree *tree);
-
 void    restore_fd(int saved_stdin, int saved_stdout);
 int     redirect_fds(int in_fd, int out_fd);
 void    clean_args(char **args, int arg_count);
-int     check_cmd_permission(s_tree *node , s_minishell *mini);
 int     check_file_acces(const char *file);
 int     check_dir_acess(const char *str);
 char    *fetch_file_path(const char *command, s_minishell *mini); 
+void    leading_quotes(char *str);
+int     count_quotes(const char *str);
+void    remove_trailing(char *arg);
 
 
 #endif

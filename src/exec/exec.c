@@ -136,58 +136,7 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
     return status;
 }
 
-char *find_path_variable(s_minishell *mini)
-{
-    s_env *env;
-    env = mini->env;
-    while(env)
-    {
-        if(ft_strncmp(env->key, "PATH", 4) == 0)
-            return (env->value + 5);    //skip PATH=
-        env = env->next;
-    }
-    return NULL;
-}
 
-char *find_cmd_path(const char *cmd, const char *path)
-{
-    char **dir;
-    char *full_path;
-    char *half_path;
-    int i;
-
-    i = 0;
-    dir = ft_split(path, ':');
-    while(dir[i])
-    {
-        half_path = ft_strjoin(dir[i], "/");
-        full_path = ft_strjoin(half_path, cmd);
-        free(half_path);
-        if(access(full_path, F_OK | X_OK) == 0)
-            return full_path;
-        free(full_path);
-        i++;
-    }
-    return NULL;
-}
-
-int report_error(int status)
-{
-    return status;
-}
-
-int is_builtin(char *cmd)
-{
-    if (!cmd)
-        return (0);
-    return (ft_strcmp(cmd, "cd") == 0 ||
-            ft_strcmp(cmd, "echo") == 0 ||
-            ft_strcmp(cmd, "pwd") == 0 ||
-            ft_strcmp(cmd, "export") == 0 ||
-            ft_strcmp(cmd, "unset") == 0 ||
-            ft_strcmp(cmd, "env") == 0 ||
-            ft_strcmp(cmd, "exit") == 0);
-}
 
 void execute_builtin(s_tree *node, s_minishell *mini)
 {
@@ -215,64 +164,4 @@ void free_struct(s_minishell *mini)
     	clear_env_array(&mini->env_array);   //todo
     if(mini->env) 
     	clear_env(&mini->env);            //todo
-}
-
-void restore_fd(int saved_stdin, int saved_stdout)
-{
-    dup2(saved_stdin, STDIN_FILENO);
-    dup2(saved_stdout, STDOUT_FILENO);
-    close(saved_stdin);
-    close(saved_stdout);
-}
-
-int redirect_fds(int in_fd, int out_fd)
-{
-    if (in_fd != STDIN_FILENO) 
-    {
-        if(dup2(in_fd, STDIN_FILENO) == -1)
-        {   
-            perror("dup2 for stdin failed!");
-            return -1;
-        }
-        close(in_fd);
-    }
-    if (out_fd != STDOUT_FILENO) 
-    {
-
-        if(dup2(out_fd, STDOUT_FILENO) == -1)
-        {
-            perror("dup2 for stdout failed!");
-            return -1;
-        }
-        close(out_fd);
-    }
-    return 0;
-}
-void remove_quotes(char *arg)
-{
-    int len;
-
-    len = ft_strlen(arg);
-    if(len > 1 && arg[0] == '\'' && arg[len - 1] == '\'')     // need to do check for expansions 
-    {
-        arg[len - 1] = '\0';
-        ft_memmove(arg, arg + 1, len - 1); 
-    }
-    else if(len > 1 && arg[0] == '"' && arg[len - 1] == '"') 
-    {
-        arg[len - 1] = '\0';
-        ft_memmove(arg, arg + 1, len - 1);
-    }
-}
-
-void clean_args(char **args, int arg_count)
-{
-    int index;
-
-    index = 0;
-    while(index < arg_count)
-    {
-        remove_quotes(args[index]);
-        index++;
-    }
 }

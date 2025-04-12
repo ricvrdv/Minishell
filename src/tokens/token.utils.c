@@ -1,13 +1,19 @@
 #include "../../inc/minishell.h"
 
-s_token     *make_token(char **str, s_token **tokens)
-{
 
-    if(full_check(*str))         //will check for doubles/quotes/pipes/redirects
+s_token *make_token(char *str, s_token **tokens)
+{
+    char *trim;
+
+    trim = ft_strtrim(str, " \t\n\v\f\r");
+    free(str);
+    if(full_check(trim))
     {
-        return NULL; 
+        free(trim);
+        return NULL;
     }
-    *tokens = get_token(*str);   //will check for operators or text and put tokens in struct 
+    *tokens = get_token(trim);
+    free(trim);
     return (*tokens);
 }
 
@@ -18,11 +24,11 @@ s_token     *get_token(char *str)
     tokens = NULL;
     while(*str)
     {
-        if(*str == ' ' || *str == '\t')  //skip spaces
+        while(*str && ft_strchr(" \t\n", *str))
             str++;
         if (*str == '>' || *str == '<' || *str == '|')       //if we find a operator use handle signs
             handle_sign(&str, &tokens);
-        else if(*str)                       //else we have text handle word
+        else                        //else we have text handle word
             handle_word(&str, &tokens);
     }
     return (tokens);
