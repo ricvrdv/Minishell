@@ -195,6 +195,8 @@ char    *fetch_file_path(const char *command, s_minishell *mini);
 void    leading_quotes(char *str);
 int     count_quotes(const char *str);
 void    remove_trailing(char *arg);
+int     handle_heredoc(s_tree *node);
+void    read_heredoc(int fd, const char *delimiter);
 
 
 #endif

@@ -39,6 +39,13 @@ char *find_cmd_path(const char *cmd, const char *path)
     char *half_path;
     int i;
 
+    if(cmd[0] == '/')
+    {
+        if(access(cmd, F_OK | X_OK) == 0)
+            return ft_strdup(cmd);
+        else
+            return NULL;
+    }
     i = 0;
     dir = ft_split(path, ':');
     while(dir[i])
