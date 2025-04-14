@@ -49,7 +49,8 @@ int execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
         fd = handle_redirect_r(tree);
         if (fd == -1) 
             return report_error(127);
-        status = execute_node(tree->left, mini, in_fd, fd); // Execute the command with the output redirection
+        if(tree->left)
+            status = execute_node(tree->left, mini, in_fd, fd); // Execute the command with the output redirection
         close(fd);
     }
     else if (tree->type == HEREDOC)
