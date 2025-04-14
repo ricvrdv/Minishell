@@ -26,6 +26,7 @@
 # define HEREDOC_FILE 500
 # define PIPE_FILE 600
 # define CMD_READY 700
+# define BUFFERSIZE 4096
 
 typedef struct s_token	s_token;
 typedef struct s_env	s_env;
