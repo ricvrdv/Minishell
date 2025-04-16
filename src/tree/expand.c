@@ -37,7 +37,7 @@ char *expand_variable(s_minishell *mini, const char *arg)
     {
         if (*ptr == '$') 
         {
-            get_variable_name(&ptr, var_name);                                                  // Extract variable name
+            get_variable_name(&ptr, var_name);                                                  // Extract variable name into var_name
             value = find_variable(mini, var_name);                                              // Find the variable's value
             append_value_to_result(&res_ptr, value);                                            // Append the value to the result
         } 
@@ -57,7 +57,7 @@ void append_value_to_result(char **res_ptr, const char *value)
     }
 }
 
-int get_variable_name(const char **ptr, char *var_name) 
+void get_variable_name(const char **ptr, char *var_name) 
 {
     int i;
 
@@ -68,8 +68,7 @@ int get_variable_name(const char **ptr, char *var_name)
         var_name[i++] = **ptr;
         (*ptr)++;
     }
-    var_name[i] = '\0';                                                                         // Null-terminate the variable name
-    return i;                                                                                   // Return the length of the variable name
+    var_name[i] = '\0';                                                                         // Null-terminate the variable name                                                                                // Return the length of the variable name
 }
 
 char *ft_strcpy(char *dest, const char *src) 
@@ -84,4 +83,21 @@ char *ft_strcpy(char *dest, const char *src)
     }
     *dest = '\0';                                       // Null-terminate the destination string
     return original_dest;                               // Return the original destination pointer
+}
+
+
+char *find_variable(s_minishell *mini, const char *variable)
+{
+    s_env *env;
+    int len;
+
+    len = ft_strlen(variable);
+    env = mini->env;
+    while(env)
+    {
+        if(ft_strncmp(env->key, variable,len + 1) == 0)
+            return (env->value);
+        env = env->next;
+    }
+    return NULL;
 }

@@ -197,7 +197,7 @@ void    read_heredoc(int fd, const char *delimiter);
 
 void    expand_tree(s_minishell *mini, s_tree *tree);
 char    *expand_variable(s_minishell *mini, const char *arg);
-int     get_variable_name(const char **ptr, char *var_name);
+void     get_variable_name(const char **ptr, char *var_name);
 void    append_value_to_result(char **res_ptr, const char *value);
 char    *ft_strcpy(char *dest, const char *src); 
 char    *find_variable(s_minishell *mini, const char *variable);

@@ -1,8 +1,5 @@
 #include "../../inc/minishell.h"
 
-
-
-
 void    handle_word(char **str, s_token **tokens)
 {
     char    *start;

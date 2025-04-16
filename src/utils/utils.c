@@ -73,6 +73,20 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
+char *ft_strcpy(char *dest, const char *src) 
+{
+    char *original_dest;
+    original_dest = dest;                               // Save the original pointer to the destination
+    while (*src) 
+    {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    *dest = '\0';                                       // Null-terminate the destination string
+    return original_dest;                               // Return the original destination pointer
+}
+
 void free_struct(s_minishell *mini)
 {
     if(mini->cur_dir)

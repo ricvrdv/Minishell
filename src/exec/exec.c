@@ -66,3 +66,21 @@ void execute_builtin(s_tree *node, s_minishell *mini)
     else if (ft_strcmp(node->args[0], "exit") == 0)
         mini_exit(mini, node);
 }
+
+int report_error(int status)
+{
+    return status;
+}
+
+int is_builtin(char *cmd)
+{
+    if (!cmd)
+        return (0);
+    return (ft_strcmp(cmd, "cd") == 0 ||
+            ft_strcmp(cmd, "echo") == 0 ||
+            ft_strcmp(cmd, "pwd") == 0 ||
+            ft_strcmp(cmd, "export") == 0 ||
+            ft_strcmp(cmd, "unset") == 0 ||
+            ft_strcmp(cmd, "env") == 0 ||
+            ft_strcmp(cmd, "exit") == 0);
+}
