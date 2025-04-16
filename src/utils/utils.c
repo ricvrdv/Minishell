@@ -72,3 +72,13 @@ int	ft_strcmp(const char *s1, const char *s2)
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
+
+void free_struct(s_minishell *mini)
+{
+    if(mini->cur_dir)
+    	free(mini->cur_dir);
+    if(mini->env_array)
+    	clear_env_array(&mini->env_array);   //todo
+    if(mini->env) 
+    	clear_env(&mini->env);            //todo
+}

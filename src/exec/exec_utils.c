@@ -32,6 +32,22 @@ char *find_path_variable(s_minishell *mini)
     return NULL;
 }
 
+char *find_variable(s_minishell *mini, const char *variable)
+{
+    s_env *env;
+    int len;
+
+    len = ft_strlen(variable);
+    env = mini->env;
+    while(env)
+    {
+        if(ft_strncmp(env->key, variable,len + 1) == 0)
+            return (env->value);
+        env = env->next;
+    }
+    return NULL;
+}
+
 char *find_cmd_path(const char *cmd, const char *path)
 {
     char **dir;
@@ -60,6 +76,8 @@ char *find_cmd_path(const char *cmd, const char *path)
     }
     return NULL;
 }
+
+
 
 void restore_fd(int saved_stdin, int saved_stdout)
 {
@@ -92,3 +110,4 @@ int redirect_fds(int in_fd, int out_fd)
     }
     return 0;
 }
+
