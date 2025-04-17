@@ -75,7 +75,11 @@ typedef struct s_minishell
 {
     int     created;                                    
     char    *cur_dir;
-    int     exit_status;                                  
+    int     exit_status;
+    bool     is_child;
+    int     heredoc_count;
+    int     heredoc_fd;
+    int     heredoc_index;                           
     char    **env_array;                               
     struct s_env   *env;                                
 }s_minishell;
@@ -115,26 +119,26 @@ s_token *new_token(s_type type, char *value);
 
 //for builtin folder
 int     is_builtin(char *cmd);
-void    execute_builtin(s_tree *node, s_minishell *mini);
+int     execute_builtin(s_tree *node, s_minishell *mini);
+int     mini_unset(s_minishell *mini, s_tree *node);
+int     mini_env(s_minishell *mini, s_tree *node);
+int     mini_pwd(s_minishell *mini);
+int     mini_cd(s_minishell *mini, s_tree *node);
+int     mini_echo(s_tree *node);
+int     mini_export(s_minishell *mini, s_tree *node);
+int     mini_exit(s_minishell *mini, s_tree *node);
+int     ft_strcmp(const char *s1, const char *s2);
+int     is_valid_long(const char *str);
+int     is_valid_identifier(const char *str);
+int     execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd);
 s_env   *find_env_var(s_env *env, const char *key);
 void    update_env_var(s_env **env, const char *key, const char *value);
-int     ft_strcmp(const char *s1, const char *s2);
-void    mini_pwd(s_minishell *mini);
-void    mini_env(s_minishell *mini, s_tree *node);
-void    mini_cd(s_minishell *mini, s_tree *node);
-char    *get_target_dir(s_minishell *mini, char *arg);
-void    mini_echo(s_tree *node);
-void    mini_export(s_minishell *mini, s_tree *node);
-void    mini_exit(s_minishell *mini, s_tree *node);
-int     is_valid_long(const char *str);
-long    ft_atol(const char *nptr);
 void    sync_env_array(s_minishell *mini);
 void    free_array(char **array);
-void    mini_unset(s_minishell *mini, s_tree *node);
-int     is_valid_identifier(const char *str);
 void    print_sorted_env(s_env *env);
-int     execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd);
 void    free_struct(s_minishell *mini);
+long    ft_atol(const char *nptr);
+char    *get_target_dir(s_minishell *mini, char *arg);
 
 //for utils folder
 void	error_exit(char *error);
@@ -201,5 +205,7 @@ void     get_variable_name(const char **ptr, char *var_name);
 void    append_value_to_result(char **res_ptr, const char *value);
 char    *ft_strcpy(char *dest, const char *src); 
 char    *find_variable(s_minishell *mini, const char *variable);
+int     execute_heredoc(s_tree *tree, s_minishell *mini); 
+int	    exit_code(int exit_status, int write_, int exit_);
 
 #endif

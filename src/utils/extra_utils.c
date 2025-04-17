@@ -34,3 +34,14 @@ int report_error(int status)
 {
     return status;
 }
+
+int	exit_code(int exit_status, int write_, int exit_)
+{
+	static int	current_status;
+
+	if (write_ == 1)
+		current_status = exit_status;
+	if (exit_ == 1)
+		exit(current_status);
+	return (current_status);
+}

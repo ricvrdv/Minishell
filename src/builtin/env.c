@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-void    mini_env(s_minishell *mini, s_tree *node)
+int    mini_env(s_minishell *mini, s_tree *node)
 {
     s_env   *current;
 
@@ -8,7 +8,7 @@ void    mini_env(s_minishell *mini, s_tree *node)
     if (node->argcount > 1)
     {
         ft_putstr_fd("This version does not handle options or arguments.\n", 2);
-        return ;
+        return (1);
     }
     while (current)
     {
@@ -22,4 +22,5 @@ void    mini_env(s_minishell *mini, s_tree *node)
         current = current->next;
     }
     sync_env_array(mini);
+    return (0);
 }

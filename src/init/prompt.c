@@ -23,5 +23,6 @@ void	start_prompt(s_minishell **mini)
 			prep_tree(tree, *mini, &status);
 		}
 		free(line);
+		printf(RED "Exit code = %d\n" RESET, status);
 	}
 }

@@ -38,3 +38,25 @@ void read_heredoc(int fd, const char *delimiter)
         free(line);
     }
 }
+
+int execute_heredoc(s_tree *tree, s_minishell *mini) 
+{
+    int fd;
+    
+    if (tree == NULL) 
+        return -1;
+    if (tree->type == HEREDOC) 
+    {
+        fd = handle_heredoc(tree);
+        if (fd == -1) 
+        {
+            report_error(127);
+            return -1; 
+        }
+        mini->heredoc_fd = fd;
+            return 0;
+    }
+    if (execute_heredoc(tree->left, mini) == 0) 
+        return 0;
+    return execute_heredoc(tree->right, mini);
+}

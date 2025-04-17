@@ -23,7 +23,6 @@ SRCS = src/init/init.c \
        src/utils/utils.c \
        src/utils/clear.c \
        src/tokens/token.utils.c \
-       src/builtin/builtin.c \
        src/parse/quotes.c \
        src/signal/signal.c \
        src/init/prompt.c \

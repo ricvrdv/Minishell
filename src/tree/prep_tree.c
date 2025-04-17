@@ -8,6 +8,7 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
+	mini->heredoc_count = counter[2];
 	expand_tree(mini, tree);
 	*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }
@@ -19,8 +20,10 @@ void	count_pipes_redir(s_tree *tree, int *counter)
 		counter[5] += 1;
 	else if (tree->type == REDIRECT_R || tree->type == APPEND)
 		counter[4] += 1;
-	else if (tree->type == REDIRECT_L || tree->type == HEREDOC)
+	else if (tree->type == REDIRECT_L)
 		counter[3]++;
+	else if (tree->type == HEREDOC)
+		counter[2]++;
 	if (tree->left)
 		count_pipes_redir(tree->left, counter);
 	if (tree->right)

@@ -2,15 +2,12 @@
 
 static  void remove_env_var(s_env **env, const char *key);
 
-void    mini_unset(s_minishell *mini, s_tree *node)
+int    mini_unset(s_minishell *mini, s_tree *node)
 {
     int i;
     
     if (!mini || !node)
-    {
-        ft_putstr_fd("minishell: unset: invalid arguments\n", STDERR_FILENO);
-        return ;
-    }
+        return (0);
     i = 1;
     while (i < node->argcount)
     {
@@ -18,6 +15,7 @@ void    mini_unset(s_minishell *mini, s_tree *node)
         i++;
     }
     sync_env_array(mini);
+    return (0);
 }
 
 static  void remove_env_var(s_env **env, const char *key)

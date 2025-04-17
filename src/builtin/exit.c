@@ -5,28 +5,33 @@ static bool is_numeric_arg_valid(const char *arg);
 static void exit_error(const char *arg, bool numeric_error);
 static long calculate_exit_status(const char *arg);
 
-void    mini_exit(s_minishell *mini, s_tree *node)
+int    mini_exit(s_minishell *mini, s_tree *node)
 {
     int arg_offset;
     long    exit_status;
 
-    ft_putstr_fd("exit\n", STDERR_FILENO);
+    if (!mini->is_child)
+        ft_putstr_fd("exit\n", STDERR_FILENO);
     arg_offset = handle_args_offset(node);
     if (arg_offset == -1)
     {
         free_struct(mini);
-        exit (0);
+        exit_code(exit_code(0, 0, 0), 0, 1);
     }
     if (!is_numeric_arg_valid(node->args[arg_offset]))
+    {
         exit_error(node->args[arg_offset], true);
+        free_struct(mini);
+        exit_code(2, 1, 1);
+    }
     if (node->argcount > arg_offset + 1)
     {
         exit_error(NULL, false);
-        return ;
+        return (1);
     }
     exit_status = calculate_exit_status(node->args[arg_offset]);
     free_struct(mini);
-    exit((int)exit_status);
+    return (exit_code((int)exit_status, 1, 1), (int)exit_status);
 }
 
 static int handle_args_offset(s_tree *node)

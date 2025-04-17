@@ -29,6 +29,7 @@ int execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
         fd = handle_heredoc(tree);
         if (fd == -1) 
             return report_error(127);
+        if (tree->left)
         status = execute_node(tree->left, mini, fd, out_fd); // Execute the command with the output redirection
         close(fd);
     }

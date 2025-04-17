@@ -2,7 +2,12 @@
 
 int execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd) 
 {
-    
+    //int fd;
+
+    /*while(mini->heredoc_count >= 0)
+    {   
+        mini->heredoc_count -=1;
+    }*/
     if (tree->type == PIPE) 
         return execute_pipe(tree, mini, in_fd, out_fd);
     else if (tree->type == REDIRECT_L || tree->type == REDIRECT_R 
@@ -27,8 +32,8 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
     saved_stdout = dup(STDOUT_FILENO);
     redirect_fds(in_fd, out_fd);
     clean_args(node->args, node->argcount);
-    if (is_builtin(node->args[0]))
-        execute_builtin(node, mini);
+    if (is_builtin(node->args[0]) && in_fd == STDIN_FILENO && out_fd == STDOUT_FILENO)
+        status = execute_builtin(node, mini);
     else
     {
         pid = fork();
@@ -36,6 +41,9 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
             return report_error(127);
         if (pid == 0) 
         {
+            mini->is_child = true;
+            if (is_builtin(node->args[0]))
+                exit(execute_builtin(node, mini));
             full_path = find_cmd_path(node->args[0], find_path_variable(mini));
             if (full_path == NULL) 
                 exit(127);
@@ -43,28 +51,40 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
                 exit(127);
         }
         else 
-            waitpid(pid, &status, 0); 
+        {
+            waitpid(pid, &status, 0);
+            if (WIFEXITED(status))
+                status = WEXITSTATUS(status);
+            else if (WIFSIGNALED(status))
+                status = 128 + WTERMSIG(status);
+        } 
     }
     restore_fd(saved_stdin, saved_stdout);
-    return status;
+    return (exit_code(status, 1, 0));
 }
 
-void execute_builtin(s_tree *node, s_minishell *mini)
+int execute_builtin(s_tree *node, s_minishell *mini)
 {
+    int status;
+
+    status = 0;
     if (ft_strcmp(node->args[0], "cd") == 0)
-        mini_cd(mini, node);
+        status = mini_cd(mini, node);
     else if (ft_strcmp(node->args[0], "echo") == 0)
-        mini_echo(node);
+        status = mini_echo(node);
     else if (ft_strcmp(node->args[0], "pwd") == 0)
-        mini_pwd(mini);
+        status = mini_pwd(mini);
     else if (ft_strcmp(node->args[0], "export") == 0)
-        mini_export(mini, node);
+        status = mini_export(mini, node);
     else if (ft_strcmp(node->args[0], "unset") == 0)
-        mini_unset(mini, node);
+        status = mini_unset(mini, node);
     else if (ft_strcmp(node->args[0], "env") == 0)
-        mini_env(mini, node);
+        status = mini_env(mini, node);
     else if (ft_strcmp(node->args[0], "exit") == 0)
-        mini_exit(mini, node);
+        status = mini_exit(mini, node);
+    else 
+        status = 127;
+    return (exit_code(status, 1, 0));
 }
 
 int is_builtin(char *cmd)

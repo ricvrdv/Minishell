@@ -8,6 +8,10 @@ void	init_struct(s_minishell *mini)
 	curdir = get_dir(mini);
 	mini->exit_status = 0;
 	mini->cur_dir = curdir;
+	mini->heredoc_count = 0;
+	mini->heredoc_fd = 0;
+	mini->heredoc_index = 0;
+	mini->is_child = false;
 	mini->env_array = NULL;
 	mini->env = NULL;
 }
