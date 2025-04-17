@@ -7,6 +7,7 @@ int main(int ac, char *av[], char **envp)
     s_minishell *mini;
     (void)av;
 
+    exit_code(0, 1, 0);
     setup_signal_handling();
     mini = safe_malloc(sizeof(s_minishell));  //allocate space for struct
     init_struct(mini);                       //init values on struc -created-curdir-full_cmd/s_env/s_token

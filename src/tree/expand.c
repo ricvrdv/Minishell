@@ -38,7 +38,13 @@ char	*expand_variable(s_minishell *mini, const char *arg)
 		{
 			get_variable_name(&ptr, var_name);
 			value = find_variable(mini, var_name);
-			append_value_to_result(&res_ptr, value);
+			if (ft_strcmp(var_name, "?") == 0)
+            {
+                append_value_to_result(&res_ptr, value);
+                free(value);
+            }
+			else
+				append_value_to_result(&res_ptr, value);
 		}
 		else
 			*res_ptr++ = *ptr++;
@@ -62,10 +68,18 @@ void	get_variable_name(const char **ptr, char *var_name)
 
 	i = 0;
 	(*ptr)++;
-	while (isalnum(**ptr) || **ptr == '_')
+	if (**ptr == '?')
 	{
-		var_name[i++] = **ptr;
-		(*ptr)++;
+        var_name[i++] = '?';
+        (*ptr)++;
+    } 
+	else
+	{
+		while (isalnum(**ptr) || **ptr == '_')
+		{
+			var_name[i++] = **ptr;
+			(*ptr)++;
+		}
 	}
 	var_name[i] = '\0';
 }
@@ -74,8 +88,14 @@ char	*find_variable(s_minishell *mini, const char *variable)
 {
 	s_env	*env;
 	int		len;
+	char	*exit_status;
 
 	len = ft_strlen(variable);
+	if (ft_strcmp(variable, "?") == 0)
+    {
+        exit_status = ft_itoa(exit_code(0, 0, 0));
+        return (exit_status);
+    }
 	env = mini->env;
 	while (env)
 	{
