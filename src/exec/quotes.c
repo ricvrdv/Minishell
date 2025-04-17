@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-void remove_quotes(char *arg) 
+void remove_quotes(char *arg, s_tree *tree) 
 {
     int len;
     //int quote_count;
@@ -17,6 +17,7 @@ void remove_quotes(char *arg)
     {
         arg[len - 1] = '\0';
         ft_memmove(arg, arg + 1, len - 1);
+        tree->d_quoute = 1;
     }
     remove_trailing(arg);                                            //remove trailing quote echo "hello"""
 }
@@ -66,14 +67,14 @@ int count_quotes(const char *str)
     return counter;
 }
 
-void clean_args(char **args, int arg_count)
+void clean_args(char **args, int arg_count, s_tree *tree)
 {
     int index;
 
     index = 0;
     while(index < arg_count)
     {
-        remove_quotes(args[index]);
+        remove_quotes(args[index], tree);
         index++;
     }
 }

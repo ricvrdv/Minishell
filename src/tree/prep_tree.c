@@ -9,6 +9,7 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
 	mini->heredoc_count = counter[2];
+	clean_args(tree->args, tree->argcount, tree);
 	expand_tree(mini, tree);
 	*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }

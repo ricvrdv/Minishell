@@ -10,9 +10,12 @@ void	expand_tree(s_minishell *mini, s_tree *tree)
 		i = -1;
 		while (tree->args[++i])
 		{
-			expansion = expand_variable(mini, tree->args[i]);
-			free(tree->args[i]);
-			tree->args[i] = expansion;
+			if(tree->d_quoute)
+			{
+				expansion = expand_variable(mini, tree->args[i]);
+				free(tree->args[i]);
+				tree->args[i] = expansion;
+			}
 		}
 	}
 	if (tree->left)
