@@ -10,7 +10,7 @@ void	expand_tree(s_minishell *mini, s_tree *tree)
 		i = -1;
 		while (tree->args[++i])
 		{
-			if(tree->d_quoute)
+			if(should_expand(tree->args[i]))							//if double or no quotes expand 
 			{
 				expansion = expand_variable(mini, tree->args[i]);
 				free(tree->args[i]);
@@ -107,4 +107,23 @@ char	*find_variable(s_minishell *mini, const char *variable)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+bool	enclosed_single_quotes(const char *str)
+{
+	size_t	len;
+
+	len = strlen(str);
+	if (len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
+		return (true);
+	return (false);											//dont have single but can have double
+}
+
+bool	should_expand(const char *str)
+{
+	if (!str)
+		return (false);
+	if (enclosed_single_quotes(str))						// if str inside single quotes return false dont expand
+		return (false); 
+	return (true); 											//any other case expand $user "$user"	
 }

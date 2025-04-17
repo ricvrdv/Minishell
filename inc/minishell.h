@@ -210,4 +210,9 @@ int     execute_heredoc(s_tree *tree, s_minishell *mini);
 int	    exit_code(int exit_status, int write_, int exit_);
 void    remove_quotes(char *arg, s_tree *tree); 
 
+
+
+bool	should_expand(const char *str);
+bool	enclosed_single_quotes(const char *str);
+
 #endif

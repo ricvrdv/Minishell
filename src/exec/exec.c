@@ -31,6 +31,7 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
     saved_stdin = dup(STDIN_FILENO);
     saved_stdout = dup(STDOUT_FILENO);
     redirect_fds(in_fd, out_fd);
+    clean_args(node->args, node->argcount, node);
     if (is_builtin(node->args[0]) && in_fd == STDIN_FILENO && out_fd == STDOUT_FILENO)
         status = execute_builtin(node, mini);
     else
