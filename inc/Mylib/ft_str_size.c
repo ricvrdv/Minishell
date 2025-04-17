@@ -1,0 +1,11 @@
+#include "libft.h"
+
+int	str_size(char *str, char end)
+{
+	int	i;
+
+	i = 0;
+	while (*str && str[i] != '\0' && str[i] != end)
+		i += 1;
+	return (i);
+}

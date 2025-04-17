@@ -46,7 +46,11 @@ SRCS = \
     ft_lstclear.c \
     ft_lstdelone.c \
     ft_strnlen.c \
-    ft_strndup.c
+    ft_strndup.c \
+    ft_str_size.c \
+    ft_strcmp.c \
+    ft_strcpy.c \
+    space.c \
     
     
     
@@ -56,11 +60,10 @@ NAME = libft.a
 
 CC = cc
 
-CC_FLAGS = -Wall -Wextra -Werror
+CC_FLAGS = -Wall -Wextra -Werror 
 
 all: $(NAME)
 	
-
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 

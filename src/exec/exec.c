@@ -67,11 +67,6 @@ void execute_builtin(s_tree *node, s_minishell *mini)
         mini_exit(mini, node);
 }
 
-int report_error(int status)
-{
-    return status;
-}
-
 int is_builtin(char *cmd)
 {
     if (!cmd)

@@ -1,30 +1,27 @@
 #include "../../inc/minishell.h"
 
-void        start_prompt(s_minishell **mini)
+void	start_prompt(s_minishell **mini)
 {
-    char    *line;
-    s_token *tokens;
-    s_tree  *tree;
-    int status;
+	char	*line;
+	s_token	*tokens;
+	s_tree	*tree;
+	int		status;
 
-    (void)mini;
-    while(1)   
-    {
-        line = readline(">");
-        if (line == NULL)
-            break; // Exit the loop
-        if(check_str(&line))
-            continue;   //if returns 1 skips and start loop again.
-        add_history(line);                                              
-        tokens = make_token(line, &tokens); 
-        if(tokens)
-        {
-            tree = parse_token(&tokens);  
-            prep_tree(tree, *mini, &status); 
-            //clear_token(&tokens);
-            //clear_tree(&tree);           
-        }
-        //update mini on env $?
-        free(line);
-    }
+	(void)mini;
+	while (1)
+	{
+		line = readline(">");
+		if (line == NULL)
+			break ;
+		if (check_str(&line))
+			continue ;
+		add_history(line);
+		tokens = make_token(line, &tokens);
+		if (tokens)
+		{
+			tree = parse_token(&tokens);
+			prep_tree(tree, *mini, &status);
+		}
+		free(line);
+	}
 }

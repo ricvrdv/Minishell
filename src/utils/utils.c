@@ -6,33 +6,24 @@ void	error_exit(char *error)
 	exit(1);
 }
 
-void	*safe_malloc(size_t bytes)
+void	free_mini_struct(s_minishell *mini)
 {
-	void	*ret;
-
-	ret = malloc(bytes);
-	if (!ret)
-		error_exit("Error with Malloc!");
-	return (ret);
+	if (mini->cur_dir)
+		free(mini->cur_dir);
+	if (mini->env_array)
+		clear_env_array(&mini->env_array);
+	if (mini->env)
+		clear_env(&mini->env);
 }
 
-void free_mini_struct(s_minishell *mini)
+char	*get_dir()
 {
-    if(mini->cur_dir)
-    	free(mini->cur_dir);
-    if(mini->env_array)
-    	clear_env_array(&mini->env_array);   //todo
-    if(mini->env) 
-    	clear_env(&mini->env);            //todo
+	char	*currentdir;
+
+	currentdir = getcwd(NULL, 1024);
+	return (currentdir);
 }
 
-char    *get_dir()
-{
-    char *currentdir;
-
-    currentdir = getcwd(NULL, 1024);
-    return currentdir;
-}
 void	free_stuff(char *str[])
 {
 	int	i;
@@ -43,56 +34,13 @@ void	free_stuff(char *str[])
 	free(str);
 }
 
-int space(int c)
+void	free_struct(s_minishell *mini)
 {
-	return(c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r');
+	if (mini->cur_dir)
+		free(mini->cur_dir);
+	if (mini->env_array)
+		clear_env_array(&mini->env_array);
+	if (mini->env)
+		clear_env(&mini->env);
 }
 
-bool are_counts_odd(int d_count, int s_count)
-{
-	return(!(d_count % 2) && !(s_count % 2));       //returns true if we have even nbr of quotes on counter
-}
-
-int str_size(char *str, char end)                  //will check str_size using end to defined the end
-{
-	int i;
-
-	i = 0;
-	while(*str && str[i] != '\0' && str[i] != end)
-		i += 1;
-	return (i);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-char *ft_strcpy(char *dest, const char *src) 
-{
-    char *original_dest;
-    original_dest = dest;                               // Save the original pointer to the destination
-    while (*src) 
-    {
-        *dest = *src;
-        dest++;
-        src++;
-    }
-    *dest = '\0';                                       // Null-terminate the destination string
-    return original_dest;                               // Return the original destination pointer
-}
-
-void free_struct(s_minishell *mini)
-{
-    if(mini->cur_dir)
-    	free(mini->cur_dir);
-    if(mini->env_array)
-    	clear_env_array(&mini->env_array);   //todo
-    if(mini->env) 
-    	clear_env(&mini->env);            //todo
-}

@@ -9,9 +9,9 @@ void	clear_env(s_env **env)
 	{
 		temp = (*env)->next;
 		free((*env)->key);
-       	free((*env)->value);
+		free((*env)->value);
 		free(*env);
-    	*env = temp;
+		*env = temp;
 	}
 }
 
@@ -20,22 +20,23 @@ void	clear_token(s_token **token)
 	s_token	*temp;
 
 	temp = NULL;
-	if(token)
+	if (token)
 	{
 		while (*token)
 		{
 			temp = (*token)->next;
-        	free(*token);
-        	*token = temp;
+			free(*token);
+			*token = temp;
 		}
 	}
 }
 
 void	clear_tree(s_tree **tree)
 {
-	int i;
-	if(!tree || !*tree) // Base case to stop recursion
-		return;
+	int	i;
+
+	if (!tree || !*tree)
+		return ;
 	clear_tree(&(*tree)->left);
 	clear_tree(&(*tree)->right);
 	if ((*tree)->args)
@@ -66,30 +67,13 @@ void	clear_env_array(char ***env_array)
 	*env_array = NULL;
 }
 
-
-void ft_exit(s_minishell *mini, char *error)
+void	ft_exit(s_minishell *mini, char *error)
 {
-    if (mini->created)
-        free_mini_struct(mini);
-    if (error)
-        printf(RED "%s\n" RESET, error);  // Print any error message
-    clear_history();  // Clear history, if applicable
-    free(mini);  // Finally, free the struct itself
-    exit(1);  // Exit with status 1 (indicating an error)
-}
-
-int	fd_identifier(int *counter, int index, int index_2, int con)
-{
-	if (con)
-	{
-		if (counter[index])
-			close(counter[index_2]);
-		counter[index] = 1;
-	}
-	else
-	{
-		ft_putendl_fd("err: file not found", 2);
-		counter[6] = 0;
-	}
-	return (1);
+	if (mini->created)
+		free_mini_struct(mini);
+	if (error)
+		printf(RED "%s\n" RESET, error);
+	clear_history();
+	free(mini);
+	exit(1);
 }

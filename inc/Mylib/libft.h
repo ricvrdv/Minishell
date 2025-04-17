@@ -63,6 +63,9 @@ int		ft_printd(int n);
 int		ft_printu(unsigned int n);
 int		ft_printp(unsigned long pointer);
 int		ft_listsize(t_list *lst);
+int		space(int c);
+int		str_size(char *str, char end);
+int		ft_strcmp(const char *s1, const char *s2);
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
@@ -84,5 +87,7 @@ char	*get_next_line(int fd);
 char	*ft_strjoingnl(char const *s1, char const *s2);
 char	*ft_strchrgnl(const char *s, int c);
 char	*ft_strndup(const char *src, size_t n);
+char	*ft_strcpy(char *dest, const char *src);
+
 
 #endif
