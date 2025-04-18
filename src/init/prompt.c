@@ -21,8 +21,8 @@ void	start_prompt(s_minishell **mini)
 		{
 			tree = parse_token(&tokens);
 			prep_tree(tree, *mini, &status);
+			clear_tree(&tree);
 		}
-		free(line);
 		//printf(RED "Exit code = %d\n" RESET, status);
 	}
 }

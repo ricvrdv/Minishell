@@ -45,10 +45,16 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
             if (is_builtin(node->args[0]))
                 exit(execute_builtin(node, mini));
             full_path = find_cmd_path(node->args[0], find_path_variable(mini));
-            if (full_path == NULL) 
+            if (full_path == NULL)
+            {
+                ft_putstr_fd(" command not found\n", 2);
                 exit(127);
+            } 
             if (execve(full_path, node->args, mini->env_array) == -1)
-                exit(127);
+            {
+                ft_putstr_fd(" Is a directory\n", 2);
+                exit(126);
+            }
         }
         else 
         {

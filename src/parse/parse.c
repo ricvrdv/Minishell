@@ -25,6 +25,7 @@ int	full_check(char *str)
 		ft_putstr_fd("Misplaced operator.\n", 2);
 		return (1);
 	}
+	free(temp);
 	return (0);
 }
 

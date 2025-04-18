@@ -37,7 +37,7 @@ char	*expand_variable(s_minishell *mini, const char *arg)
 	res_ptr = result;
 	while (*ptr)
 	{
-		if (*ptr == '$')
+		if (*ptr == '$' && *(ptr + 1) != '\0' && *(ptr + 1) != 39 && *(ptr + 1) != 34)
 		{
 			get_variable_name(&ptr, var_name);
 			value = find_variable(mini, var_name);

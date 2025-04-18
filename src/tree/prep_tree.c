@@ -44,6 +44,7 @@ void	init_pipes_array(int *counter, int flag)
 
 void	rename_nodes(s_tree *tree)
 {
+	tree->file_type = 0;
 	if (tree->type != WORD)
 	{
 		tree->file_type = TREE_READY;

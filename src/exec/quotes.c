@@ -5,7 +5,7 @@ void remove_quotes(char *arg, s_tree *tree)
     int len;
     //int quote_count;
     
-    leading_quotes(arg);                                            //skips ""before cmd
+    //leading_quotes(arg);                                            //skips ""before cmd
     //quote_count = count_quotes(arg);                                //counts nbr of quotes
     len = ft_strlen(arg);                                           //len of arg
     if (len > 1 && arg[0] == '\'' && arg[len - 1] == '\'')          //atm removes quotes from tokens
@@ -19,7 +19,7 @@ void remove_quotes(char *arg, s_tree *tree)
         ft_memmove(arg, arg + 1, len - 1);
         tree->d_quoute = 1;
     }
-    remove_trailing(arg);                                            //remove trailing quote echo "hello"""
+    //remove_trailing(arg);                                            //remove trailing quote echo "hello"""
 }
 
 void remove_trailing(char *arg)
