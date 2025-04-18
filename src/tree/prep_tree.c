@@ -8,7 +8,8 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
-	mini->heredoc_count = counter[2];
+	mini->heredoc_count = counter[2];                                   //need to execute all heredoc before starting cmd execution   
+	// maybe here
 	expand_tree(mini, tree);
 	*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }
