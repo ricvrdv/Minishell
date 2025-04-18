@@ -214,5 +214,7 @@ void    remove_quotes(char *arg, s_tree *tree);
 
 bool	should_expand(const char *str);
 bool	enclosed_single_quotes(const char *str);
+int     pipe_and_fork(int *pipefd);
+void    child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir);
 
 #endif
