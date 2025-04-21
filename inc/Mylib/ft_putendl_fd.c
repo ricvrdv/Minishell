@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:50:58 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/23 13:58:26 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:58:31 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,3 @@ void	ft_putendl_fd(char *s, int fd)
 	}
 	write(fd, "\n", 1);
 }
-/*
-#include <fcntl.h>
-#include "libft.h"
-
-int main(void)
-{
-    int fd = open("output.txt", O_WRONLY | O_CREAT, 0644);
-    if (fd == -1)
-    {
-        return 1; // Error opening file
-    }
-
-    ft_putendl_fd("Hello, world!", fd);
-
-    close(fd);
-    return 0;
-}
-*/

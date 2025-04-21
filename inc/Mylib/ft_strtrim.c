@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:08:21 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/23 12:27:23 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:01:31 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	str = ft_substr(s1, first, ((last - first) + 1));
 	return (str);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    const char *s1 = "  Hello, world!  ";
-    const char *set = " ";
-
-    char *result = ft_strtrim(s1, set);
-    if (result)
-    {
-        printf("Trimmed string: '%s'\n", result); // Should print "Hello, world!"
-        free(result);
-    }
-    else
-    {
-        printf("Trimming failed\n");
-    }
-
-    return 0;
-}
-*/

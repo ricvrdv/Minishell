@@ -43,8 +43,6 @@ SRCS = \
     ft_printx.c \
     get_next_line.c \
     get_next_line_utils.c \
-    ft_lstclear.c \
-    ft_lstdelone.c \
     ft_strnlen.c \
     ft_strndup.c \
     ft_str_size.c \
@@ -60,7 +58,7 @@ NAME = libft.a
 
 CC = cc
 
-CC_FLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -fPIC
 
 all: $(NAME)
 	

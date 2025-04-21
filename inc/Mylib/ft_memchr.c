@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:06:02 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/22 14:15:12 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:57:00 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (0);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    char str[] = "Hello, world!";
-    char *result = ft_memchr(str, 'o', 13);
-    if (result != NULL)
-    {
-        printf("Found 'o' at position: %ld\n", result - str);
-    }
-    else
-    {
-        printf("'o' not found\n");
-    }
-    return 0;
-}
-*/

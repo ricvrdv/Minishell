@@ -3,25 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:12:25 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/11/12 14:24:51 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:57:10 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "libft.h" 
 
 int	ft_printc(int c)
 {
 	return (write(1, &c, 1));
 }
-
-/*
-int main()
-{
-	char *teste = "zin";
-
-	printf("%c\n" , teste[1]);
-	ft_printc(teste[2]);
-}
-*/

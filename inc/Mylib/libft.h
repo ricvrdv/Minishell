@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:55:51 by jpedro-c          #+#    #+#             */
-/*   Updated: 2025/03/21 01:04:09 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:56:28 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_bzerognl(void *s, size_t n);
 void	*ft_callocgnl(size_t nmemb, size_t size);
 void	ft_listadd_front(t_list **lst, t_list *new);
-void	ft_lstclear(t_list **lst, void(*del)(void *));
-void    ft_lstdelone(t_list *lst, void(*del)(void *));
 
 int		ft_atoi(const char *nptr);
 int		ft_isalnum(int c);
@@ -88,6 +86,5 @@ char	*ft_strjoingnl(char const *s1, char const *s2);
 char	*ft_strchrgnl(const char *s, int c);
 char	*ft_strndup(const char *src, size_t n);
 char	*ft_strcpy(char *dest, const char *src);
-
 
 #endif

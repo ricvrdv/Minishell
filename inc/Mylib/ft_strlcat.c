@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:39:14 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/22 11:52:25 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:00:13 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	}
 	return (i + ft_strlen(src));
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    char dest[20] = "Hello, ";
-    const char *src = "world!";
-    size_t size = 20;
-
-    size_t result = ft_strlcat(dest, src, size);
-    printf("Resulting string: %s\n", dest); 
-    printf("Total length: %zu\n", result);
-
-    return 0;
-}
-*/

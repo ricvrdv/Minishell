@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 10:41:53 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/23 10:53:18 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:59:50 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,3 @@ char	*ft_strdup(const char *s)
 	new[i] = '\0';
 	return (new);
 }
-/*
-#include <stdlib.h>
-#include <stdio.h>
-int main(int argc, char *argv[])
-{
-	char *new;
-
-	if(argc == 2)
-	{
-		new = ft_strdup(argv[1]);
-		printf("%s\n", new);
-	}
-	return 0;
-}
-*/

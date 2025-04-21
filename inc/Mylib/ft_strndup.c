@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 12:00:41 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/21 12:00:42 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-char	*ft_strndup(const char *src, size_t n)   //add to my lib
+char	*ft_strndup(const char *src, size_t n)
 {
 	size_t	i;
 	size_t	size;

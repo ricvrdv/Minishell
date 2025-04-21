@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:40:15 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/23 11:51:44 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:00:06 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,36 +38,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str[len_1 + len_2] = '\0';
 	return (str);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    char *result;
-    result = ft_strjoin("Hello, ", "world!");
-    if (result)
-    {
-        printf("%s\n", result); 
-        free(result);
-    }
-    result = ft_strjoin(NULL, "world!");
-    if (result)
-    {
-        printf("%s\n", result);
-        free(result);
-    }
-    result = ft_strjoin("Hello, ", NULL);
-    if (result)
-    {
-        printf("%s\n", result); 
-        free(result);
-    }
-    result = ft_strjoin(NULL, NULL);
-    if (result)
-    {
-        printf("%s\n", result);
-    }
-    return 0;
-}
-*/
