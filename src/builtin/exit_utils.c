@@ -8,11 +8,15 @@ int	is_valid_long(const char *str)
 	long	n;
 	char	buf[22];
 
+	if (*str == '+')
+		str++;
 	if (ft_strcmp(str, "-9223372036854775808") == 0)
 		return (1);
     n = ft_atol(str);
 	ft_ltoa_buf(n, buf);
-	if (ft_strcmp(str, buf) == 0)
+	if (*str == '-' && ft_strcmp(str, buf) == 0)
+		return (1);
+	if (*str != '-' && ft_strcmp(str, buf + (*buf == '+')) == 0)
 		return (1);
 	return (0);
 }
