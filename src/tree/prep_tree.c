@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prep_tree.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/21 10:51:59 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
@@ -8,8 +20,7 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
-	mini->heredoc_count = counter[2];                                   //need to execute all heredoc before starting cmd execution   
-	// maybe here
+	mini->heredoc_count = counter[2];
 	expand_tree(mini, tree);
 	*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }
@@ -45,7 +56,6 @@ void	init_pipes_array(int *counter, int flag)
 
 void	rename_nodes(s_tree *tree)
 {
-	tree->file_type = 0;
 	if (tree->type != WORD)
 	{
 		tree->file_type = TREE_READY;
@@ -71,4 +81,11 @@ void	rename_nodes(s_tree *tree)
 		rename_nodes(tree->left);
 	if (tree->right)
 		rename_nodes(tree->right);
+}
+
+s_tree	*parse_token(s_token **tokens)
+{
+	if (!tokens || !*tokens)
+		return (NULL);
+	return (parse_pipe(tokens));
 }

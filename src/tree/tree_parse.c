@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tree_parse.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:52:20 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/21 10:52:21 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 s_tree	*parse_pipe(s_token **tokens)
@@ -31,15 +43,14 @@ s_tree	*parse_redirect(s_token **tokens)
 	s_token	*next_token;
 	s_tree	*redirect_node;
 
-	if (!*tokens)
-		return (NULL);
 	temp = *tokens;
 	if ((*tokens)->type >= REDIRECT_L && (*tokens)->type <= HEREDOC)
 		return (redirect_node = especial_node(tokens, temp));
 	while (*tokens && (*tokens)->next)
 	{
 		next_token = (*tokens)->next;
-		if ((*tokens)->next->type >= REDIRECT_L && (*tokens)->next->type <= HEREDOC)
+		if ((*tokens)->next->type >= REDIRECT_L
+			&& (*tokens)->next->type <= HEREDOC)
 		{
 			redirect_node = new_tree_node((*tokens)->next->type);
 			(*tokens)->next = next_token->next->next;
@@ -52,13 +63,6 @@ s_tree	*parse_redirect(s_token **tokens)
 		*tokens = next_token;
 	}
 	return (parse_command(&temp));
-}
-
-s_tree	*parse_token(s_token **tokens)
-{
-	if (!tokens || !*tokens)
-		return (NULL);
-	return (parse_pipe(tokens));
 }
 
 s_tree	*parse_command(s_token **tokens)

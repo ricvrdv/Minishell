@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/21 10:57:27 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	start_prompt(s_minishell **mini)
@@ -23,6 +35,5 @@ void	start_prompt(s_minishell **mini)
 			prep_tree(tree, *mini, &status);
 			clear_tree(&tree);
 		}
-		//printf(RED "Exit code = %d\n" RESET, status);
 	}
 }
