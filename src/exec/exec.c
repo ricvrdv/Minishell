@@ -18,7 +18,104 @@ int execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
     return (0);
 }
 
+int execute_builtin(s_tree *node, s_minishell *mini)
+{
+    int status;
 
+    status = 0;
+    if (ft_strcmp(node->args[0], "cd") == 0)
+        status = mini_cd(mini, node);
+    else if (ft_strcmp(node->args[0], "echo") == 0)
+        status = mini_echo(node);
+    else if (ft_strcmp(node->args[0], "pwd") == 0)
+        status = mini_pwd(mini);
+    else if (ft_strcmp(node->args[0], "export") == 0)
+        status = mini_export(mini, node);
+    else if (ft_strcmp(node->args[0], "unset") == 0)
+        status = mini_unset(mini, node);
+    else if (ft_strcmp(node->args[0], "env") == 0)
+        status = mini_env(mini, node);
+    else if (ft_strcmp(node->args[0], "exit") == 0)
+        status = mini_exit(mini, node);
+    else 
+        status = 127;
+    return (exit_code(status, 1, 0));
+}
+
+int is_builtin(char *cmd)
+{
+    if (!cmd)
+        return (0);
+    return (ft_strcmp(cmd, "cd") == 0 ||
+            ft_strcmp(cmd, "echo") == 0 ||
+            ft_strcmp(cmd, "pwd") == 0 ||
+            ft_strcmp(cmd, "export") == 0 ||
+            ft_strcmp(cmd, "unset") == 0 ||
+            ft_strcmp(cmd, "env") == 0 ||
+            ft_strcmp(cmd, "exit") == 0);
+}
+static int handle_child(s_tree *node, s_minishell *mini)
+{
+    char *full_path;
+
+    mini->is_child = true;
+    if (is_builtin(node->args[0]))
+        exit(execute_builtin(node, mini));
+    full_path = find_cmd_path(node->args[0], find_path_variable(mini));
+    if (!full_path)
+    {
+        ft_putstr_fd(" command not found\n", 2);
+        exit(127);
+    }
+    if (execve(full_path, node->args, mini->env_array) == -1)
+    {
+        ft_putstr_fd(" Is a directory\n", 2);
+        exit(126);
+    }
+    return (0);
+}
+
+static int handle_parent(pid_t pid)
+{
+    int status;
+
+    waitpid(pid, &status, 0);
+    if (WIFEXITED(status))
+        return WEXITSTATUS(status);
+    if (WIFSIGNALED(status))
+        return 128 + WTERMSIG(status);
+    return (status);
+}
+
+int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
+{
+    pid_t pid;
+    int status;
+    int saved_stdin;
+    int saved_stdout;
+
+    status = 0;
+    saved_stdin = dup(STDIN_FILENO);
+    saved_stdout = dup(STDOUT_FILENO);
+    redirect_fds(in_fd, out_fd);
+    clean_args(node->args, node->argcount, node);
+    if (is_builtin(node->args[0]) && in_fd == STDIN_FILENO && out_fd == STDOUT_FILENO)
+        status = execute_builtin(node, mini);
+    else
+    {
+        pid = fork();
+        if (pid == -1)
+            return report_error(127);
+        if (pid == 0)
+            return handle_child(node, mini);
+        status = handle_parent(pid);
+    }
+    restore_fd(saved_stdin, saved_stdout);
+    return (exit_code(status, 1, 0));
+}
+
+
+/*
 int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd) 
 {
     pid_t pid;
@@ -68,40 +165,4 @@ int execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
     restore_fd(saved_stdin, saved_stdout);
     return (exit_code(status, 1, 0));
 }
-
-int execute_builtin(s_tree *node, s_minishell *mini)
-{
-    int status;
-
-    status = 0;
-    if (ft_strcmp(node->args[0], "cd") == 0)
-        status = mini_cd(mini, node);
-    else if (ft_strcmp(node->args[0], "echo") == 0)
-        status = mini_echo(node);
-    else if (ft_strcmp(node->args[0], "pwd") == 0)
-        status = mini_pwd(mini);
-    else if (ft_strcmp(node->args[0], "export") == 0)
-        status = mini_export(mini, node);
-    else if (ft_strcmp(node->args[0], "unset") == 0)
-        status = mini_unset(mini, node);
-    else if (ft_strcmp(node->args[0], "env") == 0)
-        status = mini_env(mini, node);
-    else if (ft_strcmp(node->args[0], "exit") == 0)
-        status = mini_exit(mini, node);
-    else 
-        status = 127;
-    return (exit_code(status, 1, 0));
-}
-
-int is_builtin(char *cmd)
-{
-    if (!cmd)
-        return (0);
-    return (ft_strcmp(cmd, "cd") == 0 ||
-            ft_strcmp(cmd, "echo") == 0 ||
-            ft_strcmp(cmd, "pwd") == 0 ||
-            ft_strcmp(cmd, "export") == 0 ||
-            ft_strcmp(cmd, "unset") == 0 ||
-            ft_strcmp(cmd, "env") == 0 ||
-            ft_strcmp(cmd, "exit") == 0);
-}
+*/
