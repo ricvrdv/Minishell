@@ -71,7 +71,7 @@ static void exit_error(const char *arg, bool numeric_error)
     if (numeric_error)
     {
         ft_putstr_fd((char *)arg, STDERR_FILENO);
-        ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+        //ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
         exit(2);
     }
     else

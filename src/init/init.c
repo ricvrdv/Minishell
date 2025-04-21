@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:25 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 10:57:09 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:51:00 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_struct(s_minishell *mini)
 	mini->heredoc_count = 0;
 	mini->heredoc_fd = 0;
 	mini->heredoc_index = 0;
+	mini->error_reported = 0;
 	mini->is_child = false;
 	mini->env_array = NULL;
 	mini->env = NULL;

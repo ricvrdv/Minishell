@@ -77,6 +77,7 @@ typedef struct s_minishell
     int     created;                                    
     char    *cur_dir;
     int     exit_status;
+    int     error_reported;
     bool     is_child;
     int     heredoc_count;
     int     heredoc_fd;
@@ -216,6 +217,7 @@ bool	should_expand(const char *str);
 bool	enclosed_single_quotes(const char *str);
 int     pipe_and_fork(int *pipefd);
 void    child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir);
-
+void	remove_arg(char **args, int i);
+int	    ft_strslen(char **arr);
 
 #endif
