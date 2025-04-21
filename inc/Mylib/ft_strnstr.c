@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:37:30 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/22 14:47:10 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:01:22 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (0);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    const char *big = "Hello, world!";
-    const char *little = "world";
-    size_t len = 12;
-
-    char *result = ft_strnstr(big, little, len);
-    if (result)
-    {
-        printf("Found substring: %s\n", result);
-    }
-    else
-    {
-        printf("Substring not found\n");
-    }
-
-    return 0;
-}
-*/

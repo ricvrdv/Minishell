@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:17:22 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/22 10:06:40 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:16:17 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h" 
+
 
 int	ft_isalnum(int c)
 {
@@ -20,11 +20,3 @@ int	ft_isalnum(int c)
 	}
 	return (0);
 }
-/*
-#include <stdio.h>
-int main()
-{
-	int	new = '4';
-	printf("%i\n", ft_isalnum(new);
-}
-*/

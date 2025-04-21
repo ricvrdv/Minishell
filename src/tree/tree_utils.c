@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tree_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/21 10:52:30 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 s_tree	*new_tree_node(s_type type)
@@ -19,7 +31,8 @@ s_tree	*create_arg_node(s_token *token)
 	s_tree	*node;
 
 	node = safe_malloc(sizeof(s_tree));
-	node->type = node->type;
+	node->type = token->type;
+	node->file_type = 0;
 	node->argcount = 0;
 	node->args = safe_malloc(sizeof(char *) * 2);
 	node->args[0] = token->value;
@@ -36,6 +49,7 @@ s_tree	*create_redirection_node(s_token **tokens, s_token *temp)
 
 	redi_node = new_tree_node((*tokens)->type);
 	*tokens = (*tokens)->next->next;
+	redi_node->file_type = 0;
 	redi_node->left = parse_redirect(tokens);
 	redi_node->right = create_arg_node(temp->next);
 	redi_node->argcount = 0;
@@ -50,6 +64,7 @@ s_tree	*especial_node(s_token **tokens, s_token *temp)
 
 	redi_node = new_tree_node((*tokens)->type);
 	*tokens = (*tokens)->next->next;
+	redi_node->file_type = 0;
 	redi_node->left = parse_redirect(tokens);
 	redi_node->right = create_arg_node(temp->next);
 	free(temp->value);

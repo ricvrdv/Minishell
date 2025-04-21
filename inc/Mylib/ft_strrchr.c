@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:08:14 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/22 13:23:38 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:01:26 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,3 @@ char	*ft_strrchr(const char *s, int c)
 	}
 	return (NULL);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    const char *str = "Hello, world!";
-    int ch = 'o';
-
-    char *result = ft_strrchr(str, ch);
-    if (result)
-    {
-        printf("Last occurrence of '%c': %s\n", ch, result);
-    }
-    else
-    {
-        printf("Character not found\n");
-    }
-
-    return 0;
-}
-*/

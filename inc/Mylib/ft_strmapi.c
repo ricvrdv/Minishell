@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <jpedro-c@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 11:35:06 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/24 11:44:21 by passunca         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:00:30 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,3 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	str[i] = '\0';
 	return (str);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-char sample_function(unsigned int i, char c)
-{
-    return c + 13;   /// rot13 por exemplo
-}
-
-int main(void)
-{
-    const char *str = "Hello, world!";
-    char *result = ft_strmapi(str, sample_function);
-    if (result)
-    {
-        printf("%s\n", result); 
-        free(result);
-    }
-    return 0;
-}
-*/

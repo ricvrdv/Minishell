@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:37:58 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/22 13:52:03 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:00:36 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    const char *str1 = "Hello, world!";
-    const char *str2 = "Hello, 42!";
-    size_t n = 10;
-
-    int result = ft_strncmp(str1, str2, n);
-    printf("Comparison result: %d\n", result); 
-
-    return 0;
-}
-*/

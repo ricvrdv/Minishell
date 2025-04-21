@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:54:46 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/21 15:56:06 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:01:46 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,3 @@ int	ft_toupper(int c)
 	}
 	return (c);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    printf("%i\n", ft_toupper('a'));
-    printf("%i\n", ft_toupper('1'));
-    printf("%i\n", ft_toupper('!'));
-    return 0;
-}
-*/

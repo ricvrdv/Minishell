@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:56:25 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/21 14:13:39 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	init_struct(s_minishell *mini)
@@ -28,8 +40,6 @@ static char	**create_env_array(char **envp)
 	while (envp[count])
 		count++;
 	env_array = malloc((count + 1) * sizeof(char *));
-	if (!env_array)
-		return (NULL);
 	while (envp[i])
 	{
 		env_array[i] = ft_strdup(envp[i]);

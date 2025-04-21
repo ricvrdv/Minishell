@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extra_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:53:27 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/21 13:46:07 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	fd_identifier(int *counter, int index, int index_2, int con)
@@ -30,9 +42,10 @@ bool	are_counts_odd(int d_count, int s_count)
 {
 	return (!(d_count % 2) && !(s_count % 2));
 }
-int report_error(int status)
+
+int	report_error(int status)
 {
-    return status;
+	return (status);
 }
 
 int	exit_code(int exit_status, int write_, int exit_)

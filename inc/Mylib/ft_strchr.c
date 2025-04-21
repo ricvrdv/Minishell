@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:55:04 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/22 12:14:51 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:59:03 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,3 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (0);
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-int main(void)
-{
-    const char *str = "Hello, world!";
-    char *result;
-
-    result = ft_strchr(str, 'o');
-    if (result)
-        printf("Found 'o' at: %s\n", result); 
-
-    result = ft_strchr(str, '\0');
-    if (result)
-        printf("Found null terminator at: %s\n", result); 
-
-    return 0;
-}
-*/

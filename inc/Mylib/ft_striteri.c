@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:40:47 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/24 10:45:37 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:59:56 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 		i++;
 	}
 }
-/*
-#include <stdio.h>
-#include "libft.h"
-
-void sample_function(unsigned int i, char *c)
-{
-    *c = *c + 13; // por exemplo rot_13
-}
-
-int main(void)
-{
-    char str[] = "Hello, world!";
-    ft_striteri(str, sample_function);
-    printf("%s\n", str);
-    return 0;
-}
-*/

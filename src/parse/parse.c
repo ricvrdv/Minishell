@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:55:54 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/21 10:55:55 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	full_check(char *str)
@@ -25,6 +37,7 @@ int	full_check(char *str)
 		ft_putstr_fd("Misplaced operator.\n", 2);
 		return (1);
 	}
+	free(temp);
 	return (0);
 }
 

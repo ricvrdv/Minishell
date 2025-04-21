@@ -35,7 +35,7 @@ static int  export_argument(s_minishell *mini, char *arg)
     if (!arg)
         return (0);
     equal_sign = ft_strchr(arg, '=');
-    if (!equal_sign)
+    if (!equal_sign || *arg == '=')
     {
         if (!is_valid_identifier(arg))
         {
@@ -110,7 +110,6 @@ static int assign_env_var(s_minishell *mini, char *arg, char *equal_sign)
         key = ft_strdup(arg);
         return_value = 0;
     }
-    
     if (return_value && !is_valid_identifier(key))
     {
         handle_invalid_identifier(arg);
