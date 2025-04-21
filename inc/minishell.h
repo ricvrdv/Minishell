@@ -38,10 +38,10 @@ typedef enum s_type
 {
     WORD,       
     PIPE,
-    REDIRECT_L,  //redirect_in
-    REDIRECT_R,  //redirect_out
-    APPEND,      //>> append to file
-    HEREDOC,    //
+    REDIRECT_L,
+    REDIRECT_R,  
+    APPEND,      
+    HEREDOC,   
     TOKEN,
     FILE_ARG,
     CMD,
@@ -75,13 +75,12 @@ typedef struct s_env
 typedef struct s_minishell
 {
     int     created;                                    
-    char    *cur_dir;
     int     exit_status;
-    int     error_reported;
-    bool     is_child;
     int     heredoc_count;
     int     heredoc_fd;
     int     heredoc_index;                           
+    bool     is_child;
+    char    *cur_dir;
     char    **env_array;                               
     struct s_env   *env;                                
 }s_minishell;
@@ -105,7 +104,6 @@ int     check_quotes(char *str);
 int     invalid_operator(char **str);
 int     is_space(char *str);
 int     check_str(char **line);
-int     empty_quotes(const char *str);
 char    *s_spaces(char *str);
 char    *jump_spaces(char *str);
 void    quote_counter(char c, int *s_counter, int *d_counter);
@@ -168,8 +166,6 @@ void    count_pipes_redir(s_tree *tree, int *pipes);
 void    init_pipes_array(int *pipes, int flag);
 void    rename_nodes(s_tree *tree);
 int	    count_arguments(s_token *current);
-void    print_tree_status(int *pipes, s_tree *tree);
-int     check_cmd(char *cmd);
 s_tree  *especial_node(s_token **tokens, s_token *temp);
 
 
@@ -217,7 +213,6 @@ bool	should_expand(const char *str);
 bool	enclosed_single_quotes(const char *str);
 int     pipe_and_fork(int *pipefd);
 void    child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir);
-void	remove_arg(char **args, int i);
-int	    ft_strslen(char **arr);
+
 
 #endif
