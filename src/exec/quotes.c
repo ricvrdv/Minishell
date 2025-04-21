@@ -3,31 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:34 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 15:45:03 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/21 22:30:59 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	remove_quotes(char *arg, s_tree *tree)
+void remove_quotes(char *arg)
 {
-	int	len;
+    char *read_ptr;
+    char *write_ptr;
+    int in_single;
+    int in_double;
 
-	len = ft_strlen(arg);
-	if (len > 1 && arg[0] == '\'' && arg[len - 1] == '\'')
+    read_ptr = arg;
+	write_ptr = arg;
+	in_single = 0;
+	in_double = 0;
+	while (*read_ptr)
 	{
-		arg[len - 1] = '\0';
-		ft_memmove(arg, arg + 1, len - 1);
-	}
-	else if (len > 1 && arg[0] == '"' && arg[len - 1] == '"')
-	{
-		arg[len - 1] = '\0';
-		ft_memmove(arg, arg + 1, len - 1);
-		tree->d_quoute = 1;
-	}
+        if (*read_ptr == '\'' && !in_double)
+		{
+            in_single = !in_single;
+            read_ptr++;
+        } 
+        else if (*read_ptr == '"' && !in_single)
+		{
+            in_double = !in_double;
+            read_ptr++;
+        }
+        else
+			*write_ptr++ = *read_ptr++;
+    }
+    *write_ptr = '\0';
 }
 
 void	remove_trailing(char *arg)
@@ -80,7 +91,7 @@ void	clean_args(char **args, int arg_count, s_tree *tree)
 	index = 0;
 	while (index < arg_count)
 	{
-		remove_quotes(args[index], tree);
+		remove_quotes(args[index]);
 		index++;
 	}
 }

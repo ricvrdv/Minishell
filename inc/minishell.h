@@ -205,7 +205,7 @@ char    *ft_strcpy(char *dest, const char *src);
 char    *find_variable(s_minishell *mini, const char *variable);
 int     execute_heredoc(s_tree *tree, s_minishell *mini); 
 int	    exit_code(int exit_status, int write_, int exit_);
-void    remove_quotes(char *arg, s_tree *tree); 
+void    remove_quotes(char *arg); 
 
 
 
