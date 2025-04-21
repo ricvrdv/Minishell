@@ -190,7 +190,7 @@ int     handle_redirect_l(s_tree *tree);
 int     handle_append(s_tree *tree);
 void    restore_fd(int saved_stdin, int saved_stdout);
 int     redirect_fds(int in_fd, int out_fd);
-void    clean_args(char **args, int arg_count, s_tree *tree);
+void    clean_args(char **args, int arg_count);
 void    leading_quotes(char *str);
 int     count_quotes(const char *str);
 void    remove_trailing(char *arg);
@@ -205,7 +205,7 @@ char    *ft_strcpy(char *dest, const char *src);
 char    *find_variable(s_minishell *mini, const char *variable);
 int     execute_heredoc(s_tree *tree, s_minishell *mini); 
 int	    exit_code(int exit_status, int write_, int exit_);
-void    remove_quotes(char *arg, s_tree *tree); 
+void    remove_quotes(char *arg); 
 
 
 

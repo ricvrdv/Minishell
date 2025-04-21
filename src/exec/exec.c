@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 14:57:00 by Jpedro-c         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
 int	execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
@@ -81,7 +69,7 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
 	redirect_fds(in_fd, out_fd);
-	clean_args(node->args, node->argcount, node);
+	clean_args(node->args, node->argcount);
 	if (is_builtin(node->args[0])
 		&& in_fd == STDIN_FILENO && out_fd == STDOUT_FILENO)
 		status = execute_builtin(node, mini);
