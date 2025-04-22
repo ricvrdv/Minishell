@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 16:29:25 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:30:44 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	handle_variable(s_minishell *mini, const char **ptr, char **res_ptr)
 	{
 		append_value_to_result(res_ptr, value);
 		free(value);
-	}
+	}	
 	else
 		append_value_to_result(res_ptr, value);
 }
