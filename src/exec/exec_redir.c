@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:52 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 11:00:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:02:53 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	exec_redirect_l(s_tree *tree, s_minishell *mini, int out_fd)
 
 	fd = handle_redirect_l(tree);
 	if (fd == -1)
-		return (report_error(127));
+		return (report_error(1));
 	status = 0;
 	if (tree->left)
 		status = execute_node(tree->left, mini, fd, out_fd);

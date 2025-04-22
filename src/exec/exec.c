@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 14:57:00 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/22 00:25:32 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int	is_builtin(char *cmd)
 static int	handle_child(s_tree *node, s_minishell *mini)
 {
 	char	*full_path;
+	int 	status;
 
+	status = 0;
 	mini->is_child = true;
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
@@ -48,14 +50,16 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	if (!full_path)
 	{
 		ft_putstr_fd(" command not found\n", 2);
-		exit(127);
+		status = (127);
+		exit(status);
 	}
 	if (execve(full_path, node->args, mini->env_array) == -1)
 	{
 		ft_putstr_fd(" Is a directory\n", 2);
-		exit(126);
+		status = (126);
+		exit (status);
 	}
-	return (0);
+	exit (status);
 }
 
 static int	handle_parent(pid_t pid)

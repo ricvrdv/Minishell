@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:59:51 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 11:00:02 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:08:07 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 int	handle_redirect_l(s_tree *tree)
 {
 	int	fd;
-
-	fd = open(tree->right->args[0], O_RDONLY);
+	char *file;
+	
+	file = remove_quotes_redirect(tree->right->args[0]);
+	fd = open(file, O_RDONLY);
+	free(file);
 	if (fd == -1)
 	{
 		perror("Input redirection failed");
+		exit_code(1, 1, 0);
 		return (-1);
 	}
 	return (fd);
@@ -33,6 +37,7 @@ int	handle_redirect_r(s_tree *tree)
 	if (fd == -1)
 	{
 		perror("Output redirection failed");
+		exit_code(1, 1, 0);
 		return (-1);
 	}
 	return (fd);
@@ -46,7 +51,24 @@ int	handle_append(s_tree *tree)
 	if (fd == -1)
 	{
 		perror("Output redirection failed");
+		exit_code(1, 1, 0);
 		return (-1);
 	}
 	return (fd);
+}
+
+char	*remove_quotes_redirect(char *str)
+{
+	char	*new_str;
+	size_t	len;
+
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	if ((str[0] == '"' && str[len - 1] == '"') || (str[0] == '\'' && str[len - 1] == '\''))
+	{
+		new_str = ft_substr(str, 1, len - 2);
+		return (new_str);
+	}
+	return (ft_strdup(str)); // return a copy if no quotes
 }
