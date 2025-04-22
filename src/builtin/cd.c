@@ -7,7 +7,7 @@ int    mini_cd(s_minishell *mini, s_tree *node)
     char    oldpwd[PATH_MAX];
     char    *dir;
 
-    if(node->args[2])                                               //if args+ 1 we just dont execute and print error message 
+    if(node->argcount > 2)
     {
         ft_putstr_fd(" too many arguments\n", 2);
         return(1);
@@ -23,14 +23,10 @@ int    mini_cd(s_minishell *mini, s_tree *node)
     if (chdir(dir) != 0)
     {
         perror("cd");
-        free(dir);
-        return (1);
+        return (free(dir), 1);
     }
     if (!update_pwd_vars(mini, oldpwd))
-    {
-        free(dir);
-        return (1);
-    }
+        return (free(dir), 1);
     free(dir);
     sync_env_array(mini);
     return (0);

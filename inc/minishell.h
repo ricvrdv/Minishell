@@ -180,7 +180,7 @@ void	clear_env(s_env **env);
 
 //for exec   
 int     execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
-int     execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
+int     execute_pipe(s_tree *tree, s_minishell *mini);
 int     execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 char    *find_path_variable(s_minishell *mini);
 char    *find_cmd_path(const char *cmd, const char *path);

@@ -28,7 +28,7 @@ void	child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir)
 	exit(0);
 }
 
-int	execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
+int	execute_pipe(s_tree *tree, s_minishell *mini)
 {
 	int		pipefd[2];
 	int		status;
