@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 11:13:34 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/22 23:26:37 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ char	*find_cmd_path(const char *cmd, const char *path)
 	char	*half_path;
 	int		i;
 
-	if (cmd[0] == '/')
+	if (ft_strchr(cmd, '/')) // check if there's any '/' in the command
 	{
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (ft_strdup(cmd));
-		else
-			return (NULL);
+		check_cmd_access(cmd);
+		return (ft_strdup(cmd));
 	}
 	i = 0;
 	dir = ft_split(path, ':');
@@ -108,4 +106,21 @@ int	execute_builtin(s_tree *node, s_minishell *mini)
 	else
 		status = 127;
 	return (exit_code(status, 1, 0));
+}
+
+
+int	check_cmd_access(const char *cmd)
+{
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (0);
+	else if (access(cmd, F_OK) == 0)
+	{
+		ft_putstr_fd(" Permission denied\n", 2);
+		exit(126);
+	}
+	else
+	{
+		ft_putstr_fd(" No such file or directory\n", 2);
+		exit(127);
+	}
 }

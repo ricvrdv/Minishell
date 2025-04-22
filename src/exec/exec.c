@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 15:46:19 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/22 23:57:45 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 
 	status = 0;
 	mini->is_child = true;
+	if (!node->args[0] || node->args[0][0] == '\0')
+	{	
+		ft_putstr_fd(" command not found\n", 2);
+		exit(127);
+	}
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
 	full_path = find_cmd_path(node->args[0], find_path_variable(mini));
@@ -101,3 +106,4 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));
 }
+

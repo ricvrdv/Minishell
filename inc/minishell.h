@@ -220,6 +220,6 @@ char	*join_args(char **args);
 void	remove_empty_args(char **args);
 int     verify_permissions(s_tree *tree, s_minishell *mini);
 int     is_directory(const char *path);
-
+int	    check_cmd_access(const char *cmd);
 
 #endif

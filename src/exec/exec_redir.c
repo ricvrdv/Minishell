@@ -6,7 +6,7 @@
 /*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:52 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 01:02:53 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/22 23:11:22 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	exec_redirect_r(s_tree *tree, s_minishell *mini, int in_fd)
 
 	fd = handle_redirect_r(tree);
 	if (fd == -1)
-		return (report_error(127));
+		return (report_error(1));
 	status = 0;
 	if (tree->left)
 		status = execute_node(tree->left, mini, in_fd, fd);
@@ -49,7 +49,7 @@ static int	exec_heredoc(s_tree *tree, s_minishell *mini, int out_fd)
 
 	fd = handle_heredoc(tree);
 	if (fd == -1)
-		return (report_error(127));
+		return (report_error(1));
 	status = 0;
 	if (tree->left)
 		status = execute_node(tree->left, mini, fd, out_fd);
@@ -64,7 +64,7 @@ static int	exec_append(s_tree *tree, s_minishell *mini, int in_fd)
 
 	fd = handle_append(tree);
 	if (fd == -1)
-		return (report_error(127));
+		return (report_error(1));
 	status = execute_node(tree->left, mini, in_fd, fd);
 	close(fd);
 	return (status);
