@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 00:35:16 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:11:07 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir)
 	exit(status);
 }
 
-int	execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
+int	execute_pipe(s_tree *tree, s_minishell *mini)
 {
 	int		pipefd[2];
 	int		status;

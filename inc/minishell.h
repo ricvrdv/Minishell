@@ -180,7 +180,7 @@ void	clear_env(s_env **env);
 
 //for exec   
 int     execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
-int     execute_pipe(s_tree *tree, s_minishell *mini, int in_fd, int out_fd);
+int     execute_pipe(s_tree *tree, s_minishell *mini);
 int     execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 char    *find_path_variable(s_minishell *mini);
 char    *find_cmd_path(const char *cmd, const char *path);
@@ -190,7 +190,7 @@ int     handle_redirect_l(s_tree *tree);
 int     handle_append(s_tree *tree);
 void    restore_fd(int saved_stdin, int saved_stdout);
 int     redirect_fds(int in_fd, int out_fd);
-void    clean_args(char **args, int arg_count, s_tree *tree);
+void    clean_args(char **args, int arg_count);
 void    leading_quotes(char *str);
 int     count_quotes(const char *str);
 void    remove_trailing(char *arg);
@@ -214,6 +214,7 @@ bool	enclosed_single_quotes(const char *str);
 int     pipe_and_fork(int *pipefd);
 int    child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir);
 char	*remove_quotes_redirect(char *str);
+void clean_args_redirect(char **args, int arg_count);
 
 
 #endif
