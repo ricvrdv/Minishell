@@ -29,67 +29,6 @@ void remove_quotes(char *arg)
     *write_ptr = '\0';
 }
 
-/*void	remove_quotes(char *arg, s_tree *tree)
-{
-	int	len;
-
-	len = ft_strlen(arg);
-	if (len > 1 && arg[0] == '\'' && arg[len - 1] == '\'')
-	{
-		arg[len - 1] = '\0';
-		ft_memmove(arg, arg + 1, len - 1);
-	}
-	else if (len > 1 && arg[0] == '"' && arg[len - 1] == '"')
-	{
-		arg[len - 1] = '\0';
-		ft_memmove(arg, arg + 1, len - 1);
-		tree->d_quoute = 1;
-	}
-}
-*/
-void	remove_trailing(char *arg)
-{
-	int	len;
-
-	len = ft_strlen(arg);
-	while (len > 0 && arg[len - 1] == '"')
-	{
-		arg[len - 1] = '\0';
-		len--;
-	}
-}
-
-void	leading_quotes(char *str)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	while (len > 1 && str[0] == '"' && str[1] == '"')
-	{
-		ft_memmove(str, str + 2, len - 1);
-		str[len - 2] = '\0';
-		len -= 2;
-	}
-}
-
-int	count_quotes(const char *str)
-{
-	int	counter;
-	int	len;
-	int	i;
-
-	i = 0;
-	counter = 0;
-	len = ft_strlen(str);
-	while (i < len)
-	{
-		if (str[i] == '"')
-			counter++;
-		i++;
-	}
-	return (counter);
-}
-
 void	clean_args(char **args, int arg_count)
 {
 	int	index;
@@ -98,6 +37,18 @@ void	clean_args(char **args, int arg_count)
 	while (index < arg_count)
 	{
 		remove_quotes(args[index]);
+		index++;
+	}
+}
+
+void clean_args_redirect(char **args, int arg_count)
+{
+	int	index;
+
+	index = 0;
+	while (index < arg_count)
+	{
+		remove_quotes_redirect(args[index]);
 		index++;
 	}
 }

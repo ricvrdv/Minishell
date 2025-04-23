@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/22 23:57:08 by joaorema         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	expand_tree(s_minishell *mini, s_tree *tree)
@@ -41,7 +53,7 @@ static void	handle_variable(s_minishell *mini, const char **ptr, char **res_ptr)
 	{
 		append_value_to_result(res_ptr, value);
 		free(value);
-	}
+	}	
 	else
 		append_value_to_result(res_ptr, value);
 }

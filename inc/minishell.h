@@ -212,7 +212,14 @@ void    remove_quotes(char *arg);
 bool	should_expand(const char *str);
 bool	enclosed_single_quotes(const char *str);
 int     pipe_and_fork(int *pipefd);
-void    child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir);
-
+int    child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir);
+char	*remove_quotes_redirect(char *str);
+void    clean_args_redirect(char **args, int arg_count);
+char	*strip_quotes_and_join(char *input);
+char	*join_args(char **args);
+void	remove_empty_args(char **args);
+int     verify_permissions(s_tree *tree, s_minishell *mini);
+int     is_directory(const char *path);
+int	    check_cmd_access(const char *cmd);
 
 #endif

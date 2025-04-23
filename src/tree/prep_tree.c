@@ -3,14 +3,18 @@
 void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 {
 	int	counter[12];
+	int first_check;
 
+	first_check = 0;
 	rename_nodes(tree);
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
 	mini->heredoc_count = counter[2];
 	expand_tree(mini, tree);
-	*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
+	first_check = verify_permissions(tree, mini);
+	if(first_check == 0)
+		*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }
 
 void	count_pipes_redir(s_tree *tree, int *counter)
@@ -76,4 +80,59 @@ s_tree	*parse_token(s_token **tokens)
 	if (!tokens || !*tokens)
 		return (NULL);
 	return (parse_pipe(tokens));
+}
+
+
+void	remove_empty_args(char **args)
+{
+	int	i = 0;
+	int	j = 0;
+
+	while (args[i])
+	{
+		if (args[i][0] != '\0')
+		{
+			args[j++] = args[i];
+		}
+		else
+			free(args[i]); // free empty string
+		i++;
+	}
+	args[j] = NULL;
+}
+
+
+int verify_permissions(s_tree *tree, s_minishell *mini)
+{
+	int	status;
+	char *path;
+
+	path = NULL;
+	status = 0;
+	if(tree->args && !is_builtin(tree->args[0]) && (tree->file_type == READ_FILE || tree->file_type == APPEND_FILE))
+	{
+		path = find_cmd_path(tree->args[0], find_path_variable(mini));
+		if(!path)
+			return 127;
+		if(access(path, F_OK) != 0)
+			return 127;
+		if (is_directory(path))
+			return 126;
+		if (access(path, X_OK) != 0)	
+			return 126;
+		free(path);
+	}
+	//if(status == 0 && tree->left)
+	//	status = verify_permissions(tree->left, mini);
+	if(status == 0 && tree->right)
+		status = verify_permissions(tree->right, mini);
+	return (status);
+}
+
+int is_directory(const char *path)
+{
+    struct stat statbuf;
+    if (stat(path, &statbuf) != 0)
+        return 0;
+    return S_ISDIR(statbuf.st_mode);
 }

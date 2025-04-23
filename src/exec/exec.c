@@ -28,22 +28,31 @@ int	is_builtin(char *cmd)
 static int	handle_child(s_tree *node, s_minishell *mini)
 {
 	char	*full_path;
+	int 	status;
 
+	status = 0;
 	mini->is_child = true;
+	if (!node->args[0] || node->args[0][0] == '\0')
+	{	
+		ft_putstr_fd(" command not found\n", 2);
+		exit(127);
+	}
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
 	full_path = find_cmd_path(node->args[0], find_path_variable(mini));
 	if (!full_path)
 	{
 		ft_putstr_fd(" command not found\n", 2);
-		exit(127);
+		status = (127);
+		exit(status);
 	}
 	if (execve(full_path, node->args, mini->env_array) == -1)
 	{
 		ft_putstr_fd(" Is a directory\n", 2);
-		exit(126);
+		status = (126);
+		exit (status);
 	}
-	return (0);
+	exit (status);
 }
 
 static int	handle_parent(pid_t pid)
