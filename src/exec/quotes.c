@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:34 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 12:35:21 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:39:56 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,6 @@ void	clean_args(char **args, int arg_count)
 	while (index < arg_count)
 	{
 		remove_quotes(args[index]);
-		index++;
-	}
-}
-
-void clean_args_redirect(char **args, int arg_count)
-{
-	int	index;
-
-	index = 0;
-	while (index < arg_count)
-	{
-		remove_quotes_redirect(args[index]);
 		index++;
 	}
 }

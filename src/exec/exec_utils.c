@@ -6,7 +6,7 @@
 /*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 23:26:37 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:39:00 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,21 +106,4 @@ int	execute_builtin(s_tree *node, s_minishell *mini)
 	else
 		status = 127;
 	return (exit_code(status, 1, 0));
-}
-
-
-int	check_cmd_access(const char *cmd)
-{
-	if (access(cmd, F_OK | X_OK) == 0)
-		return (0);
-	else if (access(cmd, F_OK) == 0)
-	{
-		ft_putstr_fd(" Permission denied\n", 2);
-		exit(126);
-	}
-	else
-	{
-		ft_putstr_fd(" No such file or directory\n", 2);
-		exit(127);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 23:57:08 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/23 23:21:03 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	expand_tree(s_minishell *mini, s_tree *tree)
 static bool	is_expandable(const char *ptr)
 {
 	return (*ptr == '$' && *(ptr + 1)
-		&& *(ptr + 1) != '\'' && *(ptr + 1) != '"');
+		&& *(ptr + 1) != '\'' && *(ptr + 1) != '"' && *(ptr + 1) != ' ');
 }
 
 static void	handle_variable(s_minishell *mini, const char **ptr, char **res_ptr)

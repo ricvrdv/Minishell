@@ -6,7 +6,7 @@
 /*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:59:51 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 22:54:18 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:44:24 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,46 +75,4 @@ char	*remove_quotes_redirect(char *str)
 		return (new_str);
 	}
 	return (ft_strdup(str)); // return a copy if no quotes
-}
-
-char	*strip_quotes_and_join(char *input)
-{
-	char	*result;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	result = safe_malloc(ft_strlen(input) + 1);
-	while (input[i])
-	{
-		if (input[i] != '"')
-			result[j++] = input[i];
-		i++;
-	}
-	result[j] = '\0';
-	return (result);
-}
-
-char	*join_args(char **args)
-{
-	char	*joined;
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	joined = ft_strdup("");
-	if (!joined)
-		return (NULL);
-	while (args[i])
-	{
-		tmp = safe_malloc(strlen(joined) + strlen(args[i]) + 1);
-		tmp[0] = '\0';
-		strcat(tmp, joined);
-		strcat(tmp, args[i]);
-		free(joined);
-		joined = tmp;
-		i++;
-	}
-	return (joined);
 }

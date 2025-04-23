@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 16:54:08 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:48:05 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,57 +94,3 @@ s_tree	*parse_token(s_token **tokens)
 	return (parse_pipe(tokens));
 }
 
-
-void	remove_empty_args(char **args)
-{
-	int	i = 0;
-	int	j = 0;
-
-	while (args[i])
-	{
-		if (args[i][0] != '\0')
-		{
-			args[j++] = args[i];
-		}
-		else
-			free(args[i]); // free empty string
-		i++;
-	}
-	args[j] = NULL;
-}
-
-
-int verify_permissions(s_tree *tree, s_minishell *mini)
-{
-	int	status;
-	char *path;
-
-	path = NULL;
-	status = 0;
-	if(tree->args && !is_builtin(tree->args[0]) && (tree->file_type == READ_FILE || tree->file_type == APPEND_FILE))
-	{
-		path = find_cmd_path(tree->args[0], find_path_variable(mini));
-		if(!path)
-			return 127;
-		if(access(path, F_OK) != 0)
-			return 127;
-		if (is_directory(path))
-			return 126;
-		if (access(path, X_OK) != 0)	
-			return 126;
-		free(path);
-	}
-	//if(status == 0 && tree->left)
-	//	status = verify_permissions(tree->left, mini);
-	if(status == 0 && tree->right)
-		status = verify_permissions(tree->right, mini);
-	return (status);
-}
-
-int is_directory(const char *path)
-{
-    struct stat statbuf;
-    if (stat(path, &statbuf) != 0)
-        return 0;
-    return S_ISDIR(statbuf.st_mode);
-}
