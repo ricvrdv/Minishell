@@ -221,5 +221,8 @@ void	remove_empty_args(char **args);
 int     verify_permissions(s_tree *tree, s_minishell *mini);
 int     is_directory(const char *path);
 int	    check_cmd_access(const char *cmd);
+void	clean_args_expand(char **args);
+void	pre_clean_args(char **args, int *argcount);
+int     is_variable_expanding_to_null(const char *arg);
 
 #endif
