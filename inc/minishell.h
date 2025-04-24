@@ -224,5 +224,8 @@ int	    check_cmd_access(const char *cmd);
 void	clean_args_expand(char **args);
 void	pre_clean_args(char **args, int *argcount);
 int     is_variable_expanding_to_null(const char *arg);
+void	free_split(char **arr);
+
+//  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 
 #endif

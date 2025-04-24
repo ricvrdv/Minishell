@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:59:51 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/23 21:44:24 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:54:21 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,16 @@ int	handle_redirect_r(s_tree *tree)
 	
 	join = join_args(tree->right->args);
 	file = strip_quotes_and_join(join);
+	free(join);
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
+		free(file);
 		perror("Output redirection failed");
 		exit_code(1, 1, 0);
 		return (-1);
 	}
+	free(file);
 	return (fd);
 }
 

@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_is_numeric.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 16:17:22 by jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/24 11:28:59 by Jpedro-c         ###   ########.fr       */
+/*   Created: 2025/04/24 11:29:03 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/24 11:33:42 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-int	ft_isalnum(int c)
+char ft_is_numeric(const char *str)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
+	if (!str || !*str)
+		return (0);
+	if (*str == '+' || *str == '-')
+		str++;
+	if (!*str)
+		return (0);
+	while (*str)
 	{
-		return (1);
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
 	}
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:25 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 14:13:39 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:11:52 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,31 @@ static char	**create_env_array(char **envp)
 	env_array[count] = NULL;
 	return (env_array);
 }
+static void update_shell_level(s_minishell *mini)
+{
+    s_env   *shlvl_var;
+    int     current_level;
+    char    *new_level;
+
+    shlvl_var = find_env_var(mini->env, "SHLVL");
+    if (shlvl_var && shlvl_var->value)
+    {
+        current_level = ft_atoi(shlvl_var->value);
+        if (current_level < 0)
+            current_level = 0;
+        new_level = ft_itoa(current_level + 1);
+        if (!new_level)
+            exit(EXIT_FAILURE);
+        free(shlvl_var->value);
+        shlvl_var->value = new_level;
+    }
+    else
+    {
+        add_env_node(&mini->env, ft_strdup("SHLVL"), ft_itoa(1));
+        if (!mini->env->key || !mini->env->value)
+            exit(EXIT_FAILURE);
+    }
+}
 
 int	get_env(s_minishell *mini, char **envp)
 {
@@ -81,5 +106,7 @@ int	get_env(s_minishell *mini, char **envp)
 		}
 		i++;
 	}
+	update_shell_level(mini);
+	sync_env_array(mini);
 	return (1);
 }

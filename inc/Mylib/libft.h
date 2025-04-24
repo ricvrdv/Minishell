@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:55:51 by jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 11:56:28 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:32:44 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ char	*ft_strjoingnl(char const *s1, char const *s2);
 char	*ft_strchrgnl(const char *s, int c);
 char	*ft_strndup(const char *src, size_t n);
 char	*ft_strcpy(char *dest, const char *src);
+char 	ft_is_numeric(const char *str);
 
 #endif

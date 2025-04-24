@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 10:53:39 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:01:59 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,14 @@ void	free_struct(s_minishell *mini)
 		clear_env_array(&mini->env_array);
 	if (mini->env)
 		clear_env(&mini->env);
+}
+
+void	free_split(char **arr)
+{
+	int i = 0;
+	if (!arr)
+		return;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
 }

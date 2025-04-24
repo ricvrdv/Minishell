@@ -7,14 +7,14 @@ int    mini_cd(s_minishell *mini, s_tree *node)
     char    oldpwd[PATH_MAX];
     char    *dir;
 
-    if(node->args[2])                                               //if args+ 1 we just dont execute and print error message 
+    if(node->args[1] && node->args[2])                                               //if args+ 1 we just dont execute and print error message 
     {
         ft_putstr_fd(" too many arguments\n", 2);
         return(1);
     }
     if (getcwd(oldpwd, sizeof(oldpwd)) == NULL)
     {
-        perror("cd: could not get current directory");
+        perror("cd");
         return (1);
     }
     dir = get_target_dir(mini, node->args[1]);
