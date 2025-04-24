@@ -88,7 +88,7 @@ SUPPRESSION_FILE = readline.supp
 SUPPRESSION_FILE = readline.supp
 
 valgrind: $(NAME) $(SUPPRESSION_FILE)
-	@/usr/bin/valgrind --suppressions=readline --leak-check=full -s --show-leak-kinds=definite ./$(NAME) || true
+	@/usr/bin/valgrind --suppressions=$(SUPPRESSION_FILE) --leak-check=full -s --show-leak-kinds=definite,indirect,possible ./$(NAME) || true
 
 run: $(NAME)
 	@./$(NAME)

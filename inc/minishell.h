@@ -227,5 +227,5 @@ int     is_variable_expanding_to_null(const char *arg);
 void	free_split(char **arr);
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
-
+// valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all ./minishell 
 #endif
