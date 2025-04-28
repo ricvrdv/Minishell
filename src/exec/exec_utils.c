@@ -38,6 +38,7 @@ char	*find_cmd_path(const char *cmd, const char *path)
 		free(full_path);
 		i++;
 	}
+	free_split(dir);
 	return (NULL);
 }
 
@@ -94,21 +95,4 @@ int	execute_builtin(s_tree *node, s_minishell *mini)
 	else
 		status = 127;
 	return (exit_code(status, 1, 0));
-}
-
-
-int	check_cmd_access(const char *cmd)
-{
-	if (access(cmd, F_OK | X_OK) == 0)
-		return (0);
-	else if (access(cmd, F_OK) == 0)
-	{
-		ft_putstr_fd(" Permission denied\n", 2);
-		exit(126);
-	}
-	else
-	{
-		ft_putstr_fd(" No such file or directory\n", 2);
-		exit(127);
-	}
 }

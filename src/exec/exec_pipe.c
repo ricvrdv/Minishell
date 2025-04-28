@@ -35,8 +35,8 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 {
 	int		pipefd[2];
 	int		status;
-	pid_t	left_pid;
-	pid_t 	right_pid;
+	pid_t	left_pid = 0;
+	pid_t 	right_pid = 0;
 
 	pipe_and_fork(pipefd);
 	if (tree->left)
@@ -62,4 +62,20 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 	else if (WIFSIGNALED(status))
 		return (exit_code(128 + WTERMSIG(status), 1, 0));
 	return (exit_code(status, 1, 0));
+}
+
+int	check_cmd_access(const char *cmd)
+{
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (0);
+	else if (access(cmd, F_OK) == 0)
+	{
+		ft_putstr_fd(" Permission denied\n", 2);
+		exit(126);
+	}
+	else
+	{
+		ft_putstr_fd(" No such file or directory\n", 2);
+		exit(127);
+	}
 }

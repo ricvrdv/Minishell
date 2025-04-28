@@ -25,13 +25,16 @@ int	handle_redirect_r(s_tree *tree)
 	
 	join = join_args(tree->right->args);
 	file = strip_quotes_and_join(join);
+	free(join);
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
+		free(file);
 		perror("Output redirection failed");
 		exit_code(1, 1, 0);
 		return (-1);
 	}
+	free(file);
 	return (fd);
 }
 
@@ -63,46 +66,4 @@ char	*remove_quotes_redirect(char *str)
 		return (new_str);
 	}
 	return (ft_strdup(str)); // return a copy if no quotes
-}
-
-char	*strip_quotes_and_join(char *input)
-{
-	char	*result;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	result = safe_malloc(ft_strlen(input) + 1);
-	while (input[i])
-	{
-		if (input[i] != '"')
-			result[j++] = input[i];
-		i++;
-	}
-	result[j] = '\0';
-	return (result);
-}
-
-char	*join_args(char **args)
-{
-	char	*joined;
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	joined = ft_strdup("");
-	if (!joined)
-		return (NULL);
-	while (args[i])
-	{
-		tmp = safe_malloc(strlen(joined) + strlen(args[i]) + 1);
-		tmp[0] = '\0';
-		strcat(tmp, joined);
-		strcat(tmp, args[i]);
-		free(joined);
-		joined = tmp;
-		i++;
-	}
-	return (joined);
 }

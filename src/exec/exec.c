@@ -32,10 +32,13 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 
 	status = 0;
 	mini->is_child = true;
-	if (!node->args[0] || node->args[0][0] == '\0')
-	{	
+	clean_args_expand(node->args);
+	if (!node->args[0])
+		return (0); 
+	if (node->args[0][0] == '\0')
+	{
 		ft_putstr_fd(" command not found\n", 2);
-		exit(127);
+		exit(127);	
 	}
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
@@ -78,6 +81,7 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
 	redirect_fds(in_fd, out_fd);
+	pre_clean_args(node->args, &node->argcount);
 	clean_args(node->args, node->argcount);
 	if (is_builtin(node->args[0])
 		&& in_fd == STDIN_FILENO && out_fd == STDOUT_FILENO)
@@ -93,4 +97,48 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	}
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));
+}
+
+void	clean_args_expand(char **args)
+{
+	int	i = 0;
+	int	j = 0;
+
+	while (args[i])
+	{
+		if (args[i] != NULL)
+		{
+			args[j++] = args[i];
+		}
+		else
+		{
+			// Just skip NULL entry
+			// (don’t increment j)
+		}
+		i++;
+	}
+	args[j] = NULL; // terminate array properly
+}
+
+void pre_clean_args(char **args, int *argcount)
+{
+    int i = 0;
+    int j = 0;
+
+    while (args[i] != NULL) // Continue until a NULL pointer is found
+    {
+        // Check if the argument is NULL or an empty string
+        if (args[i] == NULL || ft_strcmp(args[i], "") == 0)
+        {
+            // Free the memory if necessary
+            free(args[i]);
+            (*argcount)--; // Decrement the argument count
+        }
+        else
+        {
+            args[j++] = args[i]; // Keep the argument
+        }
+        i++;
+    }
+    args[j] = NULL; // Null-terminate the cleaned array
 }

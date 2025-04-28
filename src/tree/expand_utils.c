@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 23:49:14 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/28 00:36:35 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_variable_name(const char **ptr, char *var_name)
 	}
 	else
 	{
-		while (isalnum(**ptr) || **ptr == '_')
+		while (ft_isalnum(**ptr) || **ptr == '_')
 		{
 			var_name[i++] = **ptr;
 			(*ptr)++;
@@ -69,7 +69,7 @@ bool	enclosed_single_quotes(const char *str)
 {
 	size_t	len;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	if (len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
 		return (true);
 	return (false);
