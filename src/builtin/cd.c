@@ -5,9 +5,15 @@ static int  update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir);
 int    mini_cd(s_minishell *mini, s_tree *node)
 {
     char    oldpwd[PATH_MAX];
+
     char    *dir;
 
     status = 0;
+    if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
+    {
+        perror("minishell: cd");
+        return (exit_code(1, 1, 0));
+    }
     if (node->argcount > 2)
     {
         ft_putstr_fd(" too many arguments\n", STDERR_FILENO);
