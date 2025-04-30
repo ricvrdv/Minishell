@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   add.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:56:23 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/22 15:33:49 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	add_env_node(s_env **env_list, char *key, char *value)
@@ -27,3 +39,4 @@ void	add_token_node(s_token **tokens, s_token *new_token)
 		last->next = new_token;
 	}
 }
+

@@ -38,12 +38,10 @@ char	*strip_quotes_and_join(char *input)
 	char	*result;
 	int		i;
 	int		j;
-	int 	len;
 
 	i = 0;
 	j = 0;
-	len = ft_strlen(input);
-	result = safe_malloc(len + 1);
+	result = safe_malloc(ft_strlen(input) + 1);
 	while (input[i])
 	{
 		if (input[i] != '"')

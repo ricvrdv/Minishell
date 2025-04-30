@@ -67,9 +67,9 @@ static bool is_numeric_arg_valid(const char *arg)
             return (false);
         i++;
     }
-    if (has_sign && i == 1)
+    if(has_sign && i == 1)
         return (false);
-    if (arg[0] == '+')
+    if(arg[0] == '+')
         return (is_valid_long(arg + 1));
     return (is_valid_long(arg));
 }

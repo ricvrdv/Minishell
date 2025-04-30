@@ -34,7 +34,9 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	mini->is_child = true;
 	clean_args_expand(node->args);
 	if (!node->args[0])
-		return (0); 
+	{
+		return (0); // or maybe just exit silently, depending on context
+	}
 	if (node->args[0][0] == '\0')
 	{
 		ft_putstr_fd(" command not found\n", 2);

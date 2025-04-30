@@ -14,7 +14,7 @@ int	main(int ac, char *av[], char **envp)
 	if (ac == 1 && get_env(mini, envp))
 	{
 		start_prompt(&mini);
-		ft_exit(mini, NULL);
+		ft_exit(mini, "LEAVING");
 	}
 	ft_exit(mini, "No arguments plz");
 	return (0);

@@ -6,7 +6,6 @@ int    mini_cd(s_minishell *mini, s_tree *node)
 {
     char    oldpwd[PATH_MAX];
     char    *dir;
-    int     status;
 
     status = 0;
     if (node->argcount > 2)
@@ -20,16 +19,19 @@ int    mini_cd(s_minishell *mini, s_tree *node)
         return (exit_code(1, 1, 0));
     }
     dir = get_target_dir(mini, node->args[1]);
-    if (!dir || chdir(dir) != 0)
+    if (!dir)
+        return (1);
+    if (chdir(dir) != 0)
     {
         perror("cd");
-        status = 1;
+        free(dir);
+        return (1);
     }
     else if (!update_pwd_vars(mini, oldpwd, dir))
         status = 1;
     free(dir);
     sync_env_array(mini);
-    return (exit_code(status, 1, 0));
+    return (0);
 }
 
 static int  update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir)
