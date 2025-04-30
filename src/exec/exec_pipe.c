@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/23 21:38:52 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:43:53 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int		child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir)
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
 	}
-	status = execute_node(node, mini, 0, 1);
+	status = execute_node(node->left, mini, 0, 1);
+	clear_tree(&node);
+	ft_exit(mini, "teste");
 	exit(status);
 }
 
@@ -55,13 +57,13 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 	{
 		left_pid = fork();
 		if (left_pid == 0)
-			child_process(tree->left, mini, pipefd, 0);
+			child_process(tree, mini, pipefd, 0);
 	}
 	if (tree->right)
 	{
 		right_pid = fork();
 		if (right_pid == 0)
-			child_process(tree->right, mini, pipefd, 1);
+			child_process_right(tree, mini, pipefd, 1);
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
@@ -90,4 +92,27 @@ int	check_cmd_access(const char *cmd)
 		ft_putstr_fd(" No such file or directory\n", 2);
 		exit(127);
 	}
+}
+
+int		child_process_right(s_tree *node, s_minishell *mini, int *pipefd, int dir)
+{
+	int status;
+
+	status = 0;
+	if (dir == 0)
+	{
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[1]);
+	}
+	else
+	{
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN_FILENO);
+		close(pipefd[0]);
+	}
+	status = execute_node(node->right, mini, 0, 1);
+	clear_tree(&node);
+	ft_exit(mini, "teste");
+	exit(status);
 }

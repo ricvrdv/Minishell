@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:25 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/24 16:22:57 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:16:57 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static void update_shell_level(s_minishell *mini)
     s_env   *shlvl_var;
     int     current_level;
     char    *new_level;
+	char	*key;
+	char	*value;
 
     shlvl_var = find_env_var(mini->env, "SHLVL");
     if (shlvl_var && shlvl_var->value)
@@ -76,9 +78,15 @@ static void update_shell_level(s_minishell *mini)
     }
     else
     {
-        add_env_node(&mini->env, ft_strdup("SHLVL"), ft_itoa(1));
-        if (!mini->env->key || !mini->env->value)
-            exit(EXIT_FAILURE);
+		key = ft_strdup("SHLVL");
+		value = ft_itoa(1);
+		if (!key | !value)
+		{
+			free(key);
+			free(value);
+			exit(EXIT_FAILURE);
+		}
+		add_env_node(&mini->env, key, value);
     }
 }
 

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/30 10:59:20 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:05:39 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	redirect_fds(in_fd, out_fd);
 	pre_clean_args(node->args, &node->argcount);
 	clean_args(node->args, node->argcount);
-	if (is_builtin(node->args[0])
-		&& in_fd == STDIN_FILENO && out_fd == STDOUT_FILENO)
+	if (is_builtin(node->args[0]))
 		status = execute_builtin(node, mini);
 	else
 	{
@@ -105,7 +104,9 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 			return (report_error(127));
 		if (pid == 0)
 			return (handle_child(node, mini));
+		
 		status = handle_parent(pid);
+		
 	}
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));

@@ -230,6 +230,7 @@ int     handle_heredocs(s_tree *tree);
 char	*generate_file(int index);
 char	*ft_strcat(char *dest, const char *src);
 int	found_sign(const char *str);
+int		child_process_right(s_tree *node, s_minishell *mini, int *pipefd, int dir);
 
 
 
