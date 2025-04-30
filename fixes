@@ -1,7 +1,11 @@
-exit 100 | exit 200 | exit 300 | exit 50 | exit 25
-prints exit bash does not 
-cd -> fix change folder after deletion
 
 fixed: 
 cd was having jumps 
 when executing invalid cmds i was missing a free_split but its now fixed (exec_utils)
+heredoc are working 
+can remove folder and cd still works
+exit does not print exit when not needed
+
+missing : 
+signals
+still reachable 

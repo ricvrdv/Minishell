@@ -53,6 +53,7 @@ typedef struct s_tree
     int     file_type;
     int     argcount;
     char    **args;
+    char    *hd_file;
     int     d_quoute;
     struct s_tree *left;
     struct s_tree *right;
@@ -225,7 +226,10 @@ void	clean_args_expand(char **args);
 void	pre_clean_args(char **args, int *argcount);
 int     is_variable_expanding_to_null(const char *arg);
 void	free_split(char **arr);
+int     handle_heredocs(s_tree *tree);
+char	*generate_file(int index);
+char	*ft_strcat(char *dest, const char *src);
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
-// valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all ./minishell 
+// valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 
 #endif
