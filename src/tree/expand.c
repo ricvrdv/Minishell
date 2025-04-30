@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/23 23:21:03 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:13:15 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ void	expand_tree(s_minishell *mini, s_tree *tree)
 		{
 			if (should_expand(tree->args[i]))
 			{
-				expansion = expand_variable(mini, tree->args[i]);
-				free(tree->args[i]);
-				tree->args[i] = expansion;
+				if(found_sign(tree->args[i]))
+				{
+					expansion = expand_variable(mini, tree->args[i]);
+					free(tree->args[i]);
+					tree->args[i] = expansion;
+				}
 			}
 		}
 	}
@@ -83,4 +86,21 @@ char	*expand_variable(s_minishell *mini, const char *arg)
 	}
 	*res_ptr = '\0';
 	return (result);
+}
+
+
+int	found_sign(const char *str)
+{
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
 }

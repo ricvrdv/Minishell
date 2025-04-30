@@ -229,6 +229,9 @@ void	free_split(char **arr);
 int     handle_heredocs(s_tree *tree);
 char	*generate_file(int index);
 char	*ft_strcat(char *dest, const char *src);
+int	found_sign(const char *str);
+
+
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 
