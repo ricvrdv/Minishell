@@ -6,27 +6,11 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/24 13:53:39 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:52:15 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	fd_identifier(int *counter, int index, int index_2, int con)
-{
-	if (con)
-	{
-		if (counter[index])
-			close(counter[index_2]);
-		counter[index] = 1;
-	}
-	else
-	{
-		ft_putendl_fd("err: file not found", 2);
-		counter[6] = 0;
-	}
-	return (1);
-}
 
 void	*safe_malloc(size_t bytes)
 {

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/24 15:08:41 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:06:36 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,7 @@ void	error_exit(char *error)
 	exit(1);
 }
 
-void	free_mini_struct(s_minishell *mini)
-{
-	if (mini->cur_dir)
-		free(mini->cur_dir);
-	if (mini->env_array)
-		clear_env_array(&mini->env_array);
-	if (mini->env)
-		clear_env(&mini->env);
-}
-//can remove 
+
 char	*get_dir()
 {
 	char	*currentdir;
@@ -36,32 +27,36 @@ char	*get_dir()
 	return (currentdir);
 }
 
-void	free_stuff(char *str[])
+int	found_sign(const char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
-		free(str[i++]);
-	free(str);
+	{
+		if (str[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-void	free_struct(s_minishell *mini)
+int handle_heredocs(s_tree *tree)
 {
-	if (mini->cur_dir)
-		free(mini->cur_dir);
-	if (mini->env_array)
-		clear_env_array(&mini->env_array);
-	if (mini->env)
-		clear_env(&mini->env);
-}
-
-void	free_split(char **arr)
-{
-	int i = 0;
-	if (!arr)
-		return;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
+	int fd;
+	
+	if(!tree)
+		return 1;
+	if(tree->type == HEREDOC)
+	{
+		fd = handle_heredoc(tree);
+		close(fd);	
+	}
+	if(tree->left)
+		handle_heredocs(tree->left);
+	if(tree->right)
+		handle_heredocs(tree->right);
+	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/30 12:52:34 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:44:01 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,8 @@ char	*generate_file(int index)
 	num = ft_itoa(index);
 	if (!num)
 		return (NULL);
-	len = ft_strlen(base) + ft_strlen(num) + 4; // extra for ".txt" + null byte
-	filename = malloc(len);
-	if (!filename)
-	{
-		free(num);
-		return (NULL);
-	}
+	len = ft_strlen(base) + ft_strlen(num) + 4;
+	filename = safe_malloc(len);
 	filename[0] = '\0';
 	ft_strcat(filename, base);
 	ft_strcat(filename, num);

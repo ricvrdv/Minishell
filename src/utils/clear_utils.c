@@ -1,0 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clear_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 11:48:24 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/02 12:03:27 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../inc/minishell.h"
+
+void	free_mini_struct(s_minishell *mini)
+{
+	if (mini->cur_dir)
+		free(mini->cur_dir);
+	if (mini->env_array)
+		clear_env_array(&mini->env_array);
+	if (mini->env)
+		clear_env(&mini->env);
+}
+
+void	free_struct(s_minishell *mini)
+{
+	if (mini->cur_dir)
+		free(mini->cur_dir);
+	if (mini->env_array)
+		clear_env_array(&mini->env_array);
+	if (mini->env)
+		clear_env(&mini->env);
+}
+
+void	free_split(char **arr)
+{
+	int i = 0;
+	if (!arr)
+		return;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
+
+void	clean_args_expand(char **args)
+{
+	int	i = 0;
+	int	j = 0;
+
+	while (args[i])
+	{
+		if (args[i] != NULL)
+		{
+			args[j++] = args[i];
+		}
+		else
+		{
+			// Just skip NULL entry
+			// (don’t increment j)
+		}
+		i++;
+	}
+	args[j] = NULL; // terminate array properly
+}
+
+void pre_clean_args(char **args, int *argcount)
+{
+    int i;
+    int j;
+
+	i = 0;
+	j = 0;
+    while (args[i] != NULL) 
+    {
+        if (args[i] == NULL || strcmp(args[i], "") == 0)
+        {
+            free(args[i]);
+            (*argcount)--;
+        }
+        else
+            args[j++] = args[i]; 
+        i++;
+    }
+    args[j] = NULL;
+}

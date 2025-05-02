@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/30 11:26:29 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:07:17 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,22 +98,3 @@ s_tree	*parse_token(s_token **tokens)
 		return (NULL);
 	return (parse_pipe(tokens));
 }
-
-int handle_heredocs(s_tree *tree)
-{
-	int fd;
-	
-	if(!tree)
-		return 1;
-	if(tree->type == HEREDOC)
-	{
-		fd = handle_heredoc(tree);
-		close(fd);	
-	}
-	if(tree->left)
-		handle_heredocs(tree->left);
-	if(tree->right)
-		handle_heredocs(tree->right);
-	return 0;
-}
-

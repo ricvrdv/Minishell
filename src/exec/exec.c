@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/30 16:05:39 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:20:43 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,46 +112,3 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	return (exit_code(status, 1, 0));
 }
 
-void	clean_args_expand(char **args)
-{
-	int	i = 0;
-	int	j = 0;
-
-	while (args[i])
-	{
-		if (args[i] != NULL)
-		{
-			args[j++] = args[i];
-		}
-		else
-		{
-			// Just skip NULL entry
-			// (don’t increment j)
-		}
-		i++;
-	}
-	args[j] = NULL; // terminate array properly
-}
-
-void pre_clean_args(char **args, int *argcount)
-{
-    int i = 0;
-    int j = 0;
-
-    while (args[i] != NULL) // Continue until a NULL pointer is found
-    {
-        // Check if the argument is NULL or an empty string
-        if (args[i] == NULL || strcmp(args[i], "") == 0)
-        {
-            // Free the memory if necessary
-            free(args[i]);
-            (*argcount)--; // Decrement the argument count
-        }
-        else
-        {
-            args[j++] = args[i]; // Keep the argument
-        }
-        i++;
-    }
-    args[j] = NULL; // Null-terminate the cleaned array
-}
