@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 12:20:43 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:54:08 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	if (node->args[0][0] == '\0')
 	{
 		ft_putstr_fd(" command not found\n", 2);
+		close(4);
+		close(3);
+		clear_tree(&node);
+		ft_exit_child(mini, NULL);
 		exit(127);	
 	}
 	if (is_builtin(node->args[0]))
@@ -58,12 +62,20 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	if (!full_path)
 	{
 		ft_putstr_fd(" command not found\n", 2);
+		close(4);
+		close(3);
+		clear_tree(&node);
+		ft_exit_child(mini, NULL);
 		status = (127);
 		exit(status);
 	}
 	if (execve(full_path, node->args, mini->env_array) == -1)
 	{
 		ft_putstr_fd(" Is a directory\n", 2);
+		close(3);
+		close(4);
+		clear_tree(&node);
+		ft_exit_child(mini, NULL);
 		status = (126);
 		exit (status);
 	}
@@ -106,7 +118,6 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 			return (handle_child(node, mini));
 		
 		status = handle_parent(pid);
-		
 	}
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));

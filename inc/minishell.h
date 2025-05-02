@@ -219,6 +219,7 @@ char    *ft_strcpy(char *dest, const char *src);
 bool    are_counts_odd(int d_count, int s_count);
 void	*safe_malloc(size_t bytes);
 void	error_exit(char *error);
+void	ft_exit_child(s_minishell *mini, char *error);
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 

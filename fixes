@@ -7,5 +7,6 @@ can remove folder and cd still works
 exit does not print exit when not needed
 
 missing : 
-signals
+signals (including broken pipes exemple cmd : < teste grep i > grep | <grep wc)
+when using multiples pipes still reachables .. need to fix 
 

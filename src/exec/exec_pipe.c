@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 12:10:14 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:55:07 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir)
 	}
 	status = execute_node(node->left, mini, 0, 1);
 	clear_tree(&node);
-	ft_exit(mini, NULL);
+	ft_exit_child(mini, NULL);
 	exit(status);
 }
 
@@ -116,6 +116,6 @@ int		child_process_right(s_tree *node, s_minishell *mini, int *pipefd, int dir)
 	}
 	status = execute_node(node->right, mini, 0, 1);
 	clear_tree(&node);
-	ft_exit(mini, "teste");
+	ft_exit_child(mini, NULL);
 	exit(status);
 }
