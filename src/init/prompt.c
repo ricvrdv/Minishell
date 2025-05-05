@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/23 22:11:29 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/05 08:15:20 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	start_prompt(s_minishell **mini)
 	(void)mini;
 	while (1)
 	{
+		ft_signal(PARENT_);
 		line = readline(">");
 		if (line == NULL)
 			break ;

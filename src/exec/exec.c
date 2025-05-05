@@ -90,6 +90,7 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 		status = execute_builtin(node, mini);
 	else
 	{
+		ft_signal(CHILD_);
 		pid = fork();
 		if (pid == -1)
 			return (report_error(127));

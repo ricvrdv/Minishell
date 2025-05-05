@@ -48,6 +48,15 @@ typedef enum s_type
     CMD,
 }   s_type;
 
+typedef enum e_signal
+{
+	PARENT_,
+	CHILD_,
+	HEREDOC_CHILD,
+	HEREDOC_PARENT,
+	DEFAULT_
+}	t_signal;
+
 typedef struct s_tree
 {
     s_type  type;
@@ -150,8 +159,10 @@ bool    are_counts_odd(int d_count, int s_count);
 int     str_size(char *str, char end); 
 
 //for signals
-void    handle_sigint(int sig);
-void    setup_signal_handling(void);
+//void    handle_sigint(int sig);
+//void    setup_signal_handling(void);
+void	ft_signal(int type);
+void	ft_print_signal(void);
 
 //for tree folder
 s_tree	*parse_command(s_token **tokens);
