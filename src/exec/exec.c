@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 16:54:08 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/05 13:07:16 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 		close(3);
 		clear_tree(&node);
 		ft_exit_child(mini, NULL);
-		status = (127);
-		exit(status);
+		exit_code(127, 1, 1);
 	}
 	if (execve(full_path, node->args, mini->env_array) == -1)
 	{
@@ -82,7 +81,7 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	exit (status);
 }
 
-static int	handle_parent(pid_t pid)
+int	handle_parent(pid_t pid)
 {
 	int	status;
 
@@ -109,6 +108,10 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	clean_args(node->args, node->argcount);
 	if (is_builtin(node->args[0]))
 		status = execute_builtin(node, mini);
+	else if(mini->is_child)
+	{
+		status = handle_child(node, mini);
+	}
 	else
 	{
 		pid = fork();

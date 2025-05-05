@@ -8,7 +8,6 @@ int	main(int ac, char *av[], char **envp)
 
 	(void)av;
 	exit_code(0, 1, 0);
-	setup_signal_handling();
 	mini = safe_malloc(sizeof(s_minishell));
 	init_struct(mini);
 	if (ac == 1 && get_env(mini, envp))

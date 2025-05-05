@@ -46,6 +46,14 @@ typedef enum s_type
     CMD,
 }   s_type;
 
+typedef enum e_signal
+{
+	PARENT_,
+	CHILD_,
+	HERE_SIG,
+	DEFAULT_,
+}	t_signal;
+
 typedef struct s_tree
 {
     s_type  type;
@@ -54,6 +62,7 @@ typedef struct s_tree
     char    **args;
     char    *hd_file;
     int     d_quoute;
+    int     bad_herdoc;  
     struct s_tree *left;
     struct s_tree *right;
 }s_tree;
@@ -78,7 +87,7 @@ typedef struct s_minishell
     int     exit_status;
     int     heredoc_count;
     int     heredoc_fd;
-    int     heredoc_index;                           
+    int     heredoc_index;                        
     bool     is_child;
     char    *cur_dir;
     char    **env_array;                               
@@ -179,7 +188,10 @@ int     redirect_fds(int in_fd, int out_fd);
 int     handle_heredoc(s_tree *node);
 int     count_quotes(const char *str);
 int     handle_heredocs(s_tree *tree);
-int     execute_heredoc(s_tree *tree, s_minishell *mini); 
+int     execute_heredoc(s_tree *tree, s_minishell *mini);
+int     execute_last_command(s_tree *node, s_minishell *mini, int in_fd); 
+int     create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, int *pipefd);
+int	    handle_parent(pid_t pid);
 char    *find_cmd_path(const char *cmd, const char *path);
 char    *find_path_variable(s_minishell *mini);
 char	*remove_quotes_redirect(char *str);
@@ -189,10 +201,15 @@ void    leading_quotes(char *str);
 void    remove_trailing(char *arg);
 void    read_heredoc(int fd, const char *delimiter);
 void    remove_quotes(char *arg); 
+void    wait_for_children(int *last_status);
 
 //for signals
-void    handle_sigint(int sig);
-void    setup_signal_handling(void);
+void	ft_signal(int type);
+void	sig_heredoc_parent(void);
+void	sig_heredoc_child(void);
+void	ft_print_signal(void);
+void	ft_sig_mute(void);
+
 
 //for clear
 void	clear_env(s_env **env);
