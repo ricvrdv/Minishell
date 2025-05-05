@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/05 14:59:42 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:12:35 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	handle_heredoc(s_tree *node)
 	char		*temp_file;
 	static int 		index;
 	int 	pid;
-	int status;
 
-	status = 0;
 	temp_file = generate_file(index++);
 	if(!temp_file)
 		return 1;
@@ -34,21 +32,17 @@ int	handle_heredoc(s_tree *node)
 	delimeter = node->right->args[0];
 	node->right->hd_file = temp_file;
 	pid = fork();
+	signal(SIGINT, SIG_IGN);
 	if(pid == 0)
 	{
-		ft_signal(HERE_SIG);
+		signal(SIGINT, quite_heredoc);
 		read_heredoc(fd, delimeter);
 		close(fd);
 		exit(0);
 	}
 	else
 	{
-		status = handle_parent(pid);
-		if(status == 130)
-		{
-			node->bad_herdoc = 1;
-			exit_code(130, 1, 0);
-		}
+		handle_parent(pid);
 	}
 	fd = open(temp_file, O_RDONLY);
 	return (fd);
@@ -131,3 +125,9 @@ char	*ft_strcat(char *dest, const char *src)
 	return dest;
 }
 
+void	quite_heredoc(int a)
+{
+	(void)a;
+	write(1, "\n", 1);
+	exit(0);
+}

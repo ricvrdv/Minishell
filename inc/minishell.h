@@ -204,12 +204,10 @@ void    remove_quotes(char *arg);
 void    wait_for_children(int *last_status);
 
 //for signals
-void	ft_signal(int type);
-void	sig_heredoc_parent(void);
-void	sig_heredoc_child(void);
-void	ft_print_signal(void);
-void	ft_sig_mute(void);
-
+void	handle_ctrl_c(int a);
+void	setup_signal_handlers(void);
+void	child_ctrl_c(int sig_num);
+void	quite_heredoc(int a);
 
 //for clear
 void	clear_env(s_env **env);

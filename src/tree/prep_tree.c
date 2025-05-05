@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/05 13:18:45 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:14:41 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 		first_check = handle_heredocs(tree);
 		mini->heredoc_count = 0;
 	}
-	if(tree->bad_herdoc)
-		return ;
+	signal(SIGINT, handle_ctrl_c);
 	expand_tree(mini, tree);
 	first_check = verify_permissions(tree, mini);
 	if(first_check == 0)

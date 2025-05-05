@@ -3,6 +3,7 @@
         "minishell.h": "c",
         "type_traits": "c",
         "utility": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "*.tcc": "c"
     }
 }
