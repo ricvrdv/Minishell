@@ -5,11 +5,11 @@ static int  update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir);
 int    mini_cd(s_minishell *mini, s_tree *node)
 {
     char    oldpwd[PATH_MAX];
-
+    int     status;
     char    *dir;
 
     status = 0;
-    if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
+    if (getcwd(oldpwd, sizeof(oldpwd)) == NULL)
     {
         perror("minishell: cd");
         return (exit_code(1, 1, 0));
@@ -37,7 +37,7 @@ int    mini_cd(s_minishell *mini, s_tree *node)
         status = 1;
     free(dir);
     sync_env_array(mini);
-    return (0);
+    return (status);
 }
 
 static int  update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir)

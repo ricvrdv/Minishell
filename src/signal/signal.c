@@ -26,7 +26,7 @@ static void	sig_parent_handler(int sig)
 	write(1, "\n", 1);
 	exit_code(130, 1, 0);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 	rl_redisplay();
 }
 
