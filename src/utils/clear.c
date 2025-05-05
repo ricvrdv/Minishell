@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:14 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 10:53:15 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/02 14:21:23 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ void	clear_tree(s_tree **tree)
 			i++;
 		}
 		free((*tree)->args);
+	}
+	if ((*tree)->hd_file)
+	{
+		free((*tree)->hd_file);
+		(*tree)->hd_file = NULL;
 	}
 	free(*tree);
 	*tree = NULL;

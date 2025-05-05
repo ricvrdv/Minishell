@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 10:55:59 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/04/24 13:56:33 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	quote_counter(char c, int *s_counter, int *d_counter)
@@ -38,10 +50,12 @@ char	*strip_quotes_and_join(char *input)
 	char	*result;
 	int		i;
 	int		j;
+	int 	len;
 
 	i = 0;
 	j = 0;
-	result = safe_malloc(ft_strlen(input) + 1);
+	len = ft_strlen(input);
+	result = safe_malloc(len + 1);
 	while (input[i])
 	{
 		if (input[i] != '"')

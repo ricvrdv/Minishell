@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/05 13:07:16 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
@@ -34,12 +46,14 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	mini->is_child = true;
 	clean_args_expand(node->args);
 	if (!node->args[0])
-	{
-		return (0); // or maybe just exit silently, depending on context
-	}
+		return (0); 
 	if (node->args[0][0] == '\0')
 	{
 		ft_putstr_fd(" command not found\n", 2);
+		close(4);
+		close(3);
+		clear_tree(&node);
+		ft_exit_child(mini, NULL);
 		exit(127);	
 	}
 	if (is_builtin(node->args[0]))
@@ -48,19 +62,26 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	if (!full_path)
 	{
 		ft_putstr_fd(" command not found\n", 2);
-		status = (127);
-		exit(status);
+		close(4);
+		close(3);
+		clear_tree(&node);
+		ft_exit_child(mini, NULL);
+		exit_code(127, 1, 1);
 	}
 	if (execve(full_path, node->args, mini->env_array) == -1)
 	{
 		ft_putstr_fd(" Is a directory\n", 2);
+		close(3);
+		close(4);
+		clear_tree(&node);
+		ft_exit_child(mini, NULL);
 		status = (126);
 		exit (status);
 	}
 	exit (status);
 }
 
-static int	handle_parent(pid_t pid)
+int	handle_parent(pid_t pid)
 {
 	int	status;
 
@@ -85,63 +106,23 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	redirect_fds(in_fd, out_fd);
 	pre_clean_args(node->args, &node->argcount);
 	clean_args(node->args, node->argcount);
-	if (is_builtin(node->args[0])
-		&& in_fd == STDIN_FILENO && out_fd == STDOUT_FILENO)
+	if (is_builtin(node->args[0]))
 		status = execute_builtin(node, mini);
+	else if(mini->is_child)
+	{
+		status = handle_child(node, mini);
+	}
 	else
 	{
-		ft_signal(CHILD_);
 		pid = fork();
 		if (pid == -1)
 			return (report_error(127));
 		if (pid == 0)
 			return (handle_child(node, mini));
+		
 		status = handle_parent(pid);
 	}
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));
 }
 
-void	clean_args_expand(char **args)
-{
-	int	i = 0;
-	int	j = 0;
-
-	while (args[i])
-	{
-		if (args[i] != NULL)
-		{
-			args[j++] = args[i];
-		}
-		else
-		{
-			// Just skip NULL entry
-			// (don’t increment j)
-		}
-		i++;
-	}
-	args[j] = NULL; // terminate array properly
-}
-
-void pre_clean_args(char **args, int *argcount)
-{
-    int i = 0;
-    int j = 0;
-
-    while (args[i] != NULL) // Continue until a NULL pointer is found
-    {
-        // Check if the argument is NULL or an empty string
-        if (args[i] == NULL || ft_strcmp(args[i], "") == 0)
-        {
-            // Free the memory if necessary
-            free(args[i]);
-            (*argcount)--; // Decrement the argument count
-        }
-        else
-        {
-            args[j++] = args[i]; // Keep the argument
-        }
-        i++;
-    }
-    args[j] = NULL; // Null-terminate the cleaned array
-}

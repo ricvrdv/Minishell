@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/28 01:16:35 by applecore        ###   ########.fr       */
+/*   Updated: 2025/05/02 16:53:25 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,6 @@ void	error_exit(char *error)
 	exit(1);
 }
 
-void	free_mini_struct(s_minishell *mini)
-{
-	if (mini->cur_dir)
-		free(mini->cur_dir);
-	if (mini->env_array)
-		clear_env_array(&mini->env_array);
-	if (mini->env)
-		clear_env(&mini->env);
-}
 
 char	*get_dir()
 {
@@ -36,32 +27,46 @@ char	*get_dir()
 	return (currentdir);
 }
 
-void	free_stuff(char *str[])
+int	found_sign(const char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
-		free(str[i++]);
-	free(str);
+	{
+		if (str[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-void	free_struct(s_minishell *mini)
+int handle_heredocs(s_tree *tree)
 {
-	if (mini->cur_dir)
-		free(mini->cur_dir);
-	if (mini->env_array)
-		clear_env_array(&mini->env_array);
-	if (mini->env)
-		clear_env(&mini->env);
+	int fd;
+	
+	if(!tree)
+		return 1;
+	if(tree->type == HEREDOC)
+	{
+		fd = handle_heredoc(tree);
+		close(fd);	
+	}
+	if(tree->left)
+		handle_heredocs(tree->left);
+	if(tree->right)
+		handle_heredocs(tree->right);
+	return 0;
 }
 
-void	free_split(char **arr)
+void	ft_exit_child(s_minishell *mini, char *error)
 {
-	int i = 0;
-	if (!arr)
-		return;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
+	if (mini->created)
+		free_mini_struct(mini);
+	if (error)
+		printf(RED "%s\n" RESET, error);
+	clear_history();
+	free(mini);
 }

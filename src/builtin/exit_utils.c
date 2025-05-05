@@ -86,6 +86,11 @@ static void	ft_ltoa_buf(long n, char *buf)
         ft_strlcpy(buf, "-9223372036854775808", 22);
         return ;
     }
+	if (n < 0)
+    {
+        n = -n; 										// was having conditional jump : at 0x10CA25: ft_ltoa_buf (exit_utils.c:99)
+        buf[0] = '-';
+    }
 	while (n)
 	{
 		if (n > 0)

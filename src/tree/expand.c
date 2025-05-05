@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/28 00:45:39 by applecore        ###   ########.fr       */
+/*   Updated: 2025/05/02 12:06:23 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ void	expand_tree(s_minishell *mini, s_tree *tree)
 		{
 			if (should_expand(tree->args[i]))
 			{
-				expansion = expand_variable(mini, tree->args[i]);
-				free(tree->args[i]);
-				tree->args[i] = expansion;
+				if(found_sign(tree->args[i]))
+				{
+					expansion = expand_variable(mini, tree->args[i]);
+					free(tree->args[i]);
+					tree->args[i] = expansion;
+				}
 			}
 		}
 	}

@@ -16,7 +16,13 @@ int    mini_exit(s_minishell *mini, s_tree *node)
     if (arg_offset == -1)
     {
         free_struct(mini);
+        free(mini);
+        clear_history();
+        clear_tree(&node);
+        close(4);
+        close(3);
         exit_code(exit_code(0, 0, 0), 0, 1);
+
     }
     if (!is_numeric_arg_valid(node->args[arg_offset]))
     {
