@@ -5,6 +5,73 @@ static int  update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir);
 int    mini_cd(s_minishell *mini, s_tree *node)
 {
     char    oldpwd[PATH_MAX];
+    char    *dir;
+    int     status;
+    
+    status = 0;
+    if (node->argcount > 2)
+    {
+        ft_putstr_fd(" too many arguments\n", STDERR_FILENO);
+        return (exit_code(1, 1, 0));
+    }
+    if (!mini->cur_dir
+        || ft_strlcpy(oldpwd, mini->cur_dir, sizeof(oldpwd)) >= sizeof(oldpwd))
+    {
+        ft_putstr_fd("cd: current directory not set\n", STDERR_FILENO);
+        return (exit_code(1, 1, 0));
+    }
+    dir = get_target_dir(mini, node->args[1]);
+    if (!dir || chdir(dir) != 0)
+    {
+        if (dir && ft_strcmp(dir, "-") == 0)
+            ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
+        else
+            perror("cd");
+        status = 1;
+    }
+    else if (!update_pwd_vars(mini, oldpwd, dir))
+        status = 1;
+    free(dir);
+    sync_env_array(mini);
+    return (exit_code(status, 1, 0));
+}
+
+static int  update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir)
+{
+    char    cwd[PATH_MAX];
+    char    *new_pwd;
+
+    if (getcwd(cwd, sizeof(cwd)) == NULL)
+    {
+        if (dir[0] == '/')
+        {
+            new_pwd = ft_strdup(dir);
+            if (!new_pwd)
+                return (0);
+        }
+        else
+        {
+            perror("cd: could not get current directory");
+            return (0);
+        }
+    }
+    else
+    {
+        new_pwd = ft_strdup(cwd);
+        if (!new_pwd)
+            return (0);
+    }
+    update_env_var(&mini->env, "OLDPWD", oldpwd);
+    update_env_var(&mini->env, "PWD", new_pwd);
+    free(mini->cur_dir);
+    mini->cur_dir = new_pwd;
+    return (1);
+}
+
+/*
+int    mini_cd(s_minishell *mini, s_tree *node)
+{
+    char    oldpwd[PATH_MAX];
     int     status;
     char    *dir;
 
@@ -70,4 +137,4 @@ static int  update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir)
     free(mini->cur_dir);
     mini->cur_dir = new_pwd;
     return (1);
-}
+}*/
