@@ -21,6 +21,8 @@ int    mini_exit(s_minishell *mini, s_tree *node)
         clear_tree(&node);
         close(4);
         close(3);
+        close(5);
+        close(6);
         exit_code(exit_code(0, 0, 0), 0, 1);
 
     }
