@@ -236,6 +236,8 @@ void	*safe_malloc(size_t bytes);
 void	error_exit(char *error);
 void	ft_exit_child(s_minishell *mini, char *error);
 
+bool	is_dollar_in_single_quotes(const char *str);
+
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 
 
