@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-static int		count_env_vars(s_env *env);
 static s_env	**env_list_to_array(s_env *env, int count);
 static void		sort_env_array(s_env **array, int count);
 static void		print_env_entry(s_env *env);
@@ -23,7 +22,12 @@ void	print_sorted_env(s_env *env)
 	int		i;
 	s_env	**array;
 
-	count = count_env_vars(env);
+	count = 0;
+	while (env)
+	{
+		count++;
+		env = env->next;
+	}
 	array = env_list_to_array(env, count);
 	if (!array)
 		return ;
@@ -35,19 +39,6 @@ void	print_sorted_env(s_env *env)
 		i++;
 	}
 	free(array);
-}
-
-static int	count_env_vars(s_env *env)
-{
-	int	count;
-
-	count = 0;
-	while (env)
-	{
-		count++;
-		env = env->next;
-	}
-	return (count);
 }
 
 static s_env	**env_list_to_array(s_env *env, int count)
@@ -103,4 +94,20 @@ static void	print_env_entry(s_env *env)
 		ft_putstr_fd("\"", STDOUT_FILENO);
 	}
 	ft_putchar_fd('\n', STDOUT_FILENO);
+}
+
+int	is_valid_identifier(const char *str)
+{
+	if (!str || !*str)
+		return (0);
+	if (*str == '=')
+		return (0);
+	if (!ft_isalpha(*str) && *str != '_')
+		return (0);
+	while (*++str)
+	{
+		if (!ft_isalnum(*str) && *str != '_')
+			return (0);
+	}
+	return (1);
 }

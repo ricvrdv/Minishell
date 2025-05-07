@@ -18,7 +18,6 @@ void	error_exit(char *error)
 	exit(1);
 }
 
-
 char	*get_dir()
 {
 	char	*currentdir;

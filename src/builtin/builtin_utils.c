@@ -6,11 +6,15 @@
 /*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:06:26 by rjesus-d          #+#    #+#             */
-/*   Updated: 2025/05/07 13:06:28 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:39:23 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static s_env	*create_env_node(const char *key, const char *value);
+static char		**build_env_array(s_env *env, int count);
+static char		*join_key_value(s_env *env);
 
 s_env	*find_env_var(s_env *env, const char *key)
 {
@@ -21,6 +25,29 @@ s_env	*find_env_var(s_env *env, const char *key)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+static s_env	*create_env_node(const char *key, const char *value)
+{
+	s_env	*new;
+
+	new = malloc(sizeof(s_env));
+	if (!new)
+		exit(EXIT_FAILURE);
+	new->key = ft_strdup(key);
+	if (value)
+		new->value = ft_strdup(value);
+	else
+		new->value = NULL;
+	if (!new->key || (value && !new->value))
+	{
+		free(new->key);
+		free(new->value);
+		free(new);
+		exit(EXIT_FAILURE);
+	}
+	new->next = NULL;
+	return (new);
 }
 
 void	update_env_var(s_env **env, const char *key, const char *value)
@@ -41,100 +68,8 @@ void	update_env_var(s_env **env, const char *key, const char *value)
 	}
 	else
 	{
-		new_var = malloc(sizeof(s_env));
-		if (!new_var)
-			exit(EXIT_FAILURE);
-		new_var->key = ft_strdup(key);
-		if (value)
-			new_var->value = ft_strdup(value);
-		else
-			new_var->value = NULL;
-		if (!new_var->key || (value && !new_var->value))
-		{
-			free(new_var->key);
-			free(new_var);
-			exit(EXIT_FAILURE);
-		}
+		new_var = create_env_node(key, value);
 		new_var->next = *env;
 		*env = new_var;
 	}
-}
-
-void	sync_env_array(s_minishell *mini)
-{
-	int		count;
-	s_env	*current;
-	char	**new_array;
-	int		i;
-	char	*tmp;
-
-	if (!mini)
-		return ;
-	free_array(mini->env_array);
-	mini->env_array = NULL;
-	count = 0;
-	current = mini->env;
-	i = 0;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	new_array = malloc((count + 1) * sizeof(char *));
-	if (!new_array)
-		return ;
-	current = mini->env;
-	while (current)
-	{
-		if (current->value)
-		{
-			tmp = ft_strjoin(current->key, "=");
-			if (!tmp)
-			{
-				free_array(new_array);
-				return ;
-			}
-			new_array[i] = ft_strjoin(tmp, current->value);
-			free(tmp);
-		}
-		else
-			new_array[i] = ft_strdup(current->key);
-		if (!new_array[i])
-		{
-			free_array(new_array);
-			return ;
-		}
-		i++;
-		current = current->next;
-	}
-	new_array[i] = NULL;
-	mini->env_array = new_array;
-}
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	if (!array)
-		return ;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
-
-int	is_valid_identifier(const char *str)
-{
-	if (!str || !*str)
-		return (0);
-	if (*str == '=')
-		return (0);
-	if (!ft_isalpha(*str) && *str != '_')
-		return (0);
-	while (*++str)
-	{
-		if (!ft_isalnum(*str) && *str != '_')
-			return (0);
-	}
-	return (1);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 15:47:56 by rjesus-d          #+#    #+#             */
+/*   Updated: 2025/05/07 16:35:53 by rjesus-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static int	ft_numlen(long n);
@@ -12,7 +24,7 @@ int	is_valid_long(const char *str)
 		str++;
 	if (ft_strcmp(str, "-9223372036854775808") == 0)
 		return (1);
-    n = ft_atol(str);
+	n = ft_atol(str);
 	ft_ltoa_buf(n, buf);
 	if (*str == '-' && ft_strcmp(str, buf) == 0)
 		return (1);
@@ -21,11 +33,11 @@ int	is_valid_long(const char *str)
 	return (0);
 }
 
-long    ft_atol(const char *nptr)
+long	ft_atol(const char *nptr)
 {
-	int	    i;
+	int		i;
 	long	result;
-	int	    sign;
+	int		sign;
 
 	i = 0;
 	result = 0;
@@ -39,13 +51,13 @@ long    ft_atol(const char *nptr)
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		if (result > (LONG_MAX - (nptr[i] - '0')) / 10)
-        {
-            if (sign == 1)
-                return (LONG_MAX);
-            else
-                return (LONG_MIN);
-        }
-        result = result * 10 + (nptr[i] - '0');
+		{
+			if (sign == 1)
+				return (LONG_MAX);
+			else
+				return (LONG_MIN);
+		}
+		result = result * 10 + (nptr[i] - '0');
 		i++;
 	}
 	return (sign * result);
@@ -53,8 +65,9 @@ long    ft_atol(const char *nptr)
 
 static int	ft_numlen(long n)
 {
-	int	len = 0;
+	int	len;
 
+	len = 0;
 	if (n == 0)
 		return (1);
 	if (n < 0)
@@ -73,24 +86,24 @@ static void	ft_ltoa_buf(long n, char *buf)
 	int		i;
 
 	len = ft_numlen(n);
-    i = len;
-    buf[i] = '\0';
+	i = len;
+	buf[i] = '\0';
 	if (n == 0)
 	{
 		buf[0] = '0';
 		buf[1] = '\0';
 		return ;
 	}
-    if (n == LONG_MIN)
-    {
-        ft_strlcpy(buf, "-9223372036854775808", 22);
-        return ;
-    }
+	if (n == LONG_MIN)
+	{
+		ft_strlcpy(buf, "-9223372036854775808", 22);
+		return ;
+	}
 	if (n < 0)
-    {
-        n = -n; 										// was having conditional jump : at 0x10CA25: ft_ltoa_buf (exit_utils.c:99)
-        buf[0] = '-';
-    }
+	{
+		n = -n;
+		buf[0] = '-';
+	}
 	while (n)
 	{
 		if (n > 0)
