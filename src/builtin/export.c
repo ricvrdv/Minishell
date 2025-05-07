@@ -3,7 +3,7 @@
 static int export_argument(s_minishell *mini, char *arg);
 static int append_to_env_var(s_minishell *mini, char *arg, char *plus_sign);
 static int assign_env_var(s_minishell *mini, char *arg, char *equal_sign);
-static void handle_invalid_identifier(char *arg);
+static int	append_to_existing_or_create(s_minishell *mini, char *key, char *value);
 
 int    mini_export(s_minishell *mini, s_tree *node)
 {
@@ -39,7 +39,9 @@ static int  export_argument(s_minishell *mini, char *arg)
     {
         if (!is_valid_identifier(arg))
         {
-            handle_invalid_identifier(arg);
+            ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+    		ft_putstr_fd(arg, STDERR_FILENO);
+    		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
             return (0);
         }
         if (!find_env_var(mini->env, arg))
@@ -53,44 +55,44 @@ static int  export_argument(s_minishell *mini, char *arg)
         return (assign_env_var(mini, arg, equal_sign));
 }
 
-static int  append_to_env_var(s_minishell *mini, char *arg, char *plus_sign)
+static int	append_to_existing_or_create(s_minishell *mini, char *key, char *value)
 {
-    char    *key;
-    char    *value;
-    char    *new_value;
-    s_env   *var;
+	s_env	*var;
+	char	*new_value;
 
-    key = ft_substr(arg, 0, plus_sign - arg);
-    value = ft_strdup(plus_sign + 2);
-    if (!key || !value)
-    {
-        free(key);
-        free(value);
-        return (0);
-    }
-    if (!is_valid_identifier(key))
-    {
-        handle_invalid_identifier(key);
-        return (free(key), free(value), 0);
-    }
-    var = find_env_var(mini->env, key);
-    if (var)
-    {
-        new_value = ft_strjoin(var->value, value);
-        if (!new_value)
-            return (free(key), free(value), 0);
-        else
-        {
-            free(var->value);
-            var->value = new_value;
-        }
-    }
-    else
-    {
-        update_env_var(&mini->env, key, value);
-        return (free(value), free(key), 1);
-    }
-    return (free(key), free(value), 1);
+	var = find_env_var(mini->env, key);
+	if (var)
+	{
+		new_value = ft_strjoin(var->value, value);
+		if (!new_value)
+			return (free(key), free(value), 0);
+		free(var->value);
+		var->value = new_value;
+	}
+	else
+		update_env_var(&mini->env, key, value);
+	free(key);
+	free(value);
+	return (1);
+}
+
+static int	append_to_env_var(s_minishell *mini, char *arg, char *plus_sign)
+{
+	char	*key;
+	char	*value;
+
+	key = ft_substr(arg, 0, plus_sign - arg);
+	value = ft_strdup(plus_sign + 2);
+	if (!key || !value)
+		return (free(key), free(value), 0);
+	if (!is_valid_identifier(key))
+	{
+		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+    	ft_putstr_fd(key, STDERR_FILENO);
+    	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+		return (free(key), free(value), 0);
+	}
+	return (append_to_existing_or_create(mini, key, value));
 }
 
 static int assign_env_var(s_minishell *mini, char *arg, char *equal_sign)
@@ -112,18 +114,12 @@ static int assign_env_var(s_minishell *mini, char *arg, char *equal_sign)
     }
     if (return_value && !is_valid_identifier(key))
     {
-        handle_invalid_identifier(arg);
+        ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+    	ft_putstr_fd(arg, STDERR_FILENO);
+    	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
         return (0);
     }
     if (return_value)
         update_env_var(&mini->env, key, value);
     return (free(key), free(value), return_value);
-}
-
-
-static void handle_invalid_identifier(char *arg)
-{
-    ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-    ft_putstr_fd(arg, STDERR_FILENO);
-    ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }

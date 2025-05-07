@@ -24,6 +24,11 @@ char	*get_dir()
 	char	*currentdir;
 
 	currentdir = getcwd(NULL, 1024);
+	if (!currentdir)
+    {
+        perror("minishell: failed to get current directory");
+        return (NULL);
+    }
 	return (currentdir);
 }
 
