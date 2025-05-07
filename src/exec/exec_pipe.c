@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/05 11:21:57 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:14:15 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,15 @@ int execute_pipe(s_tree *tree, s_minishell *mini)
 	int pipefd[2];
 	int in_fd;
 	int status;
-	s_tree *current;
 
 	in_fd = 0;
 	status = 0;
-	current = tree;
-	while (current->type == PIPE)
+	while (tree->type == PIPE)
 	{
-		in_fd = create_and_fork_command(current, mini, in_fd, pipefd);
-		current = current->right;
+		in_fd = create_and_fork_command(tree, mini, in_fd, pipefd);
+		tree = tree->right;
 	}
-	execute_last_command(current, mini, in_fd);
+	execute_last_command(tree, mini, in_fd);
 	wait_for_children(&status);
 	return exit_code(WEXITSTATUS(status), 1, 0);
 }

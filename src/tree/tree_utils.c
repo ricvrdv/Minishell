@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 14:25:26 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:13:27 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ s_tree	*new_tree_node(s_type type)
 	node->type = type;
 	node->file_type = 0;
 	node->argcount = 0;
+	node->bad_herdoc = 0;
 	node->args = NULL;
 	node->left = NULL;
 	node->right = NULL;
@@ -41,6 +42,7 @@ s_tree	*create_arg_node(s_token *token)
 	node->left = NULL;
 	node->right = NULL;
 	node->hd_file = NULL;
+	node->bad_herdoc = 0;
 	free(token);
 	return (node);
 }
@@ -56,6 +58,7 @@ s_tree	*create_redirection_node(s_token **tokens, s_token *temp)
 	redi_node->right = create_arg_node(temp->next);
 	redi_node->argcount = 0;
 	redi_node->hd_file = NULL;
+	redi_node->bad_herdoc = 0;
 	free(temp->value);
 	free(temp);
 	return (redi_node);
@@ -70,6 +73,7 @@ s_tree	*especial_node(s_token **tokens, s_token *temp)
 	redi_node->file_type = 0;
 	redi_node->right = create_arg_node(temp->next);
 	redi_node->hd_file = NULL;
+	redi_node->bad_herdoc = 0;
 	free(temp->value);
 	free(temp);
 	return (redi_node);

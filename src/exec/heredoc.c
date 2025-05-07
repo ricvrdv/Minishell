@@ -6,20 +6,22 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/05 16:12:35 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:02:41 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	handle_heredoc(s_tree *node)
+int	handle_heredoc(s_tree *node, s_minishell *mini, s_tree *first)
 {
 	int			fd;
 	const char	*delimeter;
 	char		*temp_file;
 	static int 		index;
 	int 	pid;
-
+	int status;
+	
+	status = 0;
 	temp_file = generate_file(index++);
 	if(!temp_file)
 		return 1;
@@ -37,12 +39,22 @@ int	handle_heredoc(s_tree *node)
 	{
 		signal(SIGINT, quite_heredoc);
 		read_heredoc(fd, delimeter);
+		clear_tree(&first);
+		ft_exit_child(mini, NULL);
 		close(fd);
+		close(3);
+		close(4);
 		exit(0);
 	}
 	else
 	{
-		handle_parent(pid);
+		waitpid(pid, &status, 0);
+		signal(SIGINT, SIG_DFL);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		{
+			node->bad_herdoc = 1; // or return -1 if you prefer
+			return (-1);
+		}
 	}
 	fd = open(temp_file, O_RDONLY);
 	return (fd);
@@ -81,7 +93,7 @@ int	execute_heredoc(s_tree *tree, s_minishell *mini)
 		return (-1);
 	if (tree->type == HEREDOC)
 	{
-		fd = handle_heredoc(tree);
+		fd = handle_heredoc(tree, mini, tree);
 		if (fd == -1)
 		{
 			report_error(127);
