@@ -8,5 +8,6 @@ exit does not print exit when not needed
 
 missing : 
 signals (including broken pipes exemple cmd : < teste grep i > grep | <grep wc) leaks atm need to fi
+some fds open when doing heredocs with redirections and multiple pipes
 
 

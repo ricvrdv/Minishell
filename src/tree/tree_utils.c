@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 10:13:27 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:45:31 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ s_tree	*especial_node(s_token **tokens, s_token *temp)
 	redi_node = new_tree_node((*tokens)->type);
 	*tokens = (*tokens)->next->next;
 	redi_node->file_type = 0;
+	redi_node->left = parse_redirect(tokens);
 	redi_node->right = create_arg_node(temp->next);
 	redi_node->hd_file = NULL;
 	redi_node->bad_herdoc = 0;
