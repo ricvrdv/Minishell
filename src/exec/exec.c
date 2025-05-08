@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/05 13:07:16 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:38:58 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,44 +40,22 @@ int	is_builtin(char *cmd)
 static int	handle_child(s_tree *node, s_minishell *mini)
 {
 	char	*full_path;
-	int 	status;
+	int		status;
 
 	status = 0;
 	mini->is_child = true;
 	clean_args_expand(node->args);
 	if (!node->args[0])
-		return (0); 
+		return (0);
 	if (node->args[0][0] == '\0')
-	{
-		ft_putstr_fd(" command not found\n", 2);
-		close(4);
-		close(3);
-		clear_tree(&node);
-		ft_exit_child(mini, NULL);
-		exit(127);	
-	}
+		invalid_cmd(node, mini);
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
 	full_path = find_cmd_path(node->args[0], find_path_variable(mini));
 	if (!full_path)
-	{
-		ft_putstr_fd(" command not found\n", 2);
-		close(4);
-		close(3);
-		clear_tree(&node);
-		ft_exit_child(mini, NULL);
-		exit_code(127, 1, 1);
-	}
+		invalid_cmd(node, mini);	
 	if (execve(full_path, node->args, mini->env_array) == -1)
-	{
-		ft_putstr_fd(" Is a directory\n", 2);
-		close(3);
-		close(4);
-		clear_tree(&node);
-		ft_exit_child(mini, NULL);
-		status = (126);
-		exit (status);
-	}
+		execve_fail(node, mini);
 	exit (status);
 }
 
@@ -100,18 +78,18 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	int			saved_stdout;
 	pid_t		pid;
 
-	status = 0;
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
 	redirect_fds(in_fd, out_fd);
 	pre_clean_args(node->args, &node->argcount);
 	clean_args(node->args, node->argcount);
 	if (is_builtin(node->args[0]))
-		status = execute_builtin(node, mini);
-	else if(mini->is_child)
 	{
-		status = handle_child(node, mini);
+		status = execute_builtin(node, mini);
+		exit_code(status, 1, 0);
 	}
+	else if (mini->is_child)
+		status = handle_child(node, mini);
 	else
 	{
 		pid = fork();
@@ -119,10 +97,8 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 			return (report_error(127));
 		if (pid == 0)
 			return (handle_child(node, mini));
-		
 		status = handle_parent(pid);
 	}
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));
 }
-

@@ -1,7 +1,6 @@
 #include "../../inc/minishell.h"
 
 static int	ft_numlen(long n);
-static long	atol_digit_accumulate(const char *str, int sign);
 static void	fill_ltoa_buf(long n, char *buf, int i);
 static void	ft_ltoa_buf(long n, char *buf);
 
@@ -21,48 +20,6 @@ int	is_valid_long(const char *str)
 	if (*str != '-' && ft_strcmp(str, buf + (*buf == '+')) == 0)
 		return (1);
 	return (0);
-}
-
-long	ft_atol(const char *nptr)
-{
-	int		i;
-	int		sign;
-	long	result;
-
-	i = 0;
-	sign = 1;
-	result = 0;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
-		i++;
-	if (nptr[i] == '-')
-		sign = -1;
-	if (nptr[i] == '-' || nptr[i] == '+')
-		i++;
-	return (sign * atol_digit_accumulate(nptr + i, sign));
-}
-
-static long	atol_digit_accumulate(const char *str, int sign)
-{
-	long	result;
-	int		i;
-	int		digit;
-
-	result = 0;
-	i = 0;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		digit = str[i] - '0';
-		if (result > (LONG_MAX - digit) / 10)
-		{
-			if (sign == 1)
-				return (LONG_MAX);
-			else
-				return (LONG_MIN);
-		}
-		result = result * 10 + digit;
-		i++;
-	}
-	return (result);
 }
 
 static int	ft_numlen(long n)

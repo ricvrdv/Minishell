@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:54 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 12:09:44 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 11:16:58 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,24 @@ int	check_pipe(char *str)
 }
 
 int	check_quotes(char *str)
+{
+	char	type;
+
+	type = 0;
+	while (*str)
+	{
+		if (*str == '\'' || *str == '\"')
+		{
+			if (type == *str)
+				type = 0;
+			else if (!type)
+				type = *str;
+		}
+		str++;
+	}
+	return (type != 0);
+}
+int	check_quotes_2(const char *str)
 {
 	char	type;
 

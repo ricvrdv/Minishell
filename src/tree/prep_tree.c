@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/05 13:18:45 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:49:10 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 	mini->heredoc_count = counter[2];
 	while(mini->heredoc_count)
 	{
-		first_check = handle_heredocs(tree);
+		first_check = handle_heredocs(tree, mini, tree);
 		mini->heredoc_count = 0;
 	}
+	signal(SIGINT, handle_ctrl_c);
 	if(tree->bad_herdoc)
-		return ;
+	{
+		return ;	
+	}
 	expand_tree(mini, tree);
 	first_check = verify_permissions(tree, mini);
 	if(first_check == 0)
@@ -59,7 +62,7 @@ void	init_pipes_array(int *counter, int flag)
 
 	i = 0;
 	if (flag)
-		while (i < 12)
+		while (i < 6)
 			counter[i++] = 0;
 	else if (counter[5])
 		counter[0] = counter[0] + 1;

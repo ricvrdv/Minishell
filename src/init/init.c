@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:25 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 12:05:11 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:12:21 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static char	**create_env_array(char **envp)
 	env_array[count] = NULL;
 	return (env_array);
 }
+
 
 int	get_env(s_minishell *mini, char **envp)
 {

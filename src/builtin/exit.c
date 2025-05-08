@@ -12,6 +12,11 @@ int	mini_exit(s_minishell *mini, s_tree *node)
 
 	if (!mini->is_child)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
+	if (mini->is_child)
+	{
+		exit_status = extra_mini_exit(mini, node);
+		return (exit_code(exit_status, 1, 0));
+	}
 	arg_offset = handle_args_offset(node);
 	if (arg_offset == -1)
 		handle_exit_cleanup(mini, node, 0);
@@ -29,7 +34,6 @@ int	mini_exit(s_minishell *mini, s_tree *node)
 	handle_exit_cleanup(mini, node, (int)exit_status);
 	return ((int)exit_status);
 }
-
 static void	handle_exit_cleanup(s_minishell *mini, s_tree *node, int code)
 {
 	free_struct(mini);
@@ -38,6 +42,8 @@ static void	handle_exit_cleanup(s_minishell *mini, s_tree *node, int code)
 	clear_tree(&node);
 	close(4);
 	close(3);
+	close(5);
+	close(6);
 	exit_code(code, 1, 1);
 }
 
@@ -87,8 +93,29 @@ static void	exit_error(const char *arg, bool numeric_error)
 	{
 		ft_putstr_fd((char *)arg, STDERR_FILENO);
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-		exit(2);
+		exit_code(2, 1, 0);
 	}
 	else
 		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
+}
+
+int	extra_mini_exit(s_minishell *mini, s_tree *node)
+{
+	int		arg_offset;
+	long	exit_status;
+
+	if (!mini->is_child)
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+	arg_offset = handle_args_offset(node);
+	if (arg_offset == -1)
+		return (exit_code(0, 1, 0));
+	if (!is_numeric_arg_valid(node->args[arg_offset]))
+	{
+		exit_error(node->args[arg_offset], true);
+		return (exit_code(0, 0, 0));
+	}
+	if (node->argcount > arg_offset + 1)
+		return (exit_code(1, 1, 0));
+	exit_status = calculate_exit_status(node->args[arg_offset]);
+	return ((int)exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 16:53:25 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:49:17 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,12 @@ void	error_exit(char *error)
 	exit(1);
 }
 
+
 char	*get_dir()
 {
 	char	*currentdir;
 
 	currentdir = getcwd(NULL, 1024);
-	if (!currentdir)
-    {
-        perror("minishell: failed to get current directory");
-        return (NULL);
-    }
 	return (currentdir);
 }
 
@@ -47,7 +43,7 @@ int	found_sign(const char *str)
 	return (0);
 }
 
-int handle_heredocs(s_tree *tree)
+int handle_heredocs(s_tree *tree, s_minishell *mini, s_tree *first)
 {
 	int fd;
 	
@@ -55,13 +51,13 @@ int handle_heredocs(s_tree *tree)
 		return 1;
 	if(tree->type == HEREDOC)
 	{
-		fd = handle_heredoc(tree);
+		fd = handle_heredoc(tree, mini, first);
 		close(fd);	
 	}
 	if(tree->left)
-		handle_heredocs(tree->left);
+		handle_heredocs(tree->left, mini, first);
 	if(tree->right)
-		handle_heredocs(tree->right);
+		handle_heredocs(tree->right, mini, first);
 	return 0;
 }
 

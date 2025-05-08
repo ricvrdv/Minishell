@@ -6,12 +6,17 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 12:06:23 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:46:48 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static bool	is_expandable(const char *ptr)
+{
+	return (*ptr == '$' && *(ptr + 1)
+		&& *(ptr + 1) != '\'' && *(ptr + 1) != '"' && *(ptr + 1) != ' ');
+}
 void	expand_tree(s_minishell *mini, s_tree *tree)
 {
 	int		i;
@@ -39,11 +44,6 @@ void	expand_tree(s_minishell *mini, s_tree *tree)
 		expand_tree(mini, tree->right);
 }
 
-static bool	is_expandable(const char *ptr)
-{
-	return (*ptr == '$' && *(ptr + 1)
-		&& *(ptr + 1) != '\'' && *(ptr + 1) != '"' && *(ptr + 1) != ' ');
-}
 
 static void	handle_variable(s_minishell *mini, const char **ptr, char **res_ptr)
 {
@@ -86,4 +86,13 @@ char	*expand_variable(s_minishell *mini, const char *arg)
 	}
 	*res_ptr = '\0';
 	return (result);
+}
+
+char *strip_quotes(const char *str)
+{
+	size_t len = ft_strlen(str);
+	if (len >= 2 && ((str[0] == '\'' && str[len - 1] == '\'') ||
+	                 (str[0] == '"' && str[len - 1] == '"')))
+		return ft_substr(str, 1, len - 2);
+	return ft_strdup(str);
 }

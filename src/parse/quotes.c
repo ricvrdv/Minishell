@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:59 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/24 13:56:33 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 11:41:34 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,25 @@ char	*join_args(char **args)
 		i++;
 	}
 	return (joined);
+}
+
+char	*strip_and_join(char *input)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int 	len;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(input);
+	result = safe_malloc(len + 1);
+	while (input[i])
+	{
+		if (input[i] != '"' && input[i] != '\'')
+			result[j++] = input[i];
+		i++;
+	}
+	result[j] = '\0';
+	return (result);
 }
