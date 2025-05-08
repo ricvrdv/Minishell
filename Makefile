@@ -42,6 +42,7 @@ SRCS = src/init/init.c \
        src/builtin/pwd.c \
        src/builtin/unset.c \
        src/builtin/builtin_utils.c \
+       src/builtin/builtin_utils2.c \
        src/exec/exec_utils.c \
        src/exec/quotes.c \
        src/exec/exec_pipe.c \

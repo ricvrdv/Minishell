@@ -13,8 +13,6 @@
 #include "../../inc/minishell.h"
 
 static s_env	*create_env_node(const char *key, const char *value);
-static char		**build_env_array(s_env *env, int count);
-static char		*join_key_value(s_env *env);
 
 s_env	*find_env_var(s_env *env, const char *key)
 {
@@ -72,4 +70,11 @@ void	update_env_var(s_env **env, const char *key, const char *value)
 		new_var->next = *env;
 		*env = new_var;
 	}
+}
+
+void	handle_invalid_identifier(char *arg)
+{
+	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }

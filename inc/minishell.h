@@ -145,6 +145,8 @@ void    print_sorted_env(s_env *env);
 long    ft_atol(const char *nptr);
 char    *get_target_dir(s_minishell *mini, char *arg);
 s_env   *find_env_var(s_env *env, const char *key);
+void    handle_invalid_identifier(char *arg);
+long    calculate_exit_status(const char *arg);
 
 //for tree folder
 int     verify_permissions(s_tree *tree, s_minishell *mini);

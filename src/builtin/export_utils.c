@@ -21,14 +21,16 @@ void	print_sorted_env(s_env *env)
 	int		count;
 	int		i;
 	s_env	**array;
+	s_env	*head;
 
+	head = env;
 	count = 0;
 	while (env)
 	{
 		count++;
 		env = env->next;
 	}
-	array = env_list_to_array(env, count);
+	array = env_list_to_array(head, count);
 	if (!array)
 		return ;
 	sort_env_array(array, count);

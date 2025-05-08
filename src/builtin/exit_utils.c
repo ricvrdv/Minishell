@@ -6,13 +6,15 @@
 /*   By: rjesus-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:47:56 by rjesus-d          #+#    #+#             */
-/*   Updated: 2025/05/07 16:35:53 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2025/05/08 11:04:00 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	ft_numlen(long n);
+static long	atol_digit_accumulate(const char *str, int sign);
+static void	fill_ltoa_buf(long n, char *buf, int i);
 static void	ft_ltoa_buf(long n, char *buf);
 
 int	is_valid_long(const char *str)
@@ -36,31 +38,43 @@ int	is_valid_long(const char *str)
 long	ft_atol(const char *nptr)
 {
 	int		i;
-	long	result;
 	int		sign;
+	long	result;
 
 	i = 0;
-	result = 0;
 	sign = 1;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || (nptr[i] == ' '))
+	result = 0;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
 		i++;
 	if (nptr[i] == '-')
 		sign = -1;
 	if (nptr[i] == '-' || nptr[i] == '+')
 		i++;
-	while (nptr[i] >= '0' && nptr[i] <= '9')
+	return (sign * atol_digit_accumulate(nptr + i, sign));
+}
+
+static long	atol_digit_accumulate(const char *str, int sign)
+{
+	long	result;
+	int		i;
+	int		digit;
+
+	result = 0;
+	i = 0;
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (result > (LONG_MAX - (nptr[i] - '0')) / 10)
+		digit = str[i] - '0';
+		if (result > (LONG_MAX - digit) / 10)
 		{
 			if (sign == 1)
 				return (LONG_MAX);
 			else
 				return (LONG_MIN);
 		}
-		result = result * 10 + (nptr[i] - '0');
+		result = result * 10 + digit;
 		i++;
 	}
-	return (sign * result);
+	return (result);
 }
 
 static int	ft_numlen(long n)
@@ -80,38 +94,50 @@ static int	ft_numlen(long n)
 	return (len);
 }
 
-static void	ft_ltoa_buf(long n, char *buf)
+void	ft_ltoa_buf(long n, char *buf)
 {
-	int		len;
-	int		i;
+	int	len;
 
+	if (n == LONG_MIN)
+	{
+		ft_strlcpy(buf, "-9223372036854775808", 22);
+		return ;
+	}
 	len = ft_numlen(n);
-	i = len;
-	buf[i] = '\0';
+	buf[len] = '\0';
 	if (n == 0)
 	{
 		buf[0] = '0';
 		buf[1] = '\0';
 		return ;
 	}
-	if (n == LONG_MIN)
-	{
-		ft_strlcpy(buf, "-9223372036854775808", 22);
-		return ;
-	}
+	fill_ltoa_buf(n, buf, len);
+}
+
+static void	fill_ltoa_buf(long n, char *buf, int i)
+{
 	if (n < 0)
 	{
-		n = -n;
 		buf[0] = '-';
+		n = -n;
 	}
-	while (n)
+	while (n > 0)
 	{
-		if (n > 0)
-			buf[--i] = (n % 10) + '0';
-		else
-			buf[--i] = -(n % 10) + '0';
+		i--;
+		buf[i] = (n % 10) + '0';
 		n /= 10;
 	}
-	if (buf[0] != '-' && i > 0)
-		buf[--i] = '-';
+}
+
+long	calculate_exit_status(const char *arg)
+{
+	long	status;
+
+	if (*arg == '+')
+		arg++;
+	status = ft_atol(arg);
+	status %= 256;
+	if (status < 0)
+		status += 256;
+	return (status);
 }

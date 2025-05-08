@@ -12,6 +12,9 @@
 
 #include "../../inc/minishell.h"
 
+static char		**build_env_array(s_env *env, int count);
+static char		*join_key_value(s_env *env);
+
 void	sync_env_array(s_minishell *mini)
 {
 	s_env	*current;
