@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 15:59:13 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:21:00 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,9 @@ bool	should_expand(const char *str)
 
 bool	is_dollar_in_single_quotes(const char *str)
 {
-	bool	in_single = false;
-
+	bool	in_single;
+	
+	in_single = false;	
 	for (size_t i = 0; str[i]; i++)
 	{
 		if (str[i] == '\'')

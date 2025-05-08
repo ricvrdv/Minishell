@@ -237,6 +237,18 @@ void	error_exit(char *error);
 void	ft_exit_child(s_minishell *mini, char *error);
 
 bool	is_dollar_in_single_quotes(const char *str);
+bool	is_quoted(const char *delim);
+void    read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini);
+int     heredoc_expand(s_tree *tree, s_minishell *mini, s_tree *first, const char *delimeter);
+char    *strip_quotes(const char *str);
+int	    check_quotes_2(const char *str);
+bool	has_any_quotes(const char *delim);
+char	*strip_and_join(char *input);
+void	close_fds();
+int	    static_index(void);
+int	    handle_heredoc_wait(int pid, int *status, s_tree *node);
+void    close_heredoc(s_tree *tree, s_minishell *mini, int fd);
+void print_heredoc(char *str, int fd);
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 

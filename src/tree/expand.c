@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 15:26:59 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:46:48 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,13 @@ char	*expand_variable(s_minishell *mini, const char *arg)
 	}
 	*res_ptr = '\0';
 	return (result);
+}
+
+char *strip_quotes(const char *str)
+{
+	size_t len = ft_strlen(str);
+	if (len >= 2 && ((str[0] == '\'' && str[len - 1] == '\'') ||
+	                 (str[0] == '"' && str[len - 1] == '"')))
+		return ft_substr(str, 1, len - 2);
+	return ft_strdup(str);
 }
