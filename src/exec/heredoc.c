@@ -6,18 +6,16 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 12:44:35 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:45:19 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 int	handle_heredoc(s_tree *node, s_minishell *mini, s_tree *first)
 {
 	int			fd;
 	const char	*delimeter;
 	char		*temp_file;
-	static int 		index;
 	int 			pid;
 	int 			status;
 	bool 			quoted;
@@ -27,15 +25,8 @@ int	handle_heredoc(s_tree *node, s_minishell *mini, s_tree *first)
 	quoted = has_any_quotes(delimeter);
 	if(quoted)
 		remove_quotes((char *) delimeter);
-	temp_file = generate_file(index++);
-	if(!temp_file)
-		return 1;
+	temp_file = generate_file(static_index());;
 	fd = open (temp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		free(temp_file);
-		return (-1);
-	}
 	node->right->hd_file = temp_file;
 	pid = fork();
 	if(pid == 0)
@@ -44,21 +35,11 @@ int	handle_heredoc(s_tree *node, s_minishell *mini, s_tree *first)
 			read_heredoc(fd, delimeter);
 		else
 			read_heredoc_expand(fd, delimeter, mini);
-		clear_tree(&first);
-		ft_exit_child(mini, NULL);
-		close(fd);
-		close_fds();
+		close_heredoc(first, mini, fd);
 		exit(0);
 	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-		{
-			node->bad_herdoc = 1; // or return -1 if you prefer
-			return (-1);
-		}
-	}
+	else if(handle_heredoc_wait(pid, &status, node))
+		return (-1);
 	close(fd);
 	fd = open(temp_file, O_RDONLY);
 	return (fd);
@@ -187,11 +168,7 @@ void read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini)
 		{
 			expansion = expand_variable(mini, line);
 			if (expansion)
-			{
-				ft_putstr_fd(expansion, fd);
-				ft_putstr_fd("\n", fd);
-				free(expansion);
-			}
+				print_heredoc(expansion, fd);
 		}
 		else
 		{
@@ -222,4 +199,35 @@ void	close_fds()
 	close(7);
 	close(8);
 	close(9);
+}
+int		static_index(void)
+{
+	static int i;
+	return (i++);
+}
+
+int	handle_heredoc_wait(int pid, int *status, s_tree *node)
+{
+	waitpid(pid, status, 0);
+	if (WIFEXITED(*status) && WEXITSTATUS(*status) == 130)
+	{
+		node->bad_herdoc = 1;
+		return (-1);
+	}
+	return (0);
+}
+
+void close_heredoc(s_tree *tree, s_minishell *mini, int fd)
+{
+	clear_tree(&tree);
+	ft_exit_child(mini, NULL);
+	close(fd);
+	close_fds();
+}
+
+void print_heredoc(char *str, int fd)
+{
+	ft_putstr_fd(str, fd);
+	ft_putstr_fd("\n", fd);
+	free(str);
 }
