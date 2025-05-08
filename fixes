@@ -1,14 +1,6 @@
 
-fixed: 
-cd was having jumps 
-when executing invalid cmds i was missing a free_split but its now fixed (exec_utils)
-heredoc are working 
-can remove folder and cd still works
-exit does not print exit when not needed
-
 missing : 
-signals (including broken pipes exemple cmd : < teste grep i > grep | <grep wc) leaks atm need to fi
-some fds open when doing heredocs with redirections and multiple pipes
-check_single quotes fails in some cases; after export and echo 
+signals (also broken pipe) leaks atm need to fi
+check_single quotes fails in some cases; after export and echo  ???????
 if unset path (avoid leaks);
 invalid exit _code when using 3 pipes.
