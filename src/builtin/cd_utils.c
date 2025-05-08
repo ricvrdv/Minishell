@@ -1,52 +1,52 @@
 #include "../../inc/minishell.h"
 
-static char *get_oldpwd(s_env *env);
-static char *get_home_dir(s_env *env);
-static char *expand_tilde_path(s_env *env, const char *path);
+static char	*get_oldpwd(s_env *env);
+static char	*get_home_dir(s_env *env);
+static char	*expand_tilde_path(s_env *env, const char *path);
 
-char *get_target_dir(s_minishell *mini, char *arg)
+char	*get_target_dir(s_minishell *mini, char *arg)
 {
-    char    *dir;
-    char    *expanded;
+	char	*dir;
+	char	*expanded;
 
-    if (arg && ft_strcmp(arg, "-") == 0)
-        dir = get_oldpwd(mini->env);
-    else if (!arg || ft_strcmp(arg, "~") == 0)
-        dir = get_home_dir(mini->env);
-    else
-        dir = ft_strdup(arg);
-    if (!dir)
-        return (NULL);
-    if (dir[0] == '~' && dir[1] == '/')
-    {
-        expanded = expand_tilde_path(mini->env, dir);
-        free(dir);
-        if (!expanded)
-            return (NULL);
-        return (expanded);
-    }
-    return (dir);
+	if (arg && ft_strcmp(arg, "-") == 0)
+		dir = get_oldpwd(mini->env);
+	else if (!arg || ft_strcmp(arg, "~") == 0)
+		dir = get_home_dir(mini->env);
+	else
+		dir = ft_strdup(arg);
+	if (!dir)
+		return (NULL);
+	if (dir[0] == '~' && dir[1] == '/')
+	{
+		expanded = expand_tilde_path(mini->env, dir);
+		free(dir);
+		if (!expanded)
+			return (NULL);
+		return (expanded);
+	}
+	return (dir);
 }
 
-static char *get_oldpwd(s_env *env)
+static char	*get_oldpwd(s_env *env)
 {
-	s_env   *oldpwd;
-    
-    oldpwd = find_env_var(env, "OLDPWD");
+	s_env	*oldpwd;
+
+	oldpwd = find_env_var(env, "OLDPWD");
 	if (!oldpwd || !oldpwd->value || oldpwd->value[0] == '\0')
 	{
-		perror("cd: OLDPWD not set");
+		ft_putstr_fd("cd: OLDPWD not set", STDERR_FILENO);
 		return (NULL);
 	}
 	printf("%s\n", oldpwd->value);
 	return (ft_strdup(oldpwd->value));
 }
 
-static char *get_home_dir(s_env *env)
+static char	*get_home_dir(s_env *env)
 {
-	s_env   *home; 
-    
-    home = find_env_var(env, "HOME");
+	s_env	*home;
+
+	home = find_env_var(env, "HOME");
 	if (!home || !home->value)
 	{
 		perror("cd: HOME not set");
@@ -55,14 +55,14 @@ static char *get_home_dir(s_env *env)
 	return (ft_strdup(home->value));
 }
 
-static char *expand_tilde_path(s_env *env, const char *path)
+static char	*expand_tilde_path(s_env *env, const char *path)
 {
-	s_env   *home;
-    char    *expanded;
-    
-    if (ft_strncmp(path, "~/", 2) != 0)
+	s_env	*home;
+	char	*expanded;
+
+	if (ft_strncmp(path, "~/", 2) != 0)
 		return (NULL);
-    home = find_env_var(env, "HOME");
+	home = find_env_var(env, "HOME");
 	if (!home || !home->value)
 	{
 		perror("cd: HOME not set");

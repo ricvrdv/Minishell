@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 12:21:54 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:40:42 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*find_path_variable(s_minishell *mini)
 			return (env->value + 5);
 		env = env->next;
 	}
+	ft_putstr_fd("Command not Found\n", 2);
+	exit_code(127, 1, 1);
 	return (NULL);
 }
 

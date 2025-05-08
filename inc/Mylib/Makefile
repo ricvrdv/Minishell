@@ -49,7 +49,8 @@ SRCS = \
     ft_strcmp.c \
     ft_strcpy.c \
     space.c \
-    ft_is_numeric.c
+    ft_is_numeric.c \
+    ft_atol.c
     
     
     

@@ -11,4 +11,4 @@ signals (including broken pipes exemple cmd : < teste grep i > grep | <grep wc) 
 some fds open when doing heredocs with redirections and multiple pipes
 check_single quotes fails in some cases; after export and echo 
 if unset path (avoid leaks);
-
+invalid exit _code when using 3 pipes.

@@ -127,24 +127,25 @@ s_token *get_token(char *str);
 s_token *new_token(s_type type, char *value);
 
 //for builtin folder
-int     is_builtin(char *cmd);
-int     mini_unset(s_minishell *mini, s_tree *node);
-int     mini_env(s_minishell *mini, s_tree *node);
-int     mini_pwd(s_minishell *mini);
 int     mini_cd(s_minishell *mini, s_tree *node);
+char    *get_target_dir(s_minishell *mini, char *arg);
 int     mini_echo(s_tree *node);
-int     mini_export(s_minishell *mini, s_tree *node);
+int     mini_env(s_minishell *mini, s_tree *node);
 int     mini_exit(s_minishell *mini, s_tree *node);
-int     ft_strcmp(const char *s1, const char *s2);
 int     is_valid_long(const char *str);
+long    calculate_exit_status(const char *arg);
+int     mini_export(s_minishell *mini, s_tree *node);
+void    print_sorted_env(s_env *env);
 int     is_valid_identifier(const char *str);
+int     mini_pwd(s_minishell *mini);
+int     mini_unset(s_minishell *mini, s_tree *node);
 void    update_env_var(s_env **env, const char *key, const char *value);
+s_env   *find_env_var(s_env *env, const char *key);
+void    handle_invalid_identifier(char *arg);
 void    sync_env_array(s_minishell *mini);
 void    free_array(char **array);
-void    print_sorted_env(s_env *env);
+int     is_builtin(char *cmd);
 long    ft_atol(const char *nptr);
-char    *get_target_dir(s_minishell *mini, char *arg);
-s_env   *find_env_var(s_env *env, const char *key);
 
 //for tree folder
 int     verify_permissions(s_tree *tree, s_minishell *mini);
@@ -190,7 +191,7 @@ int     count_quotes(const char *str);
 int     handle_heredocs(s_tree *tree, s_minishell *mini, s_tree *first);
 int     execute_heredoc(s_tree *tree, s_minishell *mini);
 int     execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start);
-int     create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, int *pipefd, s_tree *start);
+int     create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start);
 int	    handle_parent(pid_t pid);
 char    *find_cmd_path(const char *cmd, const char *path);
 char    *find_path_variable(s_minishell *mini);
@@ -252,6 +253,9 @@ void    print_heredoc(char *str, int fd);
 void	invalid_cmd(s_tree *node, s_minishell *mini);
 void    invalid_path(s_tree *node, s_minishell *mini);
 void    execve_fail(s_tree *node, s_minishell *mini);
+pid_t	init_pipe_and_fork(int *pipefd);
+int	    extra_mini_exit(s_minishell *mini, s_tree *node);
+
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 

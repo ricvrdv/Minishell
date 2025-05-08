@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 13:06:31 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:54:16 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	execute_pipe(s_tree *tree, s_minishell *mini)
 {
-	int		pipefd[2];
 	int		in_fd;
 	int		status;
 	s_tree	*temp;
@@ -24,7 +23,7 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 	status = 0;
 	while (tree->type == PIPE)
 	{
-		in_fd = create_and_fork_command(tree, mini, in_fd, pipefd, temp);
+		in_fd = create_and_fork_command(tree, mini, in_fd, temp);
 		tree = tree->right;
 	}
 	execute_last_command(tree, mini, in_fd, temp);
@@ -32,13 +31,12 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 	return (exit_code(WEXITSTATUS(status), 1, 0));
 }
 
-int create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, int *pipefd, s_tree *start)
+int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start)
 {
-	pid_t pid;
-	
-	if (pipe(pipefd) < 0)
-	perror("pipe");
-	pid = fork();
+	int		pipefd[2];
+	pid_t	pid;
+
+	pid = init_pipe_and_fork(pipefd);
 	if (pid == 0)
 	{
 		if (in_fd != 0)
@@ -53,19 +51,20 @@ int create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, int *pip
 		execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
 		clear_tree(&start);
 		ft_exit_child(mini, NULL);
+		if(exit_code(0, 0, 0) != 0)
+			exit_code(exit_code(0, 0 ,0), 1, 1);
 		exit(0);
 	}
 	if (in_fd != 0)
-	close(in_fd);
+		close(in_fd);
 	close(pipefd[1]);
 	return (pipefd[0]);
 }
 
-
-int execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start)
+int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start)
 {
 	pid_t pid;
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -78,7 +77,10 @@ int execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *sta
 		execute_node(node, mini, STDIN_FILENO, STDOUT_FILENO);
 		clear_tree(&start);
 		ft_exit_child(mini, NULL);
+		if(exit_code(0, 0, 0) != 0)
+			exit_code(exit_code(0, 0 ,0), 1, 1);
 		exit(0);
+		
 	}
 	if (in_fd != 0)
 	close(in_fd);
@@ -93,4 +95,16 @@ void wait_for_children(int *last_status)
 		if (WIFEXITED(status))
 		*last_status = status;
 	}
+}
+
+pid_t	init_pipe_and_fork(int *pipefd)
+{
+	pid_t pid;
+
+	if (pipe(pipefd) < 0)
+		perror("pipe");
+	pid = fork();
+	if (pid < 0)
+		perror("fork");
+	return (pid);
 }

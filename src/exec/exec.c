@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 12:56:16 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:38:58 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 		exit(execute_builtin(node, mini));
 	full_path = find_cmd_path(node->args[0], find_path_variable(mini));
 	if (!full_path)
-		invalid_cmd(node, mini);
+		invalid_cmd(node, mini);	
 	if (execve(full_path, node->args, mini->env_array) == -1)
 		execve_fail(node, mini);
 	exit (status);
@@ -84,7 +84,10 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	pre_clean_args(node->args, &node->argcount);
 	clean_args(node->args, node->argcount);
 	if (is_builtin(node->args[0]))
+	{
 		status = execute_builtin(node, mini);
+		exit_code(status, 1, 0);
+	}
 	else if (mini->is_child)
 		status = handle_child(node, mini);
 	else

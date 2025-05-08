@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:55:51 by jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/24 11:32:44 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:33:44 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <fcntl.h>
+# include <limits.h>
 
 typedef struct s_list
 {
@@ -87,5 +88,7 @@ char	*ft_strchrgnl(const char *s, int c);
 char	*ft_strndup(const char *src, size_t n);
 char	*ft_strcpy(char *dest, const char *src);
 char 	ft_is_numeric(const char *str);
+
+long	ft_atol(const char *nptr);
 
 #endif
