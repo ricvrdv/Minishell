@@ -94,7 +94,7 @@ static int	ft_numlen(long n)
 	return (len);
 }
 
-void	ft_ltoa_buf(long n, char *buf)
+static void	ft_ltoa_buf(long n, char *buf)
 {
 	int	len;
 

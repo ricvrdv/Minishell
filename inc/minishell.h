@@ -127,26 +127,26 @@ s_token *get_token(char *str);
 s_token *new_token(s_type type, char *value);
 
 //for builtin folder
-int     is_builtin(char *cmd);
-int     mini_unset(s_minishell *mini, s_tree *node);
-int     mini_env(s_minishell *mini, s_tree *node);
-int     mini_pwd(s_minishell *mini);
 int     mini_cd(s_minishell *mini, s_tree *node);
-int     mini_echo(s_tree *node);
-int     mini_export(s_minishell *mini, s_tree *node);
-int     mini_exit(s_minishell *mini, s_tree *node);
-int     ft_strcmp(const char *s1, const char *s2);
-int     is_valid_long(const char *str);
-int     is_valid_identifier(const char *str);
-void    update_env_var(s_env **env, const char *key, const char *value);
-void    sync_env_array(s_minishell *mini);
-void    free_array(char **array);
-void    print_sorted_env(s_env *env);
-long    ft_atol(const char *nptr);
 char    *get_target_dir(s_minishell *mini, char *arg);
+int     mini_echo(s_tree *node);
+int     mini_env(s_minishell *mini, s_tree *node);
+int     mini_exit(s_minishell *mini, s_tree *node);
+int     is_valid_long(const char *str);
+long    calculate_exit_status(const char *arg);
+int     mini_export(s_minishell *mini, s_tree *node);
+void    print_sorted_env(s_env *env);
+int     is_valid_identifier(const char *str);
+int     mini_pwd(s_minishell *mini);
+int     mini_unset(s_minishell *mini, s_tree *node);
+void    update_env_var(s_env **env, const char *key, const char *value);
 s_env   *find_env_var(s_env *env, const char *key);
 void    handle_invalid_identifier(char *arg);
-long    calculate_exit_status(const char *arg);
+void    sync_env_array(s_minishell *mini);
+void    free_array(char **array);
+
+int     is_builtin(char *cmd);
+long    ft_atol(const char *nptr);
 
 //for tree folder
 int     verify_permissions(s_tree *tree, s_minishell *mini);

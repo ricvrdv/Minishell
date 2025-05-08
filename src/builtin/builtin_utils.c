@@ -14,6 +14,30 @@
 
 static s_env	*create_env_node(const char *key, const char *value);
 
+void	update_env_var(s_env **env, const char *key, const char *value)
+{
+	s_env	*var;
+	s_env	*new_var;
+
+	var = find_env_var(*env, key);
+	if (var)
+	{
+		free(var->value);
+		if (value)
+			var->value = ft_strdup(value);
+		else
+			var->value = NULL;
+		if (value && !var->value)
+			exit(EXIT_FAILURE);
+	}
+	else
+	{
+		new_var = create_env_node(key, value);
+		new_var->next = *env;
+		*env = new_var;
+	}
+}
+
 s_env	*find_env_var(s_env *env, const char *key)
 {
 	while (env)
@@ -46,30 +70,6 @@ static s_env	*create_env_node(const char *key, const char *value)
 	}
 	new->next = NULL;
 	return (new);
-}
-
-void	update_env_var(s_env **env, const char *key, const char *value)
-{
-	s_env	*var;
-	s_env	*new_var;
-
-	var = find_env_var(*env, key);
-	if (var)
-	{
-		free(var->value);
-		if (value)
-			var->value = ft_strdup(value);
-		else
-			var->value = NULL;
-		if (value && !var->value)
-			exit(EXIT_FAILURE);
-	}
-	else
-	{
-		new_var = create_env_node(key, value);
-		new_var->next = *env;
-		*env = new_var;
-	}
 }
 
 void	handle_invalid_identifier(char *arg)
