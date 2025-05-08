@@ -248,7 +248,10 @@ void	close_fds();
 int	    static_index(void);
 int	    handle_heredoc_wait(int pid, int *status, s_tree *node);
 void    close_heredoc(s_tree *tree, s_minishell *mini, int fd);
-void print_heredoc(char *str, int fd);
+void    print_heredoc(char *str, int fd);
+void	invalid_cmd(s_tree *node, s_minishell *mini);
+void    invalid_path(s_tree *node, s_minishell *mini);
+void    execve_fail(s_tree *node, s_minishell *mini);
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 
