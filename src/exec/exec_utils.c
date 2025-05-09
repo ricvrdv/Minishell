@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 10:05:43 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:53:36 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*find_path_variable(s_minishell *mini, s_tree *node)
 	return (NULL);
 }
 
-char	*find_cmd_path(const char *cmd, const char *path)
+char	*find_cmd_path(const char *cmd, const char *path, s_minishell *mini)
 {
 	char	**dir;
 	char	*full_path;
@@ -40,7 +40,7 @@ char	*find_cmd_path(const char *cmd, const char *path)
 
 	if (ft_strchr(cmd, '/')) // check if there's any '/' in the command
 	{
-		check_cmd_access(cmd);
+		check_cmd_access(cmd, mini);
 		return (ft_strdup(cmd));
 	}
 	i = 0;

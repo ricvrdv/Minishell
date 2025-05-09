@@ -8,3 +8,7 @@ ptr in mini to tree
 check_single quotes fails in some cases; after export and echo  ???????
 
 exit status sometimes incorrect when using pipes
+
+cd "" returns prompt ? 
+
+$$ pid // echo ~ (home)  // echo $0 (minishell)   echo $/,,

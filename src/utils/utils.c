@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 10:49:17 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:34:23 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,20 @@ char	*get_dir()
 int	found_sign(const char *str)
 {
 	int	i;
-
+	char next;
 	if (!str)
 		return (0);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
-			return (1);
+		{
+			next = str[i + 1];
+			if (ft_isalpha(next) || ft_isdigit(next) || next == '_')
+				return (1);
+			else
+				return (0);
+		}
 		i++;
 	}
 	return (0);

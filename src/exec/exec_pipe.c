@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 10:17:08 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:02:37 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 	status = 0;
 	while (tree->type == PIPE)
 	{
-		in_fd = create_and_fork_command(tree, mini, in_fd, temp);
+		in_fd = create_and_fork_command(tree, mini, in_fd);
 		tree = tree->right;
 	}
-	execute_last_command(tree, mini, in_fd, temp);
+	execute_last_command(tree, mini, in_fd);
 	wait_for_children(&status);
 	return (exit_code(WEXITSTATUS(status), 1, 0));
 }
 
-	int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start)
+	int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
 	{
 		int		pipefd[2];
 		pid_t	pid;
@@ -49,7 +49,7 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 			close(pipefd[0]);
 			close(pipefd[1]);
 			execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
-			clear_tree(&start);
+			clear_tree(&mini->root);
 			ft_exit_child(mini, NULL);
 			if(exit_code(0, 0, 0) != 0)
 				exit_code(exit_code(0, 0 ,0), 1, 1);
@@ -61,7 +61,7 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 		return (pipefd[0]);
 	}
 
-int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start)
+int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd)
 {
 	pid_t pid;
 
@@ -75,7 +75,7 @@ int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *sta
 		}
 		mini->is_child = true;
 		execute_node(node, mini, STDIN_FILENO, STDOUT_FILENO);
-		clear_tree(&start);
+		clear_tree(&mini->root);
 		ft_exit_child(mini, NULL);
 		if(exit_code(0, 0, 0) != 0)
 			exit_code(exit_code(0, 0 ,0), 1, 1);

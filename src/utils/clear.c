@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:14 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 11:01:47 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:55:27 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	clear_tree(s_tree **tree)
 
 	if (!tree || !*tree)
 		return ;
-	clear_tree(&(*tree)->left);
-	clear_tree(&(*tree)->right);
+	if((*tree)->left)
+		clear_tree(&(*tree)->left);
+	if((*tree)->right)
+		clear_tree(&(*tree)->right);
 	if ((*tree)->args)
 	{
 		i = 0;

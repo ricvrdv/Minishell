@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 10:55:22 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:14:17 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,17 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	if (!node->args[0])
 		return (0);
 	if (node->args[0][0] == '\0')
-		invalid_cmd(node, mini);
+		invalid_cmd(mini);
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
-	full_path = find_cmd_path(node->args[0], find_path_variable(mini, node));
+	full_path = find_cmd_path(node->args[0], find_path_variable(mini, node), mini);
 	if (!full_path)
-		invalid_cmd(node, mini);
+		invalid_cmd(mini);
 	if (execve(full_path, node->args, mini->env_array) == -1)
-		execve_fail(node, mini);
+	{
+		free(full_path);
+		execve_fail(mini);
+	}
 	exit (status);
 }
 

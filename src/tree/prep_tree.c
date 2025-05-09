@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 10:49:10 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:26:31 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
+	mini->root = tree;
 	mini->heredoc_count = counter[2];
 	while(mini->heredoc_count)
 	{

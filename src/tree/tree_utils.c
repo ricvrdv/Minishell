@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 10:04:07 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:52:32 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int verify_permissions(s_tree *tree, s_minishell *mini)
 	status = 0;
 	if(tree->args && !is_builtin(tree->args[0]) && (tree->file_type == READ_FILE || tree->file_type == APPEND_FILE))
 	{
-		path = find_cmd_path(tree->args[0], find_path_variable(mini, tree));
+		path = find_cmd_path(tree->args[0], find_path_variable(mini, tree), mini);
 		if(!path)
 			return 127;
 		if(access(path, F_OK) != 0)

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:48:24 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 12:24:16 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:27:15 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_mini_struct(s_minishell *mini)
 	if (mini->env)
 		clear_env(&mini->env);
 	if(mini->root)
-		clear_tree(mini->root);
+		clear_tree(&mini->root);
 }
 
 void	free_struct(s_minishell *mini)
