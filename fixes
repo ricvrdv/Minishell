@@ -1,6 +1,8 @@
 
+
+
 missing : 
-signals (also broken pipe) leaks atm need to fi
+signals (also broken pipe) leaks atm need to fix
+invalid exit _code when using 3 pipes (only at letters right now)
+
 check_single quotes fails in some cases; after export and echo  ???????
-if unset path (avoid leaks);
-invalid exit _code when using 3 pipes.

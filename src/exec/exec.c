@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 16:38:58 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:03:23 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 		invalid_cmd(node, mini);
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
-	full_path = find_cmd_path(node->args[0], find_path_variable(mini));
+	full_path = find_cmd_path(node->args[0], find_path_variable(mini, node));
 	if (!full_path)
 		invalid_cmd(node, mini);	
 	if (execve(full_path, node->args, mini->env_array) == -1)

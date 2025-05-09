@@ -194,7 +194,7 @@ int     execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree 
 int     create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start);
 int	    handle_parent(pid_t pid);
 char    *find_cmd_path(const char *cmd, const char *path);
-char    *find_path_variable(s_minishell *mini);
+char    *find_path_variable(s_minishell *mini, s_tree *node);
 char	*remove_quotes_redirect(char *str);
 void    restore_fd(int saved_stdin, int saved_stdout);
 void    clean_args(char **args, int arg_count);
