@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:14 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 10:52:10 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:01:47 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ void	ft_exit(s_minishell *mini, char *error)
 		printf(RED "%s\n" RESET, error);
 	clear_history();
 	free(mini);
-	exit(1);
+	exit_code(0, 0 , 1);
 }

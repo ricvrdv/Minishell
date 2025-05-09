@@ -2,7 +2,9 @@
 
 
 missing : 
-signals (also broken pipe) leaks atm need to fix
+signals (also broken pipe)
 invalid exit _code when using 3 pipes (only at letters right now)
-
+ptr in mini to tree
 check_single quotes fails in some cases; after export and echo  ???????
+
+exit status sometimes incorrect when using pipes

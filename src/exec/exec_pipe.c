@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 15:54:16 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:17:08 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,35 +31,35 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 	return (exit_code(WEXITSTATUS(status), 1, 0));
 }
 
-int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start)
-{
-	int		pipefd[2];
-	pid_t	pid;
-
-	pid = init_pipe_and_fork(pipefd);
-	if (pid == 0)
+	int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start)
 	{
-		if (in_fd != 0)
+		int		pipefd[2];
+		pid_t	pid;
+
+		pid = init_pipe_and_fork(pipefd);
+		if (pid == 0)
 		{
-			dup2(in_fd, STDIN_FILENO);
-			close(in_fd);
+			if (in_fd != 0)
+			{
+				dup2(in_fd, STDIN_FILENO);
+				close(in_fd);
+			}
+			mini->is_child = true;
+			dup2(pipefd[1], STDOUT_FILENO);
+			close(pipefd[0]);
+			close(pipefd[1]);
+			execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
+			clear_tree(&start);
+			ft_exit_child(mini, NULL);
+			if(exit_code(0, 0, 0) != 0)
+				exit_code(exit_code(0, 0 ,0), 1, 1);
+			exit(0);
 		}
-		mini->is_child = true;
-		dup2(pipefd[1], STDOUT_FILENO);
-		close(pipefd[0]);
+		if (in_fd != 0)
+			close(in_fd);
 		close(pipefd[1]);
-		execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
-		clear_tree(&start);
-		ft_exit_child(mini, NULL);
-		if(exit_code(0, 0, 0) != 0)
-			exit_code(exit_code(0, 0 ,0), 1, 1);
-		exit(0);
+		return (pipefd[0]);
 	}
-	if (in_fd != 0)
-		close(in_fd);
-	close(pipefd[1]);
-	return (pipefd[0]);
-}
 
 int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start)
 {

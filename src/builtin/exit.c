@@ -19,7 +19,7 @@ int	mini_exit(s_minishell *mini, s_tree *node)
 	}
 	arg_offset = handle_args_offset(node);
 	if (arg_offset == -1)
-		handle_exit_cleanup(mini, node, 0);
+		handle_exit_cleanup(mini, node, exit_code(0, 0 , 0));
 	if (!is_numeric_arg_valid(node->args[arg_offset]))
 	{
 		exit_error(node->args[arg_offset], true);
@@ -112,7 +112,7 @@ int	extra_mini_exit(s_minishell *mini, s_tree *node)
 	if (!is_numeric_arg_valid(node->args[arg_offset]))
 	{
 		exit_error(node->args[arg_offset], true);
-		return (exit_code(0, 0, 0));
+		return (exit_code(2, 0, 0));
 	}
 	if (node->argcount > arg_offset + 1)
 		return (exit_code(1, 1, 0));

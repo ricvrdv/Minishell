@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:54 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 11:16:58 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:29:23 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,26 @@ int	full_check(char *str)
 	if (check_quotes(temp))
 	{
 		ft_putstr_fd("Unclosed quote.\n", 2);
-		return (1);
+		free(temp);
+		return (exit_code(2, 1, 0));
 	}
 	if (check_redirect(temp))
 	{
-		ft_putstr_fd("syntax error near unexpected token newline.\n", 2);
-		return (1);
+		ft_putstr_fd("syntax error near unexpected token.\n", 2);
+		free(temp);
+		return (exit_code(2, 1, 0));
 	}
 	if (check_doubles(temp))
 	{
 		ft_putstr_fd("Logical opertators are not suported.\n", 2);
-		return (1);
+		free(temp);
+		return (exit_code(2, 1, 0));
 	}
 	if (check_pipe(temp))
 	{
 		ft_putstr_fd("Misplaced operator.\n", 2);
-		return (1);
+		free(temp);
+		return (exit_code(2, 1, 0));
 	}
 	free(temp);
 	return (0);

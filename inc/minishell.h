@@ -91,7 +91,8 @@ typedef struct s_minishell
     bool     is_child;
     char    *cur_dir;
     char    **env_array;                               
-    struct s_env   *env;                                
+    struct s_env   *env;  
+    struct s_tree  *root;                              
 }s_minishell;
 
 
