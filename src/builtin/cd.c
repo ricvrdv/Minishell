@@ -14,7 +14,7 @@ int	mini_cd(s_minishell *mini, s_tree *node)
 	status = check_cd_args(node);
 	if (status != 0)
 		return (status);
-	if (!mini->cur_dir
+	else if (!mini->cur_dir
 		|| ft_strlcpy(oldpwd, mini->cur_dir, sizeof(oldpwd)) >= sizeof(oldpwd))
 	{
 		ft_putstr_fd("cd: current directory not set\n", STDERR_FILENO);
@@ -22,7 +22,11 @@ int	mini_cd(s_minishell *mini, s_tree *node)
 	}
 	dir = get_target_dir(mini, node->args[1]);
 	if (!dir || chdir(dir) != 0)
+	{
+		if (!dir)
+			return (exit_code(0, 1, 0));
 		status = handle_chdir_failure(dir);
+	}
 	else if (!update_pwd_vars(mini, oldpwd, dir))
 		status = 1;
 	free(dir);

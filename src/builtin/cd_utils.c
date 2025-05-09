@@ -14,7 +14,11 @@ char	*get_target_dir(s_minishell *mini, char *arg)
 	else if (!arg || ft_strcmp(arg, "~") == 0)
 		dir = get_home_dir(mini->env);
 	else
+	{
+		if (ft_strcmp(arg, "") == 0)
+			return (NULL);
 		dir = ft_strdup(arg);
+	}
 	if (!dir)
 		return (NULL);
 	if (dir[0] == '~' && dir[1] == '/')

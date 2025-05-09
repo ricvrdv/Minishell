@@ -96,7 +96,10 @@ static void	exit_error(const char *arg, bool numeric_error)
 		exit_code(2, 1, 0);
 	}
 	else
+	{
 		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
+		exit_code(1, 1, 0);
+	}
 }
 
 int	extra_mini_exit(s_minishell *mini, s_tree *node)
@@ -115,7 +118,10 @@ int	extra_mini_exit(s_minishell *mini, s_tree *node)
 		return (exit_code(0, 0, 0));
 	}
 	if (node->argcount > arg_offset + 1)
-		return (exit_code(1, 1, 0));
+	{
+		exit_error(NULL, false);
+		return (exit_code(0, 0, 0));
+	}
 	exit_status = calculate_exit_status(node->args[arg_offset]);
-	return ((int)exit_status);
+	return (exit_code(exit_status, 1, 0));
 }
