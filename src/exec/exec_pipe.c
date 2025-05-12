@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 14:02:37 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/11 10:17:51 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 {
 	int		in_fd;
 	int		status;
-	s_tree	*temp;
-
-	temp = tree;
+	
 	in_fd = 0;
 	status = 0;
 	while (tree->type == PIPE)
@@ -49,7 +47,6 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 			close(pipefd[0]);
 			close(pipefd[1]);
 			execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
-			clear_tree(&mini->root);
 			ft_exit_child(mini, NULL);
 			if(exit_code(0, 0, 0) != 0)
 				exit_code(exit_code(0, 0 ,0), 1, 1);
@@ -75,7 +72,6 @@ int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd)
 		}
 		mini->is_child = true;
 		execute_node(node, mini, STDIN_FILENO, STDOUT_FILENO);
-		clear_tree(&mini->root);
 		ft_exit_child(mini, NULL);
 		if(exit_code(0, 0, 0) != 0)
 			exit_code(exit_code(0, 0 ,0), 1, 1);

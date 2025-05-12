@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:57 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 10:55:58 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:38:21 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,11 @@ char	*jump_spaces(char *str)
 	while (*str && (*str == ' ' || *str == '\t'))
 		str++;
 	return (str);
+}
+
+s_tree	*parse_token(s_token **tokens)
+{
+	if (!tokens || !*tokens)
+		return (NULL);
+	return (parse_pipe(tokens));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 10:21:00 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 23:13:20 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,16 @@ bool	should_expand(const char *str)
 
 bool	is_dollar_in_single_quotes(const char *str)
 {
-	bool	in_single;
-	
-	in_single = false;	
-	for (size_t i = 0; str[i]; i++)
+	bool	in_single = false;
+	size_t	i = 0;
+
+	while (str[i])
 	{
 		if (str[i] == '\'')
 			in_single = !in_single;
 		if (str[i] == '$' && in_single)
-			return (false);  // Dollar inside single quotes → don't expand
+			return (false);
+		i++;
 	}
-	return (true);  // Dollar is outside single quotes → should expand
+	return (true);
 }

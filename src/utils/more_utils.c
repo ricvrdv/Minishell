@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   more_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:02:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 13:01:31 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 23:22:14 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@ int	check_cmd_access(const char *cmd, s_minishell *mini)
 	else if (access(cmd, F_OK) == 0)
 	{
 		ft_putstr_fd(" Permission denied\n", 2);
-		clear_tree(&mini->root);
 		ft_exit_child(mini , NULL);
 		close_fds();
-		exit (126);
+		exit_code(126, 1, 1);
 	}
 	else
 	{
 		ft_putstr_fd(" No such file or directory\n", 2);
-		clear_tree(&mini->root);
 		ft_exit_child(mini , NULL);
 		close_fds();
-		exit (127);
+		exit_code(127, 1, 1);
 	}
+	return 0;
 }

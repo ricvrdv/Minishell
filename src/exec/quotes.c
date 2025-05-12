@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:34 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 15:47:33 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 23:07:45 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,18 @@ void remove_quotes(char *arg)
 		if (*read_ptr == '\'' && !in_double)
 		{
 			in_single = !in_single;
-			read_ptr++; // skip quote
+			read_ptr++; 
 		}
 		else if (*read_ptr == '"' && !in_single)
 		{
 			in_double = !in_double;
-			read_ptr++; // skip quote
+			read_ptr++;
 		}
 		else
-		{
 			*write_ptr++ = *read_ptr++;
-		}
 	}
 	*write_ptr = '\0';
 }
-
 
 void	remove_trailing(char *arg)
 {

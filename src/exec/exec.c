@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 13:14:17 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:54:07 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 		invalid_cmd(mini);
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
-	full_path = find_cmd_path(node->args[0], find_path_variable(mini, node), mini);
+	full_path = find_cmd_path(node->args[0], find_path_variable(mini), mini);
 	if (!full_path)
-		invalid_cmd(mini);
+		invalid_path(mini);
 	if (execve(full_path, node->args, mini->env_array) == -1)
 	{
 		free(full_path);
@@ -96,8 +96,6 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	else
 	{
 		pid = fork();
-		if (pid == -1)
-			return (report_error(127));
 		if (pid == 0)
 			return (handle_child(node, mini));
 		status = handle_parent(pid);

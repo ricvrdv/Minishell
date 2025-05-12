@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 12:53:36 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:49:35 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*find_path_variable(s_minishell *mini, s_tree *node)
+char	*find_path_variable(s_minishell *mini)
 {
 	s_env	*env;
 
@@ -23,11 +23,10 @@ char	*find_path_variable(s_minishell *mini, s_tree *node)
 			return (env->value + 5);
 		env = env->next;
 	}
-	ft_putstr_fd("Command not Found\n", 2);
-	clear_tree(&node);
-	ft_exit_child(mini, NULL);
-	close_fds();
-	exit_code(127, 1, 1);
+	//ft_putstr_fd("Command not Found\n", 2);
+	//ft_exit_child(mini, NULL);
+	//close_fds();
+	//exit_code(127, 1, 1);
 	return (NULL);
 }
 

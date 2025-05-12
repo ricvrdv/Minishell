@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:59 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 11:41:34 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 23:10:40 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ char	*join_args(char **args)
 	{
 		tmp = safe_malloc(ft_strlen(joined) + ft_strlen(args[i]) + 1);
 		tmp[0] = '\0';
-		strcat(tmp, joined);
-		strcat(tmp, args[i]);
+		ft_strcat(tmp, joined);
+		ft_strcat(tmp, args[i]);
 		free(joined);
 		joined = tmp;
 		i++;

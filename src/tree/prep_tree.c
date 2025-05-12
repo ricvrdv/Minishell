@@ -3,39 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   prep_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 12:26:31 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 23:36:26 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
+static void	preprocess_tree(s_tree *tree, s_minishell *mini)
 {
 	int	counter[12];
-	int first_check;
 
-	first_check = 0;
 	rename_nodes(tree);
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
+
 	mini->root = tree;
 	mini->heredoc_count = counter[2];
-	while(mini->heredoc_count)
+	while (mini->heredoc_count)
 	{
-		first_check = handle_heredocs(tree, mini, tree);
+		handle_heredocs(tree, mini);
 		mini->heredoc_count = 0;
 	}
-	signal(SIGINT, handle_ctrl_c);
+}
+
+void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
+{
+	int first_check;
+	
+	first_check = 0;
+	preprocess_tree(tree, mini);
 	if(tree->bad_herdoc)
 	{
 		return ;	
 	}
 	expand_tree(mini, tree);
-	first_check = verify_permissions(tree, mini);
+	//first_check = verify_permissions(tree, mini);  not needed
 	if(first_check == 0)
 		*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }
@@ -96,11 +102,4 @@ void	rename_nodes(s_tree *tree)
 		rename_nodes(tree->left);
 	if (tree->right)
 		rename_nodes(tree->right);
-}
-
-s_tree	*parse_token(s_token **tokens)
-{
-	if (!tokens || !*tokens)
-		return (NULL);
-	return (parse_pipe(tokens));
 }
