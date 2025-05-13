@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 16:52:21 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:03:38 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 		in_fd = create_and_fork_command(tree, mini, in_fd);
 		tree = tree->right;
 	}
+	//wait_for_children(&status);
 	execute_last_command(tree, mini, in_fd);
 	wait_for_children(&status);
 	return (exit_code(WEXITSTATUS(status), 1, 0));
@@ -33,9 +34,9 @@ int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
+	int status;
 
 	pid = init_pipe_and_fork(pipefd);
-	
 	if (pid == 0)
 	{
 		ft_sig_child();
@@ -67,6 +68,7 @@ int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_sig_child();
 		if (in_fd != 0)
 		{
 			dup2(in_fd, STDIN_FILENO);
@@ -101,6 +103,12 @@ void	wait_for_children(int *last_status)
 			{
 				ft_putstr_fd("\n", 1);
 				exit_code(130, 1, 0);                  // 130 = interrupted by SIGI
+				return ;
+			}
+			else if (sig == SIGQUIT)
+			{
+				ft_putstr_fd("Quit (core dumped)\n", 1);
+				exit_code(131, 1, 0);                  // 130 = interrupted by SIGI
 				return ;
 			}
 		}

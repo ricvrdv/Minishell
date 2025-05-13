@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:28 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 15:27:21 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:09:41 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_sig_restore(void)
 void	ft_sig_child(void)
 {
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	ft_sig_mute(void)

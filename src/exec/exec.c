@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 16:48:13 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:14:06 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,12 @@ int	handle_parent(pid_t pid)
 		{
 			ft_putstr_fd("\n", 1);
 			exit_code(130, 1, 0);                  // 130 = interrupted by SIGI
+			return (-1);
+		}
+		else if (sig == SIGQUIT)
+		{
+			ft_putstr_fd("Quit (core dumped)\n", 1);
+			exit_code(131, 1, 0);                  // 130 = interrupted by SIGI
 			return (-1);
 		}
 	}
