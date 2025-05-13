@@ -54,7 +54,11 @@ SRCS = src/init/init.c \
        src/exec/redirect_utils.c \
        src/utils/clear_utils.c \
        src/exec/extra_utils_exec.c \
-       src/utils/more_utils.c 
+       src/utils/more_utils.c \
+       src/exec/heredoc_utils.c \
+       src/exec/heredoc_expand.c \
+       src/parse/extra_parse.c \
+       src/utils/close.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -64,9 +68,9 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(MYLIB)
+$(NAME): $(OBJS)
 	@echo "\033[0;32mCompilation Successful!\033[0m"
-	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) -L$(MYLIB_DIR) -lft -o $(NAME) 
+	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) $(MYLIB) -o $(NAME) 
 
 $(MYLIB): $(MYLIB_DIR)
 	@make -C $(MYLIB_DIR) -s
@@ -77,11 +81,9 @@ $(MYLIB): $(MYLIB_DIR)
 
 clean:
 	@$(RM) $(OBJS)
-	@make clean -C $(MYLIB_DIR)
 
 fclean: clean
 	@$(RM) $(NAME)
-	@make fclean -C $(MYLIB_DIR)
 
 re: fclean all
 

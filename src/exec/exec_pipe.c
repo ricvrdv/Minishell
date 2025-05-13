@@ -34,7 +34,7 @@ int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
-	int status;
+	//int status;
 
 	pid = init_pipe_and_fork(pipefd);
 	if (pid == 0)
