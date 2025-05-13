@@ -1,6 +1,5 @@
 #include "../../inc/minishell.h"
 
-static void	handle_exit_cleanup(s_minishell *mini, s_tree *node, int code);
 static int	handle_args_offset(s_tree *node);
 static bool	is_numeric_arg_valid(const char *arg);
 static void	exit_error(const char *arg, bool numeric_error);
@@ -13,10 +12,7 @@ int	mini_exit(s_minishell *mini, s_tree *node)
 	if (!mini->is_child)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (mini->is_child)
-	{
-		exit_status = extra_mini_exit(mini, node);
-		return (exit_code(exit_status, 1, 0));
-	}
+		return (exit_code(extra_mini_exit(mini, node), 1, 0));
 	arg_offset = handle_args_offset(node);
 	if (arg_offset == -1)
 		handle_exit_cleanup(mini, node, 0);
@@ -33,18 +29,6 @@ int	mini_exit(s_minishell *mini, s_tree *node)
 	exit_status = calculate_exit_status(node->args[arg_offset]);
 	handle_exit_cleanup(mini, node, (int)exit_status);
 	return ((int)exit_status);
-}
-static void	handle_exit_cleanup(s_minishell *mini, s_tree *node, int code)
-{
-	free_struct(mini);
-	free(mini);
-	clear_history();
-	clear_tree(&node);
-	close(4);
-	close(3);
-	close(5);
-	close(6);
-	exit_code(code, 1, 1);
 }
 
 static int	handle_args_offset(s_tree *node)

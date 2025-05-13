@@ -144,6 +144,7 @@ s_env   *find_env_var(s_env *env, const char *key);
 void    handle_invalid_identifier(char *arg);
 void    sync_env_array(s_minishell *mini);
 void    free_array(char **array);
+void    handle_exit_cleanup(s_minishell *mini, s_tree *node, int code);
 int     is_builtin(char *cmd);
 long    ft_atol(const char *nptr);
 

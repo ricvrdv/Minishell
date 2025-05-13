@@ -66,3 +66,16 @@ void	handle_invalid_identifier(char *arg)
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }
+
+void	handle_exit_cleanup(s_minishell *mini, s_tree *node, int code)
+{
+	free_struct(mini);
+	free(mini);
+	clear_history();
+	clear_tree(&node);
+	close(4);
+	close(3);
+	close(5);
+	close(6);
+	exit_code(code, 1, 1);
+}
