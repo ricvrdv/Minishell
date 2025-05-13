@@ -3,12 +3,7 @@
 
 missing : 
 signals (also broken pipe)
-invalid exit _code when using 3 pipes (only at letters right now)
-ptr in mini to tree
-check_single quotes fails in some cases; after export and echo  ???????
 
-exit status sometimes incorrect when using pipes
+exit status sometimes incorrect when using pipes ??
 
-cd "" returns prompt ? 
 
-$$ pid // echo ~ (home)  // echo $0 (minishell)   echo $/,,

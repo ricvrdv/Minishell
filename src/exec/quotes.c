@@ -12,19 +12,23 @@
 
 #include "../../inc/minishell.h"
 
-void remove_quotes(char *arg)
+void	remove_quotes(char *arg)
 {
-	char *read_ptr = arg;
-	char *write_ptr = arg;
-	int in_single = 0;
-	int in_double = 0;
+	char	*read_ptr;
+	char	*write_ptr;
+	int		in_single;
+	int		in_double;
 
+	in_single = 0;
+	in_double = 0;
+	read_ptr = arg;
+	write_ptr = arg;
 	while (*read_ptr)
 	{
 		if (*read_ptr == '\'' && !in_double)
 		{
 			in_single = !in_single;
-			read_ptr++; 
+			read_ptr++;
 		}
 		else if (*read_ptr == '"' && !in_single)
 		{
@@ -91,4 +95,3 @@ void	clean_args(char **args, int arg_count)
 		index++;
 	}
 }
-

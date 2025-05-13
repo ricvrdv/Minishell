@@ -1,41 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 10:55:28 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/05 16:05:52 by Jpedro-c         ###   ########.fr       */
+/*   Created: 2025/05/13 12:51:53 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/13 12:51:54 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
-void	setup_signal_handlers(void)
+void	close_heredoc(s_minishell *mini, int fd)
 {
-	signal(SIGINT, handle_ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
+	ft_exit_child(mini, NULL);
+	close(fd);
+	close_fds();
 }
 
-void	child_ctrl_c(int sig_num)
+void	print_heredoc(char *str, int fd)
 {
-	if (sig_num == 2)
-		g_sig = 130;
-	else
-	{
-		ft_putstr_fd("Quit", 1);
-		g_sig = 131;
-	}
-	write(1, "\n", 1);
+	ft_putstr_fd(str, fd);
+	ft_putstr_fd("\n", fd);
+	free(str);
 }
 
-void	handle_ctrl_c(int a)
+void	close_fds(void)
 {
-	(void)a;
-	g_sig = 1;
-	rl_replace_line("", 0);
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
+	close(3);
+	close(4);
+	close(5);
+	close(6);
+	close(7);
+	close(8);
+	close(9);
 }

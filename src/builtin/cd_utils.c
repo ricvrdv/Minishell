@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 13:19:29 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/13 13:19:30 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static char	*get_oldpwd(s_env *env);
@@ -14,7 +26,11 @@ char	*get_target_dir(s_minishell *mini, char *arg)
 	else if (!arg || ft_strcmp(arg, "~") == 0)
 		dir = get_home_dir(mini->env);
 	else
+	{
+		if (ft_strcmp(arg, "") == 0)
+			return (NULL);
 		dir = ft_strdup(arg);
+	}
 	if (!dir)
 		return (NULL);
 	if (dir[0] == '~' && dir[1] == '/')

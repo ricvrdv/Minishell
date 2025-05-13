@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/11 10:17:51 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:14:33 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 {
 	int		in_fd;
 	int		status;
-	
+
 	in_fd = 0;
 	status = 0;
 	while (tree->type == PIPE)
@@ -29,38 +29,38 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 	return (exit_code(WEXITSTATUS(status), 1, 0));
 }
 
-	int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
-	{
-		int		pipefd[2];
-		pid_t	pid;
+int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
+{
+	int		pipefd[2];
+	pid_t	pid;
 
-		pid = init_pipe_and_fork(pipefd);
-		if (pid == 0)
-		{
-			if (in_fd != 0)
-			{
-				dup2(in_fd, STDIN_FILENO);
-				close(in_fd);
-			}
-			mini->is_child = true;
-			dup2(pipefd[1], STDOUT_FILENO);
-			close(pipefd[0]);
-			close(pipefd[1]);
-			execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
-			ft_exit_child(mini, NULL);
-			if(exit_code(0, 0, 0) != 0)
-				exit_code(exit_code(0, 0 ,0), 1, 1);
-			exit(0);
-		}
+	pid = init_pipe_and_fork(pipefd);
+	if (pid == 0)
+	{
 		if (in_fd != 0)
+		{
+			dup2(in_fd, STDIN_FILENO);
 			close(in_fd);
+		}
+		mini->is_child = true;
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[0]);
 		close(pipefd[1]);
-		return (pipefd[0]);
+		execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
+		ft_exit_child(mini, NULL);
+		if (exit_code(0, 0, 0) != 0)
+			exit_code(exit_code(0, 0, 0), 1, 1);
+		exit(0);
 	}
+	if (in_fd != 0)
+		close(in_fd);
+	close(pipefd[1]);
+	return (pipefd[0]);
+}
 
 int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
@@ -73,29 +73,29 @@ int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd)
 		mini->is_child = true;
 		execute_node(node, mini, STDIN_FILENO, STDOUT_FILENO);
 		ft_exit_child(mini, NULL);
-		if(exit_code(0, 0, 0) != 0)
-			exit_code(exit_code(0, 0 ,0), 1, 1);
+		if (exit_code(0, 0, 0) != 0)
+			exit_code(exit_code(0, 0, 0), 1, 1);
 		exit(0);
-		
 	}
 	if (in_fd != 0)
-	close(in_fd);
-	return 0;
+		close(in_fd);
+	return (0);
 }
 
-void wait_for_children(int *last_status)
+void	wait_for_children(int *last_status)
 {
-	int status;
+	int	status;
+
 	while (wait(&status) > 0)
 	{
 		if (WIFEXITED(status))
-		*last_status = status;
+			*last_status = status;
 	}
 }
 
 pid_t	init_pipe_and_fork(int *pipefd)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	if (pipe(pipefd) < 0)
 		perror("pipe");

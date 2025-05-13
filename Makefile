@@ -56,7 +56,9 @@ SRCS = src/init/init.c \
        src/exec/extra_utils_exec.c \
        src/utils/more_utils.c \
        src/exec/heredoc_utils.c \
-       src/exec/heredoc_expand.c
+       src/exec/heredoc_expand.c \
+       src/parse/extra_parse.c \
+       src/utils/close.c
 
 OBJS = $(SRCS:.c=.o)
 

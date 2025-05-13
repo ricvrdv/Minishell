@@ -20,7 +20,6 @@ static void	preprocess_tree(s_tree *tree, s_minishell *mini)
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
-
 	mini->root = tree;
 	mini->heredoc_count = counter[2];
 	while (mini->heredoc_count)
@@ -32,17 +31,14 @@ static void	preprocess_tree(s_tree *tree, s_minishell *mini)
 
 void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 {
-	int first_check;
-	
+	int	first_check;
+
 	first_check = 0;
 	preprocess_tree(tree, mini);
-	if(tree->bad_herdoc)
-	{
-		return ;	
-	}
+	if (tree->bad_herdoc)
+		return ;
 	expand_tree(mini, tree);
-	//first_check = verify_permissions(tree, mini);  not needed
-	if(first_check == 0)
+	if (first_check == 0)
 		*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }
 

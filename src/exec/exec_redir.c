@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:52 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 13:13:27 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:18:49 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	setup_heredoc(s_tree *tree, s_minishell *mini, int out_fd)
 	return (status);
 }
 
-
 static int	exec_append(s_tree *tree, s_minishell *mini, int in_fd)
 {
 	int	fd;
@@ -86,5 +85,3 @@ int	execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
 		status = exec_append(tree, mini, in_fd);
 	return (status);
 }
-
-

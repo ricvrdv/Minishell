@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:59 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 23:10:40 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:28:10 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	quote_counter(char c, int *s_counter, int *d_counter)
-{
-	if (c == '\"')
-		(*d_counter)++;
-	else if (c == '\'')
-		(*s_counter)++;
-}
-
-void	update_quotes(char c, int *inside, char *quote)
-{
-	if (c == '\'' || c == '\"')
-	{
-		if (*inside && c == *quote)
-			*inside = 0;
-		else if (!*inside)
-		{
-			*inside = 1;
-			*quote = c;
-		}
-	}
-}
 
 int	check_str(char **line)
 {
@@ -50,7 +28,7 @@ char	*strip_quotes_and_join(char *input)
 	char	*result;
 	int		i;
 	int		j;
-	int 	len;
+	int		len;
 
 	i = 0;
 	j = 0;
@@ -94,7 +72,7 @@ char	*strip_and_join(char *input)
 	char	*result;
 	int		i;
 	int		j;
-	int 	len;
+	int		len;
 
 	i = 0;
 	j = 0;

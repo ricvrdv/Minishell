@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 22:54:07 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:39:14 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
-	redirect_fds(in_fd, out_fd);
-	pre_clean_args(node->args, &node->argcount);
-	clean_args(node->args, node->argcount);
+	setup_cmd(node, in_fd, out_fd);
 	if (is_builtin(node->args[0]))
 	{
 		status = execute_builtin(node, mini);

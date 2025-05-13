@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 23:06:07 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:44:16 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	process_heredoc_child(int fd, const char *delim, bool quoted, s_minishell *mini)
+static int	process_heredoc_child(int fd, const char *delim,
+		bool quoted, s_minishell *mini)
 {
 	if (quoted)
 		read_heredoc(fd, delim);
@@ -28,10 +29,8 @@ int	handle_heredoc(s_tree *node, s_minishell *mini)
 	const char	*delim;
 	char		*temp_file;
 	int			pid;
-	int			status;
 	bool		quoted;
 
-	status = 0;
 	delim = node->right->args[0];
 	quoted = has_any_quotes(delim);
 	if (quoted)
@@ -42,12 +41,11 @@ int	handle_heredoc(s_tree *node, s_minishell *mini)
 	pid = fork();
 	if (pid == 0)
 		process_heredoc_child(fd, delim, quoted, mini);
-	else if (handle_heredoc_wait(pid, &status, node))
+	else if (handle_heredoc_wait(pid, node))
 		return (-1);
 	close(fd);
-	return open(temp_file, O_RDONLY);
+	return (open(temp_file, O_RDONLY));
 }
-
 
 void	read_heredoc(int fd, const char *delimiter)
 {
@@ -60,7 +58,7 @@ void	read_heredoc(int fd, const char *delimiter)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putstr_fd("warning: here-document delimited by end-of-file\n", 2);
+			ft_putstr_fd(HEREDOC_EOF_WARNING, 2);
 			break ;
 		}
 		if (ft_strncmp(line, delimiter, len) == 0)
@@ -93,7 +91,3 @@ int	execute_heredoc(s_tree *tree, s_minishell *mini)
 		return (0);
 	return (execute_heredoc(tree->right, mini));
 }
-
-
-
-

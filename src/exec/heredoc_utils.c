@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:59:46 by joaorema          #+#    #+#             */
-/*   Updated: 2025/05/12 23:03:36 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:39:24 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strcat(char *dest, const char *src)
 
 	dest_len = ft_strlen(dest);
 	ft_strlcat(dest, src, dest_len + ft_strlen(src) + 1);
-	return dest;
+	return (dest);
 }
 
 void	quite_heredoc(int a)
@@ -37,8 +37,8 @@ bool	is_quoted(const char *delim)
 	len = ft_strlen(delim);
 	if (len < 2)
 		return (false);
-	if ((delim[0] == '\'' && delim[len - 1] == '\'') ||
-		(delim[0] == '\"' && delim[len - 1] == '\"'))
+	if ((delim[0] == '\'' && delim[len - 1] == '\'')
+		|| (delim[0] == '\"' && delim[len - 1] == '\"'))
 		return (true);
 	return (false);
 }
@@ -48,16 +48,18 @@ bool	has_any_quotes(const char *delim)
 	while (*delim)
 	{
 		if (*delim == '\'' || *delim == '\"')
-			return true;
+			return (true);
 		delim++;
 	}
-	return false;
+	return (false);
 }
 
-int	handle_heredoc_wait(int pid, int *status, s_tree *node)
+int	handle_heredoc_wait(int pid, s_tree *node)
 {
-	waitpid(pid, status, 0);
-	if (WIFEXITED(*status) && WEXITSTATUS(*status) == 130)
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 	{
 		node->bad_herdoc = 1;
 		return (-1);

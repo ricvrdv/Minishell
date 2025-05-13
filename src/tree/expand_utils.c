@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 23:13:20 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:39:24 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,13 @@ bool	enclosed_single_quotes(const char *str)
 	return (false);
 }
 
-bool	should_expand(const char *str)
-{
-	if (!str)
-		return (false);
-	return (is_dollar_in_single_quotes(str));
-}
-
-
 bool	is_dollar_in_single_quotes(const char *str)
 {
-	bool	in_single = false;
-	size_t	i = 0;
+	bool	in_single;
+	size_t	i;
 
+	i = 0;
+	in_single = false;
 	while (str[i])
 	{
 		if (str[i] == '\'')

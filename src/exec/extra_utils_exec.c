@@ -20,7 +20,7 @@ void	invalid_cmd(s_minishell *mini)
 	exit_code(127, 1, 1);
 }
 
-void invalid_path(s_minishell *mini)
+void	invalid_path(s_minishell *mini)
 {
 	ft_putstr_fd(" command not found\n", 2);
 	close_fds();
@@ -28,7 +28,7 @@ void invalid_path(s_minishell *mini)
 	exit_code(127, 1, 1);
 }
 
-void execve_fail(s_minishell *mini)
+void	execve_fail(s_minishell *mini)
 {
 	ft_putstr_fd(" Is a directory\n", 2);
 	close_fds();

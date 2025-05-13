@@ -19,7 +19,6 @@ void	start_prompt(s_minishell **mini)
 	s_tree	*tree;
 	int		status;
 
-	
 	(void)mini;
 	while (1)
 	{

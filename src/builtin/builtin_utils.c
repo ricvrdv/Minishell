@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 13:19:23 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/13 13:19:24 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static s_env	*create_env_node(const char *key, const char *value);
@@ -65,4 +77,11 @@ void	handle_invalid_identifier(char *arg)
 	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+}
+
+void	handle_exit_cleanup(s_minishell *mini, int code)
+{
+	ft_exit_child(mini, NULL);
+	close_fds();
+	exit_code(code, 1, 1);
 }

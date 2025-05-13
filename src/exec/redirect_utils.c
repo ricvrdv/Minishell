@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:59:51 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 23:08:39 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:19:13 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	handle_redirect_l(s_tree *tree)
 {
-	int	fd;
-	char *file;
-	
+	int		fd;
+	char	*file;
+
 	file = remove_quotes_redirect(tree->right->args[0]);
 	fd = open(file, O_RDONLY);
 	free(file);
@@ -31,10 +31,10 @@ int	handle_redirect_l(s_tree *tree)
 
 int	handle_redirect_r(s_tree *tree)
 {
-	int	fd;
-	char *file;
-	char *join;
-	
+	int		fd;
+	char	*file;
+	char	*join;
+
 	join = join_args(tree->right->args);
 	file = strip_quotes_and_join(join);
 	free(join);
@@ -72,10 +72,18 @@ char	*remove_quotes_redirect(char *str)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str);
-	if ((str[0] == '"' && str[len - 1] == '"') || (str[0] == '\'' && str[len - 1] == '\''))
+	if ((str[0] == '"' && str[len - 1] == '"')
+		|| (str[0] == '\'' && str[len - 1] == '\''))
 	{
 		new_str = ft_substr(str, 1, len - 2);
 		return (new_str);
 	}
-	return (ft_strdup(str)); // return a copy if no quotes
+	return (ft_strdup(str));
+}
+
+void	setup_cmd(s_tree *node, int in_fd, int out_fd)
+{
+	redirect_fds(in_fd, out_fd);
+	pre_clean_args(node->args, &node->argcount);
+	clean_args(node->args, node->argcount);
 }

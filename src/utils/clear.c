@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:14 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 13:55:27 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:51:16 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	clear_tree(s_tree **tree)
 
 	if (!tree || !*tree)
 		return ;
-	if((*tree)->left)
+	if ((*tree)->left)
 		clear_tree(&(*tree)->left);
-	if((*tree)->right)
+	if ((*tree)->right)
 		clear_tree(&(*tree)->right);
 	if ((*tree)->args)
 	{
@@ -94,5 +94,5 @@ void	ft_exit(s_minishell *mini, char *error)
 		printf(RED "%s\n" RESET, error);
 	clear_history();
 	free(mini);
-	exit_code(0, 0 , 1);
+	exit_code(0, 0, 1);
 }

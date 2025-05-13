@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:20 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 13:48:13 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:42:43 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ s_tree	*parse_redirect(s_token **tokens)
 	s_token	*next_token;
 	s_tree	*redirect_node;
 
-	if(!*tokens)
-		return NULL;
 	temp = *tokens;
 	if ((*tokens)->type >= REDIRECT_L && (*tokens)->type <= HEREDOC)
 		return (especial_node(tokens, temp));

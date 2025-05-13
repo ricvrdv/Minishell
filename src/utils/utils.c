@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 23:03:07 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:04:27 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	error_exit(char *error)
 	exit(1);
 }
 
-
-char	*get_dir()
+char	*get_dir(void)
 {
 	char	*currentdir;
 
@@ -27,39 +26,44 @@ char	*get_dir()
 	return (currentdir);
 }
 
-
 int	found_sign(const char *str)
 {
-	int	i;
+	int		i;
+	char	next;
 
-	if (!str)
-		return (0);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
-			return (1);
+		{
+			next = str[i + 1];
+			if (ft_isalpha(next) || ft_isdigit(next)
+				|| next == '_' || next == '?')
+				return (1);
+			else
+				return (0);
+		}
 		i++;
 	}
 	return (0);
 }
 
-int handle_heredocs(s_tree *tree, s_minishell *mini)
+int	handle_heredocs(s_tree *tree, s_minishell *mini)
 {
-	int fd;
-	
-	if(!tree)
-		return 1;
-	if(tree->type == HEREDOC)
+	int	fd;
+
+	if (!tree)
+		return (1);
+	if (tree->type == HEREDOC)
 	{
 		fd = handle_heredoc(tree, mini);
-		close(fd);	
+		close(fd);
 	}
-	if(tree->left)
+	if (tree->left)
 		handle_heredocs(tree->left, mini);
-	if(tree->right)
+	if (tree->right)
 		handle_heredocs(tree->right, mini);
-	return 0;
+	return (0);
 }
 
 void	ft_exit_child(s_minishell *mini, char *error)
@@ -70,29 +74,4 @@ void	ft_exit_child(s_minishell *mini, char *error)
 		printf(RED "%s\n" RESET, error);
 	clear_history();
 	free(mini);
-}
-
-void close_heredoc(s_minishell *mini, int fd)
-{
-	ft_exit_child(mini, NULL);
-	close(fd);
-	close_fds();
-}
-
-void print_heredoc(char *str, int fd)
-{
-	ft_putstr_fd(str, fd);
-	ft_putstr_fd("\n", fd);
-	free(str);
-}
-
-void	close_fds()
-{
-	close(3);
-	close(4);
-	close(5);
-	close(6);
-	close(7);
-	close(8);
-	close(9);
 }

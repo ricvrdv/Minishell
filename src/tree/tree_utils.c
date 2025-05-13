@@ -79,20 +79,3 @@ s_tree	*especial_node(s_token **tokens, s_token *temp)
 	free(temp);
 	return (redi_node);
 }
-
-int verify_permissions(s_tree *tree, s_minishell *mini)
-{
-	int	status;
-	char *path;
-	
-	path = NULL;
-	status = 0;
-	if(tree->args && !is_builtin(tree->args[0]) && (tree->file_type == READ_FILE || tree->file_type == APPEND_FILE))
-	{
-		check_cmd_access(tree->args[0], mini);
-		free(path);
-	}
-	if(status == 0 && tree->right)
-		status = verify_permissions(tree->right, mini);
-	return (status);
-}

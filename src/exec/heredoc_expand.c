@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 23:05:41 by joaorema          #+#    #+#             */
-/*   Updated: 2025/05/12 23:06:05 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:50:18 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,12 @@ char	*generate_file(int index)
 	ft_strlcat(filename, num, len);
 	ft_strlcat(filename, ".txt", len);
 	free(num);
-	return filename;
+	return (filename);
 }
 
-void read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini)
+void	read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini)
 {
 	char	*line;
-	char	*expansion;
 	size_t	len;
 
 	len = ft_strlen(delimiter);
@@ -45,31 +44,40 @@ void read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putstr_fd("warning: here-document delimited by end-of-file\n", 2);
-			break;
+			ft_putstr_fd(HEREDOC_EOF_WARNING, 2);
+			break ;
 		}
 		if (ft_strncmp(line, delimiter, len) == 0 && line[len] == '\0')
 		{
 			free(line);
-			break;
+			break ;
 		}
-		if (found_sign(line)) // contains $
-		{
-			expansion = expand_variable(mini, line);
-			if (expansion)
-				print_heredoc(expansion, fd);
-		}
+		if (found_sign(line))
+			handle_expansion_line(fd, mini, line);
 		else
-		{
-			ft_putstr_fd(line, fd);
-			ft_putstr_fd("\n", fd);
-		}
+			write_heredoc(line, fd);
 		free(line);
 	}
 }
 
-int		static_index(void)
+void	handle_expansion_line(int fd, s_minishell *mini, char *line)
 {
-	static int i;
+	char	*expansion;
+
+	expansion = expand_variable(mini, line);
+	if (expansion)
+		print_heredoc(expansion, fd);
+}
+
+int	static_index(void)
+{
+	static int	i;
+
 	return (i++);
+}
+
+void	write_heredoc(char *str, int fd)
+{
+	ft_putstr_fd(str, fd);
+	ft_putstr_fd("\n", fd);
 }

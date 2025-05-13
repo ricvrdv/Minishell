@@ -3,21 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:25 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 22:46:33 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:04:33 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static void	update_shell_level(s_minishell *mini);
+static void	add_initial_shlvl(s_minishell *mini);
 
 void	init_struct(s_minishell *mini)
 {
 	char	*curdir;
 
 	mini->created = 1;
-	curdir = get_dir(mini);
+	curdir = get_dir();
 	mini->exit_status = 0;
 	mini->cur_dir = curdir;
 	mini->heredoc_count = 0;
@@ -58,38 +61,42 @@ static char	**create_env_array(char **envp)
 	return (env_array);
 }
 
-static void update_shell_level(s_minishell *mini)
+static void	update_shell_level(s_minishell *mini)
 {
-    s_env   *shlvl_var;
-    int     current_level;
-    char    *new_level;
+	s_env	*shlvl_var;
+	int		current_level;
+	char	*new_level;
+
+	shlvl_var = find_env_var(mini->env, "SHLVL");
+	if (shlvl_var && shlvl_var->value)
+	{
+		current_level = ft_atoi(shlvl_var->value);
+		if (current_level < 0)
+			current_level = 0;
+		new_level = ft_itoa(current_level + 1);
+		if (!new_level)
+			exit(EXIT_FAILURE);
+		free(shlvl_var->value);
+		shlvl_var->value = new_level;
+	}
+	else
+		add_initial_shlvl(mini);
+}
+
+static void	add_initial_shlvl(s_minishell *mini)
+{
 	char	*key;
 	char	*value;
 
-    shlvl_var = find_env_var(mini->env, "SHLVL");
-    if (shlvl_var && shlvl_var->value)
-    {
-        current_level = ft_atoi(shlvl_var->value);
-        if (current_level < 0)
-            current_level = 0;
-        new_level = ft_itoa(current_level + 1);
-        if (!new_level)
-            exit(EXIT_FAILURE);
-        free(shlvl_var->value);
-        shlvl_var->value = new_level;
-    }
-    else
-    {
-		key = ft_strdup("SHLVL");
-		value = ft_itoa(1);
-		if (!key | !value)
-		{
-			free(key);
-			free(value);
-			exit(EXIT_FAILURE);
-		}
-		add_env_node(&mini->env, key, value);
-    }
+	key = ft_strdup("SHLVL");
+	value = ft_itoa(1);
+	if (!key || !value)
+	{
+		free(key);
+		free(value);
+		exit(EXIT_FAILURE);
+	}
+	add_env_node(&mini->env, key, value);
 }
 
 int	get_env(s_minishell *mini, char **envp)
