@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 23:36:26 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:23:49 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	preprocess_tree(s_tree *tree, s_minishell *mini)
 {
 	int	counter[12];
+	int status;
 
 	rename_nodes(tree);
 	init_pipes_array(counter, 1);
@@ -24,7 +25,9 @@ static void	preprocess_tree(s_tree *tree, s_minishell *mini)
 	mini->heredoc_count = counter[2];
 	while (mini->heredoc_count)
 	{
-		handle_heredocs(tree, mini);
+		status = handle_heredocs(tree, mini);
+		if(status == -5)
+			return ;
 		mini->heredoc_count = 0;
 	}
 }

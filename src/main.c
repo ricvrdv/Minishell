@@ -6,13 +6,11 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:17:20 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:17:25 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:41:05 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int	g_sig = 0;
 
 int	main(int ac, char *av[], char **envp)
 {
@@ -20,7 +18,6 @@ int	main(int ac, char *av[], char **envp)
 
 	(void)av;
 	exit_code(0, 1, 0);
-	setup_signal_handlers();
 	mini = safe_malloc(sizeof(s_minishell));
 	init_struct(mini);
 	if (ac == 1 && get_env(mini, envp))

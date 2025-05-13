@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:59:46 by joaorema          #+#    #+#             */
-/*   Updated: 2025/05/13 11:39:24 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:21:39 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,31 @@ bool	has_any_quotes(const char *delim)
 	return (false);
 }
 
-int	handle_heredoc_wait(int pid, s_tree *node)
+int	handle_heredoc_wait(pid_t pid, s_tree *node)
 {
 	int	status;
+	int sig;
 
+	ft_sig_mute();
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+	if (WIFSIGNALED(status))
 	{
-		node->bad_herdoc = 1;
-		return (-1);
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+		{
+			ft_putstr_fd("\n", 1);
+			unlink(node->right->hd_file); // delete temp file
+			exit_code(130, 1, 0);                  // 130 = interrupted by SIGI
+			return (-1);
+		}
 	}
-	return (0);
+	else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+	{
+		unlink(node->right->hd_file);
+		g_sig = WEXITSTATUS(status);
+		return (1);
+	}
+	ft_sig_restore();
+	return (0); // heredoc completed successfully
 }
+

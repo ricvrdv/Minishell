@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:14:33 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:52:21 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
 	pid_t	pid;
 
 	pid = init_pipe_and_fork(pipefd);
+	
 	if (pid == 0)
 	{
+		ft_sig_child();
 		if (in_fd != 0)
 		{
 			dup2(in_fd, STDIN_FILENO);
@@ -85,12 +87,25 @@ int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd)
 void	wait_for_children(int *last_status)
 {
 	int	status;
+	int sig;
 
+	ft_sig_mute();
 	while (wait(&status) > 0)
 	{
 		if (WIFEXITED(status))
 			*last_status = status;
+		if (WIFSIGNALED(status))
+		{
+			sig = WTERMSIG(status);
+			if (sig == SIGINT)
+			{
+				ft_putstr_fd("\n", 1);
+				exit_code(130, 1, 0);                  // 130 = interrupted by SIGI
+				return ;
+			}
+		}
 	}
+	ft_sig_restore();
 }
 
 pid_t	init_pipe_and_fork(int *pipefd)

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:35:54 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:32:59 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,9 @@ void	handle_ctrl_c(int a);
 void	setup_signal_handlers(void);
 void	child_ctrl_c(int sig_num);
 void	quite_heredoc(int a);
+void	ft_sig_restore(void);
+void	ft_sig_child(void);
+void	ft_sig_mute(void);
 
 //for clear
 void	clear_env(s_env **env);
@@ -269,6 +272,7 @@ void	ft_exit_child(s_minishell *mini, char *error);
 void	close_fds(void);
 bool	has_any_quotes(const char *delim);
 bool    are_counts_odd(int d_count, int s_count);
+
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 
