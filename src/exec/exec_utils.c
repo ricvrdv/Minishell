@@ -23,8 +23,6 @@ char	*find_path_variable(s_minishell *mini)
 			return (env->value + 5);
 		env = env->next;
 	}
-	ft_putstr_fd("Command not Found\n", 2);
-	exit_code(127, 1, 1);
 	return (NULL);
 }
 
@@ -41,6 +39,8 @@ char	*find_cmd_path(const char *cmd, const char *path)
 		return (ft_strdup(cmd));
 	}
 	i = 0;
+	if (!path)
+		return (NULL);
 	dir = ft_split(path, ':');
 	while (dir[i])
 	{

@@ -60,7 +60,6 @@ static char	**create_env_array(char **envp)
 	return (env_array);
 }
 
-
 int	get_env(s_minishell *mini, char **envp)
 {
 	char		*sign;
