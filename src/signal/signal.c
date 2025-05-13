@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:28 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/05 16:05:52 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:09:41 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,22 @@ void	handle_ctrl_c(int a)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
+}
+
+void	ft_sig_restore(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	ft_sig_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	ft_sig_mute(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

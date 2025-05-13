@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 16:38:58 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:14:06 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,52 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	status = 0;
 	mini->is_child = true;
 	clean_args_expand(node->args);
+	ft_sig_child();
 	if (!node->args[0])
 		return (0);
 	if (node->args[0][0] == '\0')
-		invalid_cmd(node, mini);
+		invalid_cmd(mini);
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
-	full_path = find_cmd_path(node->args[0], find_path_variable(mini));
+	full_path = find_cmd_path(node->args[0], find_path_variable(mini), mini);
 	if (!full_path)
-		invalid_cmd(node, mini);	
+		invalid_path(mini);
 	if (execve(full_path, node->args, mini->env_array) == -1)
-		execve_fail(node, mini);
+	{
+		free(full_path);
+		execve_fail(mini);
+	}
 	exit (status);
 }
 
 int	handle_parent(pid_t pid)
 {
 	int	status;
+	int sig;
 
+	ft_sig_mute();
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+		{
+			ft_putstr_fd("\n", 1);
+			exit_code(130, 1, 0);                  // 130 = interrupted by SIGI
+			return (-1);
+		}
+		else if (sig == SIGQUIT)
+		{
+			ft_putstr_fd("Quit (core dumped)\n", 1);
+			exit_code(131, 1, 0);                  // 130 = interrupted by SIGI
+			return (-1);
+		}
+	}
+	if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
+	ft_sig_restore();
 	return (status);
 }
 
@@ -80,9 +103,7 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
-	redirect_fds(in_fd, out_fd);
-	pre_clean_args(node->args, &node->argcount);
-	clean_args(node->args, node->argcount);
+	setup_cmd(node, in_fd, out_fd);
 	if (is_builtin(node->args[0]))
 	{
 		status = execute_builtin(node, mini);
@@ -93,11 +114,14 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 	else
 	{
 		pid = fork();
-		if (pid == -1)
-			return (report_error(127));
 		if (pid == 0)
+		{
+			ft_sig_child();
 			return (handle_child(node, mini));
+		}
 		status = handle_parent(pid);
+		if(status == -1)
+			return(0);
 	}
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));

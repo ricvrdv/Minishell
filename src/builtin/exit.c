@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 13:19:45 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/13 13:19:46 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static int	handle_args_offset(s_tree *node);
@@ -15,11 +27,11 @@ int	mini_exit(s_minishell *mini, s_tree *node)
 		return (exit_code(extra_mini_exit(mini, node), 1, 0));
 	arg_offset = handle_args_offset(node);
 	if (arg_offset == -1)
-		handle_exit_cleanup(mini, node, 0);
+		handle_exit_cleanup(mini, 0);
 	if (!is_numeric_arg_valid(node->args[arg_offset]))
 	{
 		exit_error(node->args[arg_offset], true);
-		handle_exit_cleanup(mini, node, 2);
+		handle_exit_cleanup(mini, 2);
 	}
 	if (node->argcount > arg_offset + 1)
 	{
@@ -27,7 +39,7 @@ int	mini_exit(s_minishell *mini, s_tree *node)
 		return (1);
 	}
 	exit_status = calculate_exit_status(node->args[arg_offset]);
-	handle_exit_cleanup(mini, node, (int)exit_status);
+	handle_exit_cleanup(mini, (int)exit_status);
 	return ((int)exit_status);
 }
 

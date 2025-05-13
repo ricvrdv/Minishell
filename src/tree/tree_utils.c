@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 13:45:31 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/12 23:27:02 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,29 +78,4 @@ s_tree	*especial_node(s_token **tokens, s_token *temp)
 	free(temp->value);
 	free(temp);
 	return (redi_node);
-}
-
-int verify_permissions(s_tree *tree, s_minishell *mini)
-{
-	int	status;
-	char *path;
-
-	path = NULL;
-	status = 0;
-	if(tree->args && !is_builtin(tree->args[0]) && (tree->file_type == READ_FILE || tree->file_type == APPEND_FILE))
-	{
-		path = find_cmd_path(tree->args[0], find_path_variable(mini));
-		if(!path)
-			return 127;
-		if(access(path, F_OK) != 0)
-			return 127;
-		if (is_directory(path))
-			return 126;
-		if (access(path, X_OK) != 0)	
-			return 126;
-		free(path);
-	}
-	if(status == 0 && tree->right)
-		status = verify_permissions(tree->right, mini);
-	return (status);
 }

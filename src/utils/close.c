@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 13:17:20 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 15:41:05 by Jpedro-c         ###   ########.fr       */
+/*   Created: 2025/05/13 12:51:53 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/13 12:51:54 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "../../inc/minishell.h"
 
-#include "../inc/minishell.h"
-
-int	main(int ac, char *av[], char **envp)
+void	close_heredoc(s_minishell *mini, int fd)
 {
-	s_minishell	*mini;
+	ft_exit_child(mini, NULL);
+	close(fd);
+	close_fds();
+}
 
-	(void)av;
-	exit_code(0, 1, 0);
-	mini = safe_malloc(sizeof(s_minishell));
-	init_struct(mini);
-	if (ac == 1 && get_env(mini, envp))
-	{
-		start_prompt(&mini);
-		ft_putstr_fd("exit\n", 2);
-		free_struct(mini);
-		free(mini);
-		exit(0);
-	}
-	ft_exit(mini, "No arguments plz");
-	return (0);
+void	print_heredoc(char *str, int fd)
+{
+	ft_putstr_fd(str, fd);
+	ft_putstr_fd("\n", fd);
+	free(str);
+}
+
+void	close_fds(void)
+{
+	close(3);
+	close(4);
+	close(5);
+	close(6);
+	close(7);
+	close(8);
+	close(9);
 }

@@ -43,10 +43,11 @@ int	exit_code(int exit_status, int write_, int exit_)
 	return (current_status);
 }
 
-int is_directory(const char *path)
+int	is_directory(const char *path)
 {
-    struct stat statbuf;
-    if (stat(path, &statbuf) != 0)
-        return 0;
-    return S_ISDIR(statbuf.st_mode);
+	struct stat	statbuf;
+
+	if (stat(path, &statbuf) != 0)
+		return (0);
+	return (S_ISDIR(statbuf.st_mode));
 }

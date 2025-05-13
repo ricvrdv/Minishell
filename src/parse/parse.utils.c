@@ -6,18 +6,11 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:57 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 10:55:58 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:27:40 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	*s_spaces(char *str)
-{
-	while (*str && (*str == ' ' || *str == '\t'))
-		str++;
-	return (str);
-}
 
 int	invalid_operator(char **str)
 {
@@ -50,4 +43,11 @@ char	*jump_spaces(char *str)
 	while (*str && (*str == ' ' || *str == '\t'))
 		str++;
 	return (str);
+}
+
+s_tree	*parse_token(s_token **tokens)
+{
+	if (!tokens || !*tokens)
+		return (NULL);
+	return (parse_pipe(tokens));
 }

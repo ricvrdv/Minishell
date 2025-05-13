@@ -1,19 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/13 15:32:59 by Jpedro-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <stdbool.h>
-#include <signal.h>
-#include "Mylib/libft.h"
-#include <limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <unistd.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <dirent.h>
+# include <stdbool.h>
+# include <signal.h>
+# include "Mylib/libft.h"
+# include <limits.h>
 
 # define RESET  "\033[0m"
 # define RED    "\033[1;31m"
@@ -25,11 +37,13 @@
 # define HEREDOC_FILE 500
 # define PIPE_FILE 600
 # define CMD_READY 700
+# define HEREDOC_EOF_WARNING "warning: here-document delimited by end-of-file\n"
 
-typedef struct s_token	s_token;
-typedef struct s_env	s_env;
-typedef struct s_minishell	s_minishell;
+typedef struct s_token      s_token;
+typedef struct s_env        s_env;
+typedef struct s_minishell  s_minishell;
 typedef struct s_args       s_args;
+
 
 extern int g_sig;
 
@@ -91,7 +105,8 @@ typedef struct s_minishell
     bool     is_child;
     char    *cur_dir;
     char    **env_array;                               
-    struct s_env   *env;                                
+    struct s_env   *env;  
+    struct s_tree  *root;                              
 }s_minishell;
 
 
@@ -136,6 +151,7 @@ int     is_valid_long(const char *str);
 long    calculate_exit_status(const char *arg);
 int     mini_export(s_minishell *mini, s_tree *node);
 void    print_sorted_env(s_env *env);
+void	handle_exit_cleanup(s_minishell *mini, int code);
 int     is_valid_identifier(const char *str);
 int     mini_pwd(s_minishell *mini);
 int     mini_unset(s_minishell *mini, s_tree *node);
@@ -144,12 +160,10 @@ s_env   *find_env_var(s_env *env, const char *key);
 void    handle_invalid_identifier(char *arg);
 void    sync_env_array(s_minishell *mini);
 void    free_array(char **array);
-void    handle_exit_cleanup(s_minishell *mini, s_tree *node, int code);
 int     is_builtin(char *cmd);
 long    ft_atol(const char *nptr);
 
 //for tree folder
-int     verify_permissions(s_tree *tree, s_minishell *mini);
 int	    count_arguments(s_token *current);
 int	    found_sign(const char *str);
 char    *expand_variable(s_minishell *mini, const char *arg);
@@ -174,42 +188,56 @@ s_tree  *new_tree_node(s_type type);
 s_tree  *especial_node(s_token **tokens, s_token *temp);
 
 //for exec   
-int     pipe_and_fork(int *pipefd);
-int     child_process(s_tree *node, s_minishell *mini, int *pipefd, int dir);
-int	    check_cmd_access(const char *cmd);
+int	    check_cmd_access(const char *cmd, s_minishell *mini);
 int     execute_builtin(s_tree *node, s_minishell *mini);
 int     execute_node(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 int     execute_pipe(s_tree *tree, s_minishell *mini);
 int     execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd); 
 int     execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd);
-int		child_process_right(s_tree *node, s_minishell *mini, int *pipefd, int dir);
 int     handle_redirect_r(s_tree *tree);
 int     handle_redirect_l(s_tree *tree);
 int     handle_append(s_tree *tree);
 int     redirect_fds(int in_fd, int out_fd);
-int	    handle_heredoc(s_tree *node, s_minishell *mini, s_tree *first);
+int	    handle_heredoc(s_tree *node, s_minishell *mini);
 int     count_quotes(const char *str);
-int     handle_heredocs(s_tree *tree, s_minishell *mini, s_tree *first);
+int     handle_heredocs(s_tree *tree, s_minishell *mini);
 int     execute_heredoc(s_tree *tree, s_minishell *mini);
-int     execute_last_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start);
-int     create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd, s_tree *start);
+int     execute_last_command(s_tree *node, s_minishell *mini, int in_fd);
+int     create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd);
 int	    handle_parent(pid_t pid);
-char    *find_cmd_path(const char *cmd, const char *path);
+int	    handle_heredoc_wait(int pid,s_tree *node);
+int	    check_quotes_2(const char *str);
+char    *find_cmd_path(const char *cmd, const char *path, s_minishell *mini);
 char    *find_path_variable(s_minishell *mini);
 char	*remove_quotes_redirect(char *str);
+void    read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini);
 void    restore_fd(int saved_stdin, int saved_stdout);
 void    clean_args(char **args, int arg_count);
 void    leading_quotes(char *str);
 void    remove_trailing(char *arg);
 void    read_heredoc(int fd, const char *delimiter);
-void    remove_quotes(char *arg); 
+void    close_heredoc(s_minishell *mini, int fd);
+void    print_heredoc(char *str, int fd);
+void    remove_quotes(char *arg);
+void    handle_expansion_line(int fd, s_minishell *mini, char *line);
 void    wait_for_children(int *last_status);
+void	invalid_cmd(s_minishell *mini);
+void    invalid_path(s_minishell *mini);
+void    execve_fail(s_minishell *mini);
+void    setup_cmd(s_tree *node, int in_fd, int out_fd);
+void    write_heredoc(char *str, int fd);
+bool	is_quoted(const char *delim);
+bool	is_dollar_in_single_quotes(const char *str);
+pid_t	init_pipe_and_fork(int *pipefd);
 
 //for signals
 void	handle_ctrl_c(int a);
 void	setup_signal_handlers(void);
 void	child_ctrl_c(int sig_num);
 void	quite_heredoc(int a);
+void	ft_sig_restore(void);
+void	ft_sig_child(void);
+void	ft_sig_mute(void);
 
 //for clear
 void	clear_env(s_env **env);
@@ -229,33 +257,21 @@ int     str_size(char *str, char end);
 int	    exit_code(int exit_status, int write_, int exit_);
 int     report_error(int status);
 int     is_directory(const char *path);
-char    *get_dir();
+int	    static_index(void);
+int	    extra_mini_exit(s_minishell *mini, s_tree *node);
+int     handle_error(char *temp, const char *error_message);
+char    *get_dir(void);
 char	*generate_file(int index);
+char    *strip_quotes(const char *str);
+char	*strip_and_join(char *input);
 char	*ft_strcat(char *dest, const char *src);
 char    *ft_strcpy(char *dest, const char *src); 
-bool    are_counts_odd(int d_count, int s_count);
 void	*safe_malloc(size_t bytes);
 void	error_exit(char *error);
 void	ft_exit_child(s_minishell *mini, char *error);
-
-bool	is_dollar_in_single_quotes(const char *str);
-bool	is_quoted(const char *delim);
-void    read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini);
-int     heredoc_expand(s_tree *tree, s_minishell *mini, s_tree *first, const char *delimeter);
-char    *strip_quotes(const char *str);
-int	    check_quotes_2(const char *str);
+void	close_fds(void);
 bool	has_any_quotes(const char *delim);
-char	*strip_and_join(char *input);
-void	close_fds();
-int	    static_index(void);
-int	    handle_heredoc_wait(int pid, int *status, s_tree *node);
-void    close_heredoc(s_tree *tree, s_minishell *mini, int fd);
-void    print_heredoc(char *str, int fd);
-void	invalid_cmd(s_tree *node, s_minishell *mini);
-void    invalid_path(s_tree *node, s_minishell *mini);
-void    execve_fail(s_tree *node, s_minishell *mini);
-pid_t	init_pipe_and_fork(int *pipefd);
-int	    extra_mini_exit(s_minishell *mini, s_tree *node);
+bool    are_counts_odd(int d_count, int s_count);
 
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell

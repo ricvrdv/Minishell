@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 10:49:17 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:32:53 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	error_exit(char *error)
 	exit(1);
 }
 
-
-char	*get_dir()
+char	*get_dir(void)
 {
 	char	*currentdir;
 
@@ -29,36 +28,53 @@ char	*get_dir()
 
 int	found_sign(const char *str)
 {
-	int	i;
+	int		i;
+	char	next;
 
-	if (!str)
-		return (0);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
-			return (1);
+		{
+			next = str[i + 1];
+			if (ft_isalpha(next) || ft_isdigit(next)
+				|| next == '_' || next == '?')
+				return (1);
+			else
+				return (0);
+		}
 		i++;
 	}
 	return (0);
 }
 
-int handle_heredocs(s_tree *tree, s_minishell *mini, s_tree *first)
+int	handle_heredocs(s_tree *tree, s_minishell *mini)
 {
-	int fd;
-	
-	if(!tree)
-		return 1;
-	if(tree->type == HEREDOC)
+	int	fd;
+	int ret;
+
+	if (!tree)
+		return (1);
+	if (tree->type == HEREDOC)
 	{
-		fd = handle_heredoc(tree, mini, first);
-		close(fd);	
+		fd = handle_heredoc(tree, mini);
+		if(fd == -5)
+			return(-5);
+		close(fd);
 	}
-	if(tree->left)
-		handle_heredocs(tree->left, mini, first);
-	if(tree->right)
-		handle_heredocs(tree->right, mini, first);
-	return 0;
+	if (tree->left)
+	{
+		ret = handle_heredocs(tree->left, mini);
+		if(ret == -5)
+			return(-5);
+	}
+	if (tree->right)
+	{
+		ret = handle_heredocs(tree->right, mini);
+		if(ret == -5)
+			return(-5);
+	}
+	return (0);
 }
 
 void	ft_exit_child(s_minishell *mini, char *error)

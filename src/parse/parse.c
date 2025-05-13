@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:54 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/08 11:16:58 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:28:57 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,13 @@ int	full_check(char *str)
 
 	temp = ft_strtrim(str, " \t\n\v\f\r");
 	if (check_quotes(temp))
-	{
-		ft_putstr_fd("Unclosed quote.\n", 2);
-		return (1);
-	}
+		return (handle_error(temp, "Unclosed quote\n"));
 	if (check_redirect(temp))
-	{
-		ft_putstr_fd("syntax error near unexpected token newline.\n", 2);
-		return (1);
-	}
+		return (handle_error(temp, "syntax error near unexpected token.\n"));
 	if (check_doubles(temp))
-	{
-		ft_putstr_fd("Logical opertators are not suported.\n", 2);
-		return (1);
-	}
+		return (handle_error(temp, "Logical operators are not supported.\n"));
 	if (check_pipe(temp))
-	{
-		ft_putstr_fd("Misplaced operator.\n", 2);
-		return (1);
-	}
+		return (handle_error(temp, "Misplaced operator.\n"));
 	free(temp);
 	return (0);
 }
@@ -111,24 +99,6 @@ int	check_pipe(char *str)
 }
 
 int	check_quotes(char *str)
-{
-	char	type;
-
-	type = 0;
-	while (*str)
-	{
-		if (*str == '\'' || *str == '\"')
-		{
-			if (type == *str)
-				type = 0;
-			else if (!type)
-				type = *str;
-		}
-		str++;
-	}
-	return (type != 0);
-}
-int	check_quotes_2(const char *str)
 {
 	char	type;
 

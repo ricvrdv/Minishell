@@ -6,36 +6,42 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/07 10:49:10 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:35:11 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
+static void	preprocess_tree(s_tree *tree, s_minishell *mini)
 {
 	int	counter[12];
-	int first_check;
+	int status;
 
-	first_check = 0;
 	rename_nodes(tree);
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
+	mini->root = tree;
 	mini->heredoc_count = counter[2];
-	while(mini->heredoc_count)
+	while (mini->heredoc_count)
 	{
-		first_check = handle_heredocs(tree, mini, tree);
+		status = handle_heredocs(tree, mini);
+		if(status == -5)
+			return ;
 		mini->heredoc_count = 0;
 	}
-	signal(SIGINT, handle_ctrl_c);
-	if(tree->bad_herdoc)
-	{
-		return ;	
-	}
+}
+
+void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
+{
+	int	first_check;
+
+	first_check = 0;
+	preprocess_tree(tree, mini);
+	if (tree->bad_herdoc)
+		return ;
 	expand_tree(mini, tree);
-	first_check = verify_permissions(tree, mini);
-	if(first_check == 0)
+	if (first_check == 0)
 		*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }
 
@@ -95,11 +101,4 @@ void	rename_nodes(s_tree *tree)
 		rename_nodes(tree->left);
 	if (tree->right)
 		rename_nodes(tree->right);
-}
-
-s_tree	*parse_token(s_token **tokens)
-{
-	if (!tokens || !*tokens)
-		return (NULL);
-	return (parse_pipe(tokens));
 }
