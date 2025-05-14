@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 17:14:06 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:08:14 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 		free(full_path);
 		execve_fail(mini);
 	}
+	ft_sig_restore();
 	exit (status);
 }
 
@@ -70,6 +71,7 @@ int	handle_parent(pid_t pid)
 
 	ft_sig_mute();
 	waitpid(pid, &status, 0);
+	ft_sig_restore();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
@@ -88,9 +90,6 @@ int	handle_parent(pid_t pid)
 			return (-1);
 		}
 	}
-	if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	ft_sig_restore();
 	return (status);
 }
 
@@ -110,7 +109,10 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 		exit_code(status, 1, 0);
 	}
 	else if (mini->is_child)
+	{
 		status = handle_child(node, mini);
+		//return (exit_code(status, 1, 0));
+	}
 	else
 	{
 		pid = fork();
@@ -123,6 +125,7 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 		if(status == -1)
 			return(0);
 	}
+	ft_sig_restore();
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));
 }

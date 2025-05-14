@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 16:23:10 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:32:06 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	handle_heredoc(s_tree *node, s_minishell *mini)
 	pid = fork();
 	if (pid == 0)
 	{
-		ft_sig_child();
+		ft_sig_child_heredoc(mini);
 		process_heredoc_child(fd, delim, quoted, mini);
 	}
 	else if (handle_heredoc_wait(pid, node) == -1)

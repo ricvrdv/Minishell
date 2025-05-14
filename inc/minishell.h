@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 15:32:59 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:38:19 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define RESET  "\033[0m"
 # define RED    "\033[1;31m"
 # define GREEN  "\033[1;32m"
+# define BLUE	"\033[1;34m"
 # define TREE_READY 100
 # define WRITE_FILE 200
 # define APPEND_FILE 300
@@ -220,7 +221,7 @@ void    close_heredoc(s_minishell *mini, int fd);
 void    print_heredoc(char *str, int fd);
 void    remove_quotes(char *arg);
 void    handle_expansion_line(int fd, s_minishell *mini, char *line);
-void    wait_for_children(int *last_status);
+void    wait_for_children(int *last_status, pid_t last_pid);
 void	invalid_cmd(s_minishell *mini);
 void    invalid_path(s_minishell *mini);
 void    execve_fail(s_minishell *mini);
@@ -238,6 +239,8 @@ void	quite_heredoc(int a);
 void	ft_sig_restore(void);
 void	ft_sig_child(void);
 void	ft_sig_mute(void);
+void	ft_sig_child_handler(int signo, s_minishell *mini);
+void    ft_sigint_handler(int sig); 
 
 //for clear
 void	clear_env(s_env **env);
@@ -272,6 +275,7 @@ void	ft_exit_child(s_minishell *mini, char *error);
 void	close_fds(void);
 bool	has_any_quotes(const char *delim);
 bool    are_counts_odd(int d_count, int s_count);
+void 	ft_sig_child_heredoc(s_minishell *mini);
 
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell

@@ -68,9 +68,9 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(MYLIB)
 	@echo "\033[0;32mCompilation Successful!\033[0m"
-	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) $(MYLIB) -o $(NAME) 
+	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) -L$(MYLIB_DIR) -lft -o $(NAME) 
 
 $(MYLIB): $(MYLIB_DIR)
 	@make -C $(MYLIB_DIR) -s
@@ -81,9 +81,11 @@ $(MYLIB): $(MYLIB_DIR)
 
 clean:
 	@$(RM) $(OBJS)
+	@make clean -C $(MYLIB_DIR)
 
 fclean: clean
 	@$(RM) $(NAME)
+	@make fclean -C $(MYLIB_DIR)
 
 re: fclean all
 

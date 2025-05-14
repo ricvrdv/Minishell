@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 15:40:50 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:40:32 by rjesus-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,17 @@ void	start_prompt(s_minishell **mini)
 	s_tree	*tree;
 	int		status;
 
-	ft_start_sig();
+	
 	(void)mini;
 	while (1)
 	{
-		line = readline(">");
+		ft_start_sig();
+		line = readline(BLUE "minishell$ " RESET);
 		if (line == NULL)
+		{
+			close_fds();
 			break ;
+		}
 		if (check_str(&line))
 			continue ;
 		add_history(line);
