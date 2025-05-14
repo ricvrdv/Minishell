@@ -1,10 +1,2 @@
 
-
-
 missing : 
-signals (also broken pipe)
-
-exit status sometimes incorrect when using pipes ??
-
-signal cntr \ does nothing in heredoc(need to do)
-

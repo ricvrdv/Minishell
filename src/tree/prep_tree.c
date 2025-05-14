@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 17:35:11 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:28:11 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static void	preprocess_tree(s_tree *tree, s_minishell *mini)
 	{
 		status = handle_heredocs(tree, mini);
 		if(status == -5)
+		{
+			tree->bad_herdoc = 1;
 			return ;
+		}
 		mini->heredoc_count = 0;
 	}
 }
@@ -38,8 +41,10 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 
 	first_check = 0;
 	preprocess_tree(tree, mini);
-	if (tree->bad_herdoc)
+	if (tree->bad_herdoc == 1)
+	{
 		return ;
+	}
 	expand_tree(mini, tree);
 	if (first_check == 0)
 		*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);

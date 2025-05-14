@@ -6,9 +6,10 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:51:53 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 12:51:54 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:47:21 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	close_heredoc(s_minishell *mini, int fd)
