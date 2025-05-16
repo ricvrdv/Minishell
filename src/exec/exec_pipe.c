@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/16 13:21:40 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:00:46 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ void wait_for_children(int *last_status, pid_t last_pid)
 	int	status;
 	int	sig;
 	pid_t	pid;
-	bool signaled_reported = false;
+	bool signaled_reported;
 
+	signaled_reported = false;
 	ft_sig_mute();
 	while ((pid = wait(&status)) > 0)
 	{

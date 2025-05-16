@@ -3,29 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:00:13 by jpedro-c          #+#    #+#             */
-/*   Updated: 2024/10/23 14:04:30 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:22:35 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
+	ssize_t ret;
+	size_t len;
 
-	i = 0;
-	if (s)
-	{
-		while (s[i])
-		{
-			write(fd, &s[i], 1);
-			i++;
-		}
-	}
+	if (!s)
+		return;
+
+	len = ft_strlen(s);
+	ret = write(fd, s, len);
+	if (ret == -1 && errno == EPIPE)
+		return; // Avoid SIGPIPE crash
 }
+
 /*
 #include <fcntl.h>
 #include "libft.h"

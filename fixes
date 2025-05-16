@@ -1,8 +1,9 @@
 
 missing : 
 
-export a="teste" | env | grep $a
+export a="teste" | env | grep $a got 2 possible fixes dunno if we can use them
 ???
 
 cat | ls | ls 
-closes with just 1 enter...
+closes with just 1 enter...   bash does the same ... need to confirm
+
