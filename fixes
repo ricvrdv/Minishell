@@ -3,3 +3,6 @@ missing :
 
 export a="teste" | env | grep $a
 ???
+
+cat | ls | ls 
+closes with just 1 enter...

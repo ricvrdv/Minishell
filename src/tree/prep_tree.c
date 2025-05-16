@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/16 15:17:26 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:25:34 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ void assign_heredoc_filenames(s_tree *tree)
         return;
     if (tree->type == HEREDOC && tree->right)
     {
-        // Only assign if not already assigned (for safety)
         if (!tree->right->hd_file)
             tree->right->hd_file = generate_file(static_index());
     }
