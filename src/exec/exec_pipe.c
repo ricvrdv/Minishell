@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 12:19:43 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:21:40 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
 		close(pipefd[0]);
 		close(pipefd[1]);
 		execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
+		close_fds();
 		ft_exit_child(mini, NULL);
 		if (exit_code(0, 0, 0) != 0)
 			exit_code(exit_code(0, 0, 0), 1, 1);

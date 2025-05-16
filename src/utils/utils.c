@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 15:49:22 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:40:43 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,31 @@ int	found_sign(const char *str)
 	}
 	return (0);
 }
-int	handle_heredocs(s_tree *tree, s_minishell *mini)
+int handle_heredocs(s_tree *tree, s_minishell *mini)
 {
 	int	fd;
-	int ret;
+	int	ret;
 
 	if (!tree)
-		return (1);
+		return (0);
+
 	if (tree->type == HEREDOC)
 	{
 		fd = handle_heredoc(tree, mini);
-		if(fd == -5)
-			return(-5);
+		if (fd == -5)
+			return (-5);
 		close(fd);
-	}	
-	else if (tree->left && tree->left->type == HEREDOC)
-	{
-		ret = handle_heredocs(tree->left, mini);
-		if(ret == -5)
-			return(-5);
-		
 	}
-	else if (tree->right)
-	{
-		ft_putstr_fd("right\n", 1);
-		ret = handle_heredocs(tree->right, mini);
-		if(ret == -5)
-			return(-5);
-	}
+	ret = handle_heredocs(tree->left, mini);
+	if (ret == -5)
+		return (-5);
+	ret = handle_heredocs(tree->right, mini);
+	if (ret == -5)
+		return (-5);
+
 	return (0);
 }
+
 
 void	ft_exit_child(s_minishell *mini, char *error)
 {
@@ -86,4 +81,21 @@ void	ft_exit_child(s_minishell *mini, char *error)
 		printf(RED "%s\n" RESET, error);
 	clear_history();
 	free(mini);
+}
+
+void handle_all_heredocs_in_child(s_tree *tree, s_minishell *mini)
+{
+	int fd;
+
+	if (!tree)
+		return;
+	if (tree->type == HEREDOC)
+	{
+		fd = handle_heredoc_in_same_process(tree, mini);
+		if (fd == -5)
+			exit(130);
+		close(fd);
+	}
+	handle_all_heredocs_in_child(tree->left, mini);
+	handle_all_heredocs_in_child(tree->right, mini);
 }

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 12:08:14 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:22:43 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,7 @@ int	execute_command(s_tree *node, s_minishell *mini, int in_fd, int out_fd)
 		exit_code(status, 1, 0);
 	}
 	else if (mini->is_child)
-	{
 		status = handle_child(node, mini);
-		//return (exit_code(status, 1, 0));
-	}
 	else
 	{
 		pid = fork();

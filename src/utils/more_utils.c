@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:02:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 12:50:55 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:23:35 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,26 @@ int	handle_error(char *temp, const char *error_message)
 	free(temp);
 	return (exit_code(2, 1, 0));
 }
-
-bool	should_expand(const char *str)
+bool should_expand(const char *str)
 {
-	if (!str)
-		return (false);
-	return (is_dollar_in_single_quotes(str));
+    bool in_single;
+    bool in_double;
+    size_t i;
+
+        i = 0;
+        in_double = false;
+        in_single = false;
+    while (str[i])
+    {
+        if (str[i] == '\'' && !in_double)
+            in_single = !in_single;
+        else if (str[i] == '"' && !in_single)
+            in_double = !in_double;
+        else if (str[i] == '$' && !in_single)
+            return true;
+        i++;
+    }
+    return false;
 }
 
 char	*strip_quotes(const char *str)

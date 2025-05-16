@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:51:53 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 12:47:21 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:22:10 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,16 @@ void	close_fds(void)
 	close(6);
 	close(7);
 	close(8);
-	close(9);
+	close(10);
+	close(11);
+	close(12);
+	close(13);
+	close(14);
+	close(15);
+	close(16);
+	close(17);
+	close(18);
+	close(19);
+	close(20);
+	close(21);
 }
