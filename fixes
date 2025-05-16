@@ -1,2 +1,5 @@
 
 missing : 
+
+export a="teste" | env | grep $a
+???

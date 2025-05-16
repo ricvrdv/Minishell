@@ -6,12 +6,12 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 14:32:06 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:58:43 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
+/*
 static int	process_heredoc_child(int fd, const char *delim,
 		bool quoted, s_minishell *mini)
 {
@@ -22,32 +22,28 @@ static int	process_heredoc_child(int fd, const char *delim,
 	close_heredoc(mini, fd);
 	exit(0);
 }
+*/
 
 int	handle_heredoc(s_tree *node, s_minishell *mini)
 {
 	int			fd;
 	const char	*delim;
 	char		*temp_file;
-	int			pid;
 	bool		quoted;
 
 	delim = node->right->args[0];
 	quoted = has_any_quotes(delim);
 	if (quoted)
 		remove_quotes((char *)delim);
-	temp_file = generate_file(static_index());
+	temp_file = node->right->hd_file;
 	fd = open(temp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	node->right->hd_file = temp_file;
-	pid = fork();
-	if (pid == 0)
-	{
-		ft_sig_child_heredoc(mini);
-		process_heredoc_child(fd, delim, quoted, mini);
-	}
-	else if (handle_heredoc_wait(pid, node) == -1)
-		return (-5);
+	if(quoted)
+		read_heredoc(fd, delim);
+	else
+		read_heredoc_expand(fd, delim, mini);
 	close(fd);
-	return (open(temp_file, O_RDONLY));
+	return (0);
 }
 
 void	read_heredoc(int fd, const char *delimiter)

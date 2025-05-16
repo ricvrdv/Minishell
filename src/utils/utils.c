@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/16 13:40:43 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:13:39 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,26 @@ int	found_sign(const char *str)
 }
 int handle_heredocs(s_tree *tree, s_minishell *mini)
 {
-	int	fd;
-	int	ret;
-
-	if (!tree)
-		return (0);
-
-	if (tree->type == HEREDOC)
-	{
-		fd = handle_heredoc(tree, mini);
-		if (fd == -5)
-			return (-5);
-		close(fd);
-	}
-	ret = handle_heredocs(tree->left, mini);
-	if (ret == -5)
-		return (-5);
-	ret = handle_heredocs(tree->right, mini);
-	if (ret == -5)
-		return (-5);
-
-	return (0);
+    int fd;
+    if (!tree)
+        return 0;
+    if (tree->type == HEREDOC)
+    {
+        fd = open(tree->right->hd_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        if (fd == -1)
+            return -5;
+        if (has_any_quotes(tree->right->args[0]))
+            read_heredoc(fd, tree->right->args[0]);
+        else
+            read_heredoc_expand(fd, tree->right->args[0], mini);
+        close(fd);
+    }
+    if (handle_heredocs(tree->left, mini) == -5)
+        return -5;
+    if (handle_heredocs(tree->right, mini) == -5)
+        return -5;
+    return 0;
 }
-
 
 void	ft_exit_child(s_minishell *mini, char *error)
 {
@@ -81,21 +78,4 @@ void	ft_exit_child(s_minishell *mini, char *error)
 		printf(RED "%s\n" RESET, error);
 	clear_history();
 	free(mini);
-}
-
-void handle_all_heredocs_in_child(s_tree *tree, s_minishell *mini)
-{
-	int fd;
-
-	if (!tree)
-		return;
-	if (tree->type == HEREDOC)
-	{
-		fd = handle_heredoc_in_same_process(tree, mini);
-		if (fd == -5)
-			exit(130);
-		close(fd);
-	}
-	handle_all_heredocs_in_child(tree->left, mini);
-	handle_all_heredocs_in_child(tree->right, mini);
 }
