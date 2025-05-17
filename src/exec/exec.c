@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 12:08:14 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:52:03 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ static int	handle_child(s_tree *node, s_minishell *mini)
 	if (!node->args[0])
 		return (0);
 	if (node->args[0][0] == '\0')
-		invalid_cmd(mini);
+		invalid_cmd(mini, node);
 	if (is_builtin(node->args[0]))
 		exit(execute_builtin(node, mini));
 	full_path = find_cmd_path(node->args[0], find_path_variable(mini), mini);
 	if (!full_path)
-		invalid_path(mini);
+		invalid_path(mini, node);
 	if (execve(full_path, node->args, mini->env_array) == -1)
 	{
 		free(full_path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 12:39:24 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:07:40 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_variable_name(const char **ptr, char *var_name)
 	}
 	else
 	{
-		while (isalnum(**ptr) || **ptr == '_')
+		while (ft_isalnum(**ptr) || **ptr == '_')
 		{
 			var_name[i++] = **ptr;
 			(*ptr)++;
@@ -55,6 +55,11 @@ char	*find_variable(s_minishell *mini, const char *variable)
 		exit_status = ft_itoa(exit_code(0, 0, 0));
 		return (exit_status);
 	}
+	if (ft_strcmp(variable, "0") == 0)
+	{
+		ft_putstr_fd("minishell", 1);
+		return (NULL);
+	}
 	env = mini->env;
 	while (env)
 	{
@@ -69,7 +74,7 @@ bool	enclosed_single_quotes(const char *str)
 {
 	size_t	len;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	if (len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
 		return (true);
 	return (false);

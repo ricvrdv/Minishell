@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:48:24 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 12:01:02 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:39:09 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	pre_clean_args(char **args, int *argcount)
 	j = 0;
 	while (args[i] != NULL)
 	{
-		if (args[i] == NULL || strcmp(args[i], "") == 0)
+		if (args[i] == NULL || ft_strcmp(args[i], "") == 0)
 		{
 			free(args[i]);
 			(*argcount)--;

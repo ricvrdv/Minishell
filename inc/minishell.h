@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 17:38:19 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:51:27 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,8 @@ void    print_heredoc(char *str, int fd);
 void    remove_quotes(char *arg);
 void    handle_expansion_line(int fd, s_minishell *mini, char *line);
 void    wait_for_children(int *last_status, pid_t last_pid);
-void	invalid_cmd(s_minishell *mini);
-void    invalid_path(s_minishell *mini);
+void	invalid_cmd(s_minishell *mini, s_tree *node);
+void    invalid_path(s_minishell *mini, s_tree *node);
 void    execve_fail(s_minishell *mini);
 void    setup_cmd(s_tree *node, int in_fd, int out_fd);
 void    write_heredoc(char *str, int fd);
