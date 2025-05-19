@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:33:05 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ static int	append_to_env_var(t_minishell *mini, char *arg, char *plus_sign)
 	char	*value;
 
 	key = ft_substr(arg, 0, plus_sign - arg);
+	if (!is_valid_identifier(arg))
+	{
+		handle_invalid_identifier(arg);
+		return (free(key), 0);
+	}
 	value = ft_strdup(plus_sign + 2);
 	if (!key || !value)
 		return (free(key), free(value), 0);
-	if (!is_valid_identifier(key))
-	{
-		handle_invalid_identifier(key);
-		return (free(key), free(value), 0);
-	}
 	return (to_existing_or_create(mini, key, value));
 }
 

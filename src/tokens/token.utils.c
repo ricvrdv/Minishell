@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:54:55 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:51:20 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:30:01 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_token	*get_token(char *str)
 	return (tokens);
 }
 
-t_token	*new_token(s_type type, char *value)
+t_token	*new_token(t_type type, char *value)
 {
 	t_token	*token;
 

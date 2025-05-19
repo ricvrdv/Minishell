@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 23:05:41 by joaorema          #+#    #+#             */
-/*   Updated: 2025/05/19 13:41:54 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:15:13 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	read_heredoc_expand(int fd, const char *delimiter, t_minishell *mini)
 	char	*line;
 	size_t	len;
 
+	//remove_quotes((char *)delimiter);
 	len = ft_strlen(delimiter);
 	while (1)
 	{

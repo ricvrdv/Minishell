@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:47 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:33:33 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,18 @@ static void	print_env_entry(t_env *env)
 
 int	is_valid_identifier(const char *str)
 {
+	const char *ptr;
+	
+	ptr = str;
 	if (!str || !*str)
 		return (0);
-	if (*str == '=')
+	if (*ptr == '=')
 		return (0);
-	if (!ft_isalpha(*str) && *str != '_')
+	if (!ft_isalpha(*ptr) && *ptr != '_')
 		return (0);
-	while (*++str)
+	while (*++ptr && *ptr != '+' && *ptr != '=')
 	{
-		if (!ft_isalnum(*str) && *str != '_')
+		if (!ft_isalnum(*ptr) && *ptr != '_')
 			return (0);
 	}
 	return (1);

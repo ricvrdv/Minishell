@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:43:26 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:09:51 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	create_and_fork_command(t_tree *node, t_minishell *mini, int in_fd)
 		}
 		mini->is_child = true;
 		dup2(pipefd[1], STDOUT_FILENO);
-		close_pipefd(pipefd); //
+		close_pipefd(pipefd);
 		execute_node(node->left, mini, STDIN_FILENO, STDOUT_FILENO);
 		close_fds();
 		ft_exit_child(mini, NULL);
@@ -83,28 +83,30 @@ int	execute_last_command(t_tree *node, t_minishell *mini, int in_fd)
 	return (pid);
 }
 
-void wait_for_children(int *last_status, pid_t last_pid)
+void	wait_for_children(int *last_status, pid_t last_pid)
 {
-	int	status;
-	int	sig;
+	int		status;
+	int		sig;
+	bool	signaled_reported;
 	pid_t	pid;
-	bool signaled_reported;
 
 	signaled_reported = false;
 	ft_sig_mute();
-	while ((pid = wait(&status)) > 0)
+	pid = wait(&status);
+	while (pid > 0)
 	{
 		if (WIFSIGNALED(status) && !signaled_reported)
 		{
 			signaled_reported = true;
 			sig = WTERMSIG(status);
 			if (sig == SIGINT)
-				print_sigint();  //
+				print_sigint();
 			else if (sig == SIGQUIT)
-				print_sigquit();   //
+				print_sigquit();
 		}
 		if (pid == last_pid && WIFEXITED(status))
 			*last_status = status;
+		pid = wait(&status);
 	}
 	ft_sig_restore();
 }

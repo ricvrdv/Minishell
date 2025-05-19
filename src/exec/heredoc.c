@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:43:27 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:15:25 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	handle_heredoc(t_tree *node, t_minishell *mini)
 	temp_file = node->right->hd_file;
 	fd = open(temp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	node->right->hd_file = temp_file;
-	if(quoted)
+	if (quoted)
 		read_heredoc(fd, delim);
 	else
 		read_heredoc_expand(fd, delim, mini);
@@ -39,6 +39,7 @@ void	read_heredoc(int fd, const char *delimiter)
 	char	*line;
 	size_t	len;
 
+	remove_quotes((char *)delimiter);
 	len = ft_strlen(delimiter);
 	while (1)
 	{

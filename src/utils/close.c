@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:51:53 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:41:56 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:44:49 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,20 @@ void	close_fds(void)
 		close(fd);
 		fd++;
 	}
+}
+
+void	ft_exit_child(t_minishell *mini, char *error)
+{
+	if (mini->created)
+		free_mini_struct(mini);
+	if (error)
+		printf(RED "%s\n" RESET, error);
+	clear_history();
+	free(mini);
+}
+
+void	close_pipefd(int *pipefd)
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
 }

@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:51:23 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:29:28 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_tree	*new_tree_node(s_type type)
+t_tree	*new_tree_node(t_type type)
 {
 	t_tree	*node;
 
@@ -71,7 +71,7 @@ t_tree	*especial_node(t_token **tokens, t_token *temp)
 	redi_node = new_tree_node((*tokens)->type);
 	*tokens = (*tokens)->next->next;
 	redi_node->file_type = 0;
-	redi_node->left = parse_redirect(tokens);
+	//redi_node->left = parse_redirect(tokens);
 	redi_node->right = create_arg_node(temp->next);
 	redi_node->hd_file = NULL;
 	redi_node->bad_herdoc = 0;

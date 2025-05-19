@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:43:27 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:38:53 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	handle_child(t_tree *node, t_minishell *mini)
 		exit(execute_builtin(node, mini));
 	full_path = find_cmd_path(node->args[0], find_path_variable(mini), mini);
 	if (!full_path)
-		invalid_path(mini);
+		invalid_path(mini, node);
 	if (execve(full_path, node->args, mini->env_array) == -1)
 	{
 		free(full_path);
@@ -67,7 +67,7 @@ static int	handle_child(t_tree *node, t_minishell *mini)
 int	handle_parent(pid_t pid)
 {
 	int	status;
-	int sig;
+	int	sig;
 
 	ft_sig_mute();
 	waitpid(pid, &status, 0);
@@ -80,13 +80,13 @@ int	handle_parent(pid_t pid)
 		if (sig == SIGINT)
 		{
 			ft_putstr_fd("\n", 1);
-			exit_code(130, 1, 0);                  // 130 = interrupted by SIGI
+			exit_code(130, 1, 0);
 			return (-1);
 		}
 		else if (sig == SIGQUIT)
 		{
 			ft_putstr_fd("Quit (core dumped)\n", 1);
-			exit_code(131, 1, 0);                  // 130 = interrupted by SIGI
+			exit_code(131, 1, 0);
 			return (-1);
 		}
 	}
@@ -113,12 +113,10 @@ int	execute_command(t_tree *node, t_minishell *mini, int in_fd, int out_fd)
 		if (pid == 0)
 			return (handle_child(node, mini));
 		status = handle_parent(pid);
-		if(status == -1)
-			return(0);
+		if (status == -1)
+			return (0);
 	}
 	ft_sig_restore();
 	restore_fd(saved_stdin, saved_stdout);
 	return (exit_code(status, 1, 0));
 }
-
-
