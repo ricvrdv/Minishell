@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:45 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:46 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:05:02 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ static bool	is_numeric_arg_valid(const char *arg)
 
 static void	exit_error(const char *arg, bool numeric_error)
 {
-	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+	ft_putstr_fd("Minishell: exit: ", STDERR_FILENO);
 	if (numeric_error)
 	{
 		ft_putstr_fd((char *)arg, STDERR_FILENO);
-		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		exit_code(2, 1, 0);
 	}
 	else
 	{
-		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("too many arguments\n", 2);
 		exit_code(1, 1, 0);
 	}
 }

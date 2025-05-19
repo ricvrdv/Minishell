@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:30 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:59:24 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*get_oldpwd(s_env *env)
 	oldpwd = find_env_var(env, "OLDPWD");
 	if (!oldpwd || !oldpwd->value || oldpwd->value[0] == '\0')
 	{
-		ft_putstr_fd("cd: OLDPWD not set", STDERR_FILENO);
+		ft_putstr_fd("Minishell: cd: OLDPWD not set\n", STDERR_FILENO);
 		return (NULL);
 	}
 	printf("%s\n", oldpwd->value);
@@ -65,7 +65,7 @@ static char	*get_home_dir(s_env *env)
 	home = find_env_var(env, "HOME");
 	if (!home || !home->value)
 	{
-		perror("cd: HOME not set");
+		ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
 		return (NULL);
 	}
 	return (ft_strdup(home->value));
@@ -81,7 +81,7 @@ static char	*expand_tilde_path(s_env *env, const char *path)
 	home = find_env_var(env, "HOME");
 	if (!home || !home->value)
 	{
-		perror("cd: HOME not set");
+		ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
 		return (NULL);
 	}
 	expanded = ft_strjoin(home->value, path + 1);

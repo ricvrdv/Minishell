@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/16 17:00:12 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:19:52 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define RESET  "\033[0m"
 # define RED    "\033[1;31m"
 # define GREEN  "\033[1;32m"
+# define BLUE   "\033[1;36m"
 # define TREE_READY 100
 # define WRITE_FILE 200
 # define APPEND_FILE 300
@@ -277,6 +278,9 @@ bool    are_counts_odd(int d_count, int s_count);
 void 	ft_sig_child_heredoc(s_minishell *mini);
 void    handle_all_heredocs_in_child(s_tree *tree, s_minishell *mini);
 void    assign_heredoc_filenames(s_tree *tree);
+void    print_sigquit();
+void    print_sigint();
+void    close_pipefd(int *pipefd);
 
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell

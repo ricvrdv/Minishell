@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:51:53 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/16 13:22:10 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:23:12 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,12 @@ void	print_heredoc(char *str, int fd)
 
 void	close_fds(void)
 {
-	close(3);
-	close(4);
-	close(5);
-	close(6);
-	close(7);
-	close(8);
-	close(10);
-	close(11);
-	close(12);
-	close(13);
-	close(14);
-	close(15);
-	close(16);
-	close(17);
-	close(18);
-	close(19);
-	close(20);
-	close(21);
+	int	fd;
+
+	fd = 3;
+	while (fd < 100)
+	{
+		close(fd);
+		fd++;
+	}
 }

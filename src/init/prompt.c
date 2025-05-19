@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/16 15:28:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:18:24 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	ft_start_sig(void)
 	sigaddset(&sa.sa_mask, SIGINT);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
-	//signal(SIGPIPE, SIG_IGN); // redo if needed 
 }
 
 void	start_prompt(s_minishell **mini)
@@ -51,7 +50,7 @@ void	start_prompt(s_minishell **mini)
 	while (1)
 	{
 		ft_start_sig();
-		line = readline(">");
+		line = readline(BLUE "Minishell$ " RESET);
 		if (line == NULL)
 			break ;
 		if (check_str(&line))

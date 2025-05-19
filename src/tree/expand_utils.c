@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 12:39:24 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:25:09 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ char	*find_variable(s_minishell *mini, const char *variable)
 	{
 		exit_status = ft_itoa(exit_code(0, 0, 0));
 		return (exit_status);
+	}
+	if (ft_strcmp(variable, "0") == 0)
+	{
+		ft_putstr_fd("Minishell", 1);
+		return (NULL);
 	}
 	env = mini->env;
 	while (env)
