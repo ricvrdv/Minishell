@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:02:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 11:47:20 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:41:56 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	check_cmd_access(const char *cmd, s_minishell *mini)
+int	check_cmd_access(const char *cmd, t_minishell *mini)
 {
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (0);
@@ -49,9 +49,9 @@ bool should_expand(const char *str)
     bool in_double;
     size_t i;
 
-        i = 0;
-        in_double = false;
-        in_single = false;
+    i = 0;
+    in_double = false;
+    in_single = false;
     while (str[i])
     {
         if (str[i] == '\'' && !in_double)

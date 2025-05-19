@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:59:46 by joaorema          #+#    #+#             */
-/*   Updated: 2025/05/14 14:44:16 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:27 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	has_any_quotes(const char *delim)
 	return (false);
 }
 
-int	handle_heredoc_wait(pid_t pid, s_tree *node)
+int	handle_heredoc_wait(pid_t pid, t_tree *node)
 {
 	int	status;
 	int sig;
@@ -67,9 +67,9 @@ int	handle_heredoc_wait(pid_t pid, s_tree *node)
 		if (sig == SIGINT)
 		{
 			ft_putstr_fd("\n", 1);
-			unlink(node->right->hd_file); // delete temp file
+			unlink(node->right->hd_file); 
 			close_fds();
-			exit_code(130, 1, 0);                  // 130 = interrupted by SIGI
+			exit_code(130, 1, 0); 
 			return (-1);
 		}
 	}
@@ -80,6 +80,6 @@ int	handle_heredoc_wait(pid_t pid, s_tree *node)
 		return (1);
 	}
 	ft_sig_restore();
-	return (0); // heredoc completed successfully
+	return (0); 
 }
 

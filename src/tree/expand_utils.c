@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 12:25:09 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	get_variable_name(const char **ptr, char *var_name)
 	var_name[i] = '\0';
 }
 
-char	*find_variable(s_minishell *mini, const char *variable)
+char	*find_variable(t_minishell *mini, const char *variable)
 {
-	s_env	*env;
+	t_env	*env;
 	int		len;
 	char	*exit_status;
 

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 11:38:34 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:29 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	found_sign(const char *str)
 	}
 	return (0);
 }
-int handle_heredocs(s_tree *tree, s_minishell *mini)
+int handle_heredocs(t_tree *tree, t_minishell *mini)
 {
     int fd;
     if (!tree)
@@ -70,7 +70,7 @@ int handle_heredocs(s_tree *tree, s_minishell *mini)
     return 0;
 }
 
-void	ft_exit_child(s_minishell *mini, char *error)
+void	ft_exit_child(t_minishell *mini, char *error)
 {
 	if (mini->created)
 		free_mini_struct(mini);
@@ -96,4 +96,10 @@ void print_sigquit()
 {
 	ft_putstr_fd("Quit (core dumped)\n", 1);
 	exit_code(131, 1, 0);
+}
+
+void check_builtin(int *status, t_tree *tree, t_minishell *mini) //
+{
+	*status = execute_builtin(tree, mini);
+	exit_code(*status, 1, 0);
 }

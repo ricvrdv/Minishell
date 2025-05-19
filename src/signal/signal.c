@@ -6,42 +6,14 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:28 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 15:47:21 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:41:55 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static s_minishell *g_mini = NULL;
+static t_minishell *g_mini = NULL;
 
-
-void	setup_signal_handlers(void)
-{
-	signal(SIGINT, handle_ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	child_ctrl_c(int sig_num)
-{
-	if (sig_num == 2)
-		g_sig = 130;
-	else
-	{
-		ft_putstr_fd("Quit", 1);
-		g_sig = 131;
-	}
-	write(1, "\n", 1);
-}
-
-void	handle_ctrl_c(int a)
-{
-	(void)a;
-	g_sig = 1;
-	rl_replace_line("", 0);
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}
 
 void	ft_sig_restore(void)
 {
@@ -55,7 +27,7 @@ void	ft_sig_child(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
-void 	ft_sig_child_heredoc(s_minishell *mini)
+void 	ft_sig_child_heredoc(t_minishell *mini)
 {
 	g_mini = mini;
 	signal(SIGINT, ft_sigint_handler);

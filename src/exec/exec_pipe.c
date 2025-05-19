@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 11:39:20 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:26 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	execute_pipe(s_tree *tree, s_minishell *mini)
+int	execute_pipe(t_tree *tree, t_minishell *mini)
 {
 	int		in_fd;
 	int		status;
@@ -30,7 +30,7 @@ int	execute_pipe(s_tree *tree, s_minishell *mini)
 	return (exit_code(WEXITSTATUS(status), 1, 0));
 }
 
-int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
+int	create_and_fork_command(t_tree *node, t_minishell *mini, int in_fd)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -59,7 +59,7 @@ int	create_and_fork_command(s_tree *node, s_minishell *mini, int in_fd)
 	return (pipefd[0]);
 }
 
-int	execute_last_command(s_tree *node, s_minishell *mini, int in_fd)
+int	execute_last_command(t_tree *node, t_minishell *mini, int in_fd)
 {
 	pid_t	pid;
 

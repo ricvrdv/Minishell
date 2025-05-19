@@ -6,18 +6,18 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:28 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char		**build_env_array(s_env *env, int count);
-static char		*join_key_value(s_env *env);
+static char		**build_env_array(t_env *env, int count);
+static char		*join_key_value(t_env *env);
 
-void	sync_env_array(s_minishell *mini)
+void	sync_env_array(t_minishell *mini)
 {
-	s_env	*current;
+	t_env	*current;
 	int		count;
 
 	if (!mini)
@@ -33,7 +33,7 @@ void	sync_env_array(s_minishell *mini)
 	mini->env_array = build_env_array(mini->env, count);
 }
 
-static char	**build_env_array(s_env *env, int count)
+static char	**build_env_array(t_env *env, int count)
 {
 	char	**array;
 	int		i;
@@ -60,7 +60,7 @@ static char	**build_env_array(s_env *env, int count)
 	return (array);
 }
 
-static char	*join_key_value(s_env *env)
+static char	*join_key_value(t_env *env)
 {
 	char	*tmp;
 	char	*result;

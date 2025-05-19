@@ -6,25 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/16 14:58:43 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:27 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-/*
-static int	process_heredoc_child(int fd, const char *delim,
-		bool quoted, s_minishell *mini)
-{
-	if (quoted)
-		read_heredoc(fd, delim);
-	else
-		read_heredoc_expand(fd, delim, mini);
-	close_heredoc(mini, fd);
-	exit(0);
-}
-*/
 
-int	handle_heredoc(s_tree *node, s_minishell *mini)
+int	handle_heredoc(t_tree *node, t_minishell *mini)
 {
 	int			fd;
 	const char	*delim;
@@ -71,7 +59,7 @@ void	read_heredoc(int fd, const char *delimiter)
 	}
 }
 
-int	execute_heredoc(s_tree *tree, s_minishell *mini)
+int	execute_heredoc(t_tree *tree, t_minishell *mini)
 {
 	int	fd;
 

@@ -6,15 +6,15 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:28:26 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*find_path_variable(s_minishell *mini)
+char	*find_path_variable(t_minishell *mini)
 {
-	s_env	*env;
+	t_env	*env;
 
 	env = mini->env;
 	while (env)
@@ -26,7 +26,7 @@ char	*find_path_variable(s_minishell *mini)
 	return (NULL);
 }
 
-char	*find_cmd_path(const char *cmd, const char *path, s_minishell *mini)
+char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 {
 	char	**dir;
 	char	*full_path;
@@ -86,7 +86,7 @@ int	redirect_fds(int in_fd, int out_fd)
 	return (0);
 }
 
-int	execute_builtin(s_tree *node, s_minishell *mini)
+int	execute_builtin(t_tree *node, t_minishell *mini)
 {
 	int	status;
 

@@ -6,18 +6,18 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:32 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 11:53:48 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:25 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	check_cd_args(s_tree *node);
-static int	handle_chdir_failure(const char *dir, s_minishell *mini);
-static int	update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir);
+static int	check_cd_args(t_tree *node);
+static int	handle_chdir_failure(const char *dir, t_minishell *mini);
+static int	update_pwd_vars(t_minishell *mini, char *oldpwd, char *dir);
 static char	*resolve_new_pwd(const char *dir);
 
-int	mini_cd(s_minishell *mini, s_tree *node)
+int	mini_cd(t_minishell *mini, t_tree *node)
 {
 	char	oldpwd[PATH_MAX];
 	char	*dir;
@@ -46,7 +46,7 @@ int	mini_cd(s_minishell *mini, s_tree *node)
 	return (exit_code(status, 1, 0));
 }
 
-static int	check_cd_args(s_tree *node)
+static int	check_cd_args(t_tree *node)
 {
 	if (node->argcount > 2)
 	{
@@ -56,7 +56,7 @@ static int	check_cd_args(s_tree *node)
 	return (0);
 }
 
-static int	handle_chdir_failure(const char *dir, s_minishell *mini)
+static int	handle_chdir_failure(const char *dir, t_minishell *mini)
 {
 	if (dir && ft_strcmp(dir, "-") == 0)
 		ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
@@ -83,7 +83,7 @@ static char	*resolve_new_pwd(const char *dir)
 	return (NULL);
 }
 
-static int	update_pwd_vars(s_minishell *mini, char *oldpwd, char *dir)
+static int	update_pwd_vars(t_minishell *mini, char *oldpwd, char *dir)
 {
 	char	*new_pwd;
 

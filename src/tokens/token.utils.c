@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:54:55 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/09 11:12:12 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:51:20 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-s_token	*make_token(char *str, s_token **tokens)
+t_token	*make_token(char *str, t_token **tokens)
 {
 	char	*trim;
 
@@ -28,9 +28,9 @@ s_token	*make_token(char *str, s_token **tokens)
 	return (*tokens);
 }
 
-s_token	*get_token(char *str)
+t_token	*get_token(char *str)
 {
-	s_token	*tokens;
+	t_token	*tokens;
 
 	tokens = NULL;
 	while (*str)
@@ -45,11 +45,11 @@ s_token	*get_token(char *str)
 	return (tokens);
 }
 
-s_token	*new_token(s_type type, char *value)
+t_token	*new_token(s_type type, char *value)
 {
-	s_token	*token;
+	t_token	*token;
 
-	token = safe_malloc(sizeof(s_token));
+	token = safe_malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->type = type;

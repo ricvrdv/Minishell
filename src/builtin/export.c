@@ -6,18 +6,18 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:51 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	export_argument(s_minishell *mini, char *arg);
-static int	append_to_env_var(s_minishell *mini, char *arg, char *plus_sign);
-static int	assign_env_var(s_minishell *mini, char *arg, char *equal_sign);
-static int	to_existing_or_create(s_minishell *mini, char *key, char *value);
+static int	export_argument(t_minishell *mini, char *arg);
+static int	append_to_env_var(t_minishell *mini, char *arg, char *plus_sign);
+static int	assign_env_var(t_minishell *mini, char *arg, char *equal_sign);
+static int	to_existing_or_create(t_minishell *mini, char *key, char *value);
 
-int	mini_export(s_minishell *mini, s_tree *node)
+int	mini_export(t_minishell *mini, t_tree *node)
 {
 	int	i;
 	int	status;
@@ -39,7 +39,7 @@ int	mini_export(s_minishell *mini, s_tree *node)
 	return (status);
 }
 
-static int	export_argument(s_minishell *mini, char *arg)
+static int	export_argument(t_minishell *mini, char *arg)
 {
 	char	*equal_sign;
 	char	*plus_sign;
@@ -65,9 +65,9 @@ static int	export_argument(s_minishell *mini, char *arg)
 		return (assign_env_var(mini, arg, equal_sign));
 }
 
-static int	to_existing_or_create(s_minishell *mini, char *key, char *value)
+static int	to_existing_or_create(t_minishell *mini, char *key, char *value)
 {
-	s_env	*var;
+	t_env	*var;
 	char	*new_value;
 
 	var = find_env_var(mini->env, key);
@@ -86,7 +86,7 @@ static int	to_existing_or_create(s_minishell *mini, char *key, char *value)
 	return (1);
 }
 
-static int	append_to_env_var(s_minishell *mini, char *arg, char *plus_sign)
+static int	append_to_env_var(t_minishell *mini, char *arg, char *plus_sign)
 {
 	char	*key;
 	char	*value;
@@ -103,7 +103,7 @@ static int	append_to_env_var(s_minishell *mini, char *arg, char *plus_sign)
 	return (to_existing_or_create(mini, key, value));
 }
 
-static int	assign_env_var(s_minishell *mini, char *arg, char *equal_sign)
+static int	assign_env_var(t_minishell *mini, char *arg, char *equal_sign)
 {
 	char	*key;
 	char	*value;

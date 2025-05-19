@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 12:39:43 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:28 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	is_expandable(const char *ptr)
 		&& *(ptr + 1) != '\'' && *(ptr + 1) != '"' && *(ptr + 1) != ' ');
 }
 
-void	expand_tree(s_minishell *mini, s_tree *tree)
+void	expand_tree(t_minishell *mini, t_tree *tree)
 {
 	int		i;
 	char	*expansion;
@@ -45,7 +45,7 @@ void	expand_tree(s_minishell *mini, s_tree *tree)
 		expand_tree(mini, tree->right);
 }
 
-static void	handle_variable(s_minishell *mini, const char **ptr, char **res_ptr)
+static void	handle_variable(t_minishell *mini, const char **ptr, char **res_ptr)
 {
 	char	var_name[256];
 	char	*value;
@@ -68,7 +68,7 @@ static void	handle_plain_char(const char **ptr, char **res_ptr)
 	(*ptr)++;
 }
 
-char	*expand_variable(s_minishell *mini, const char *arg)
+char	*expand_variable(t_minishell *mini, const char *arg)
 {
 	char		*result;
 	char		*res_ptr;

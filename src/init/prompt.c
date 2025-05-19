@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 12:18:24 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:51:17 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static void	ft_start_sig(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	start_prompt(s_minishell **mini)
+void	start_prompt(t_minishell **mini)
 {
 	char	*line;
-	s_token	*tokens;
-	s_tree	*tree;
+	t_token	*tokens;
+	t_tree	*tree;
 	int		status;
 
 	

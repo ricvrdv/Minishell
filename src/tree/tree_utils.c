@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/12 23:27:02 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:51:23 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-s_tree	*new_tree_node(s_type type)
+t_tree	*new_tree_node(s_type type)
 {
-	s_tree	*node;
+	t_tree	*node;
 
-	node = safe_malloc(sizeof(s_tree));
+	node = safe_malloc(sizeof(t_tree));
 	node->type = type;
 	node->file_type = 0;
 	node->argcount = 0;
@@ -28,11 +28,11 @@ s_tree	*new_tree_node(s_type type)
 	return (node);
 }
 
-s_tree	*create_arg_node(s_token *token)
+t_tree	*create_arg_node(t_token *token)
 {
-	s_tree	*node;
+	t_tree	*node;
 
-	node = safe_malloc(sizeof(s_tree));
+	node = safe_malloc(sizeof(t_tree));
 	node->type = token->type;
 	node->file_type = 0;
 	node->argcount = 0;
@@ -47,9 +47,9 @@ s_tree	*create_arg_node(s_token *token)
 	return (node);
 }
 
-s_tree	*create_redirection_node(s_token **tokens, s_token *temp)
+t_tree	*create_redirection_node(t_token **tokens, t_token *temp)
 {
-	s_tree	*redi_node;
+	t_tree	*redi_node;
 
 	redi_node = new_tree_node((*tokens)->type);
 	*tokens = (*tokens)->next->next;
@@ -64,9 +64,9 @@ s_tree	*create_redirection_node(s_token **tokens, s_token *temp)
 	return (redi_node);
 }
 
-s_tree	*especial_node(s_token **tokens, s_token *temp)
+t_tree	*especial_node(t_token **tokens, t_token *temp)
 {
-	s_tree	*redi_node;
+	t_tree	*redi_node;
 
 	redi_node = new_tree_node((*tokens)->type);
 	*tokens = (*tokens)->next->next;

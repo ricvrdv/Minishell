@@ -6,16 +6,16 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:25 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:04:33 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	update_shell_level(s_minishell *mini);
-static void	add_initial_shlvl(s_minishell *mini);
+static void	update_shell_level(t_minishell *mini);
+static void	add_initial_shlvl(t_minishell *mini);
 
-void	init_struct(s_minishell *mini)
+void	init_struct(t_minishell *mini)
 {
 	char	*curdir;
 
@@ -61,9 +61,9 @@ static char	**create_env_array(char **envp)
 	return (env_array);
 }
 
-static void	update_shell_level(s_minishell *mini)
+static void	update_shell_level(t_minishell *mini)
 {
-	s_env	*shlvl_var;
+	t_env	*shlvl_var;
 	int		current_level;
 	char	*new_level;
 
@@ -83,7 +83,7 @@ static void	update_shell_level(s_minishell *mini)
 		add_initial_shlvl(mini);
 }
 
-static void	add_initial_shlvl(s_minishell *mini)
+static void	add_initial_shlvl(t_minishell *mini)
 {
 	char	*key;
 	char	*value;
@@ -99,7 +99,7 @@ static void	add_initial_shlvl(s_minishell *mini)
 	add_env_node(&mini->env, key, value);
 }
 
-int	get_env(s_minishell *mini, char **envp)
+int	get_env(t_minishell *mini, char **envp)
 {
 	char		*sign;
 	char		*key;

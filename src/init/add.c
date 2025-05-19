@@ -6,26 +6,26 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/22 15:33:49 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	add_env_node(s_env **env_list, char *key, char *value)
+void	add_env_node(t_env **env_list, char *key, char *value)
 {
-	s_env	*new_node;
+	t_env	*new_node;
 
-	new_node = safe_malloc(sizeof(s_env));
+	new_node = safe_malloc(sizeof(t_env));
 	new_node->key = key;
 	new_node->value = value;
 	new_node->next = *env_list;
 	*env_list = new_node;
 }
 
-void	add_token_node(s_token **tokens, s_token *new_token)
+void	add_token_node(t_token **tokens, t_token *new_token)
 {
-	s_token	*last;
+	t_token	*last;
 
 	if (!new_token)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/02 11:52:15 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:36:17 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,3 @@ int	exit_code(int exit_status, int write_, int exit_)
 	return (current_status);
 }
 
-int	is_directory(const char *path)
-{
-	struct stat	statbuf;
-
-	if (stat(path, &statbuf) != 0)
-		return (0);
-	return (S_ISDIR(statbuf.st_mode));
-}

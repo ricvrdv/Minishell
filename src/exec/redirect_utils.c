@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:59:51 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 11:19:13 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:27 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	handle_redirect_l(s_tree *tree)
+int	handle_redirect_l(t_tree *tree)
 {
 	int		fd;
 	char	*file;
@@ -29,7 +29,7 @@ int	handle_redirect_l(s_tree *tree)
 	return (fd);
 }
 
-int	handle_redirect_r(s_tree *tree)
+int	handle_redirect_r(t_tree *tree)
 {
 	int		fd;
 	char	*file;
@@ -50,7 +50,7 @@ int	handle_redirect_r(s_tree *tree)
 	return (fd);
 }
 
-int	handle_append(s_tree *tree)
+int	handle_append(t_tree *tree)
 {
 	int	fd;
 
@@ -81,7 +81,7 @@ char	*remove_quotes_redirect(char *str)
 	return (ft_strdup(str));
 }
 
-void	setup_cmd(s_tree *node, int in_fd, int out_fd)
+void	setup_cmd(t_tree *node, int in_fd, int out_fd)
 {
 	redirect_fds(in_fd, out_fd);
 	pre_clean_args(node->args, &node->argcount);

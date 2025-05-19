@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:51:53 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 12:23:12 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:41:56 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	close_heredoc(s_minishell *mini, int fd)
+void	close_heredoc(t_minishell *mini, int fd)
 {
 	ft_exit_child(mini, NULL);
 	close(fd);
