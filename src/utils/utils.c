@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 15:49:22 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:29 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,41 +47,30 @@ int	found_sign(const char *str)
 	}
 	return (0);
 }
-int	handle_heredocs(s_tree *tree, s_minishell *mini)
+int handle_heredocs(t_tree *tree, t_minishell *mini)
 {
-	int	fd;
-	int ret;
-
-	if (!tree)
-		return (1);
-	if (tree->type == HEREDOC)
-	{
-		fd = handle_heredoc(tree, mini);
-		if(fd == -5)
-		{
-			close_fds();
-			return(-5);
-		}
-		close(fd);
-	}	
-	else if (tree->left && tree->left->type == HEREDOC)
-	{
-		ret = handle_heredocs(tree->left, mini);
-		if(ret == -5)
-			return(-5);
-		
-	}
-	else if (tree->right)
-	{
-		ft_putstr_fd("right\n", 1);
-		ret = handle_heredocs(tree->right, mini);
-		if(ret == -5)
-			return(-5);
-	}
-	return (0);
+    int fd;
+    if (!tree)
+        return 0;
+    if (tree->type == HEREDOC)
+    {
+        fd = open(tree->right->hd_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        if (fd == -1)
+            return -5;
+        if (has_any_quotes(tree->right->args[0]))
+            read_heredoc(fd, tree->right->args[0]);
+        else
+            read_heredoc_expand(fd, tree->right->args[0], mini);
+        close(fd);
+    }
+    if (handle_heredocs(tree->left, mini) == -5)
+        return -5;
+    if (handle_heredocs(tree->right, mini) == -5)
+        return -5;
+    return 0;
 }
 
-void	ft_exit_child(s_minishell *mini, char *error)
+void	ft_exit_child(t_minishell *mini, char *error)
 {
 	if (mini->created)
 		free_mini_struct(mini);
@@ -89,4 +78,28 @@ void	ft_exit_child(s_minishell *mini, char *error)
 		printf(RED "%s\n" RESET, error);
 	clear_history();
 	free(mini);
+}
+
+void close_pipefd(int *pipefd)
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
+}
+
+void print_sigint(void)
+{
+	ft_putstr_fd("\n", 1);
+	exit_code(130, 1, 0);
+}
+
+void print_sigquit(void)
+{
+	ft_putstr_fd("Quit (core dumped)\n", 1);
+	exit_code(131, 1, 0);
+}
+
+void check_builtin(int *status, t_tree *tree, t_minishell *mini) //
+{
+	*status = execute_builtin(tree, mini);
+	exit_code(*status, 1, 0);
 }

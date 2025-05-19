@@ -6,18 +6,18 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:24 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static s_env	*create_env_node(const char *key, const char *value);
+static t_env	*create_env_node(const char *key, const char *value);
 
-void	update_env_var(s_env **env, const char *key, const char *value)
+void	update_env_var(t_env **env, const char *key, const char *value)
 {
-	s_env	*var;
-	s_env	*new_var;
+	t_env	*var;
+	t_env	*new_var;
 
 	var = find_env_var(*env, key);
 	if (var)
@@ -38,7 +38,7 @@ void	update_env_var(s_env **env, const char *key, const char *value)
 	}
 }
 
-s_env	*find_env_var(s_env *env, const char *key)
+t_env	*find_env_var(t_env *env, const char *key)
 {
 	while (env)
 	{
@@ -49,11 +49,11 @@ s_env	*find_env_var(s_env *env, const char *key)
 	return (NULL);
 }
 
-static s_env	*create_env_node(const char *key, const char *value)
+static t_env	*create_env_node(const char *key, const char *value)
 {
-	s_env	*new;
+	t_env	*new;
 
-	new = malloc(sizeof(s_env));
+	new = malloc(sizeof(t_env));
 	if (!new)
 		exit(EXIT_FAILURE);
 	new->key = ft_strdup(key);
@@ -74,12 +74,12 @@ static s_env	*create_env_node(const char *key, const char *value)
 
 void	handle_invalid_identifier(char *arg)
 {
-	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+	ft_putstr_fd("Minishell: export: `", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }
 
-void	handle_exit_cleanup(s_minishell *mini, int code)
+void	handle_exit_cleanup(t_minishell *mini, int code)
 {
 	ft_exit_child(mini, NULL);
 	close_fds();

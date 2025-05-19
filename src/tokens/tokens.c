@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:54:59 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/04/21 10:55:00 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:51:21 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	handle_word(char **str, s_token **tokens)
+void	handle_word(char **str, t_token **tokens)
 {
 	char	*start;
 	char	quote;
@@ -31,7 +31,7 @@ void	handle_word(char **str, s_token **tokens)
 	put_word(&start, str, tokens);
 }
 
-void	handle_sign(char **str, s_token **tokens)
+void	handle_sign(char **str, t_token **tokens)
 {
 	if (**str == '>')
 	{
@@ -58,7 +58,7 @@ void	handle_sign(char **str, s_token **tokens)
 	(*str)++;
 }
 
-void	put_word(char **start, char **end, s_token **tokens)
+void	put_word(char **start, char **end, t_token **tokens)
 {
 	char	*input;
 

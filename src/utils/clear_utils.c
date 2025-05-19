@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   clear_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:48:24 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/15 16:39:09 by applecore        ###   ########.fr       */
+/*   Updated: 2025/05/19 13:41:55 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_mini_struct(s_minishell *mini)
+void	free_mini_struct(t_minishell *mini)
 {
 	if (mini->cur_dir)
 		free(mini->cur_dir);
@@ -24,7 +24,7 @@ void	free_mini_struct(s_minishell *mini)
 		clear_tree(&mini->root);
 }
 
-void	free_struct(s_minishell *mini)
+void	free_struct(t_minishell *mini)
 {
 	if (mini->cur_dir)
 		free(mini->cur_dir);
@@ -73,7 +73,7 @@ void	pre_clean_args(char **args, int *argcount)
 	j = 0;
 	while (args[i] != NULL)
 	{
-		if (args[i] == NULL || ft_strcmp(args[i], "") == 0)
+		if (args[i] == NULL || strcmp(args[i], "") == 0)
 		{
 			free(args[i]);
 			(*argcount)--;

@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:52 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 15:54:14 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:27 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	exec_redirect_l(s_tree *tree, s_minishell *mini, int out_fd)
+static int	exec_redirect_l(t_tree *tree, t_minishell *mini, int out_fd)
 {
 	int	fd;
 	int	status;
@@ -27,7 +27,7 @@ static int	exec_redirect_l(s_tree *tree, s_minishell *mini, int out_fd)
 	return (status);
 }
 
-static int	exec_redirect_r(s_tree *tree, s_minishell *mini, int in_fd)
+static int	exec_redirect_r(t_tree *tree, t_minishell *mini, int in_fd)
 {
 	int	fd;
 	int	status;
@@ -42,13 +42,13 @@ static int	exec_redirect_r(s_tree *tree, s_minishell *mini, int in_fd)
 	return (status);
 }
 
-static int	setup_heredoc(s_tree *tree, s_minishell *mini, int out_fd)
+static int	setup_heredoc(t_tree *tree, t_minishell *mini, int out_fd)
 {
 	int	fd;
 	int	status;
 	
 	status = 0;
-	if(tree->right->bad_herdoc)
+	if(!tree->right->bad_herdoc)
 	{
 	
 		fd = open (tree->right->hd_file, O_RDONLY);
@@ -63,7 +63,7 @@ static int	setup_heredoc(s_tree *tree, s_minishell *mini, int out_fd)
 	return (status);
 }
 
-static int	exec_append(s_tree *tree, s_minishell *mini, int in_fd)
+static int	exec_append(t_tree *tree, t_minishell *mini, int in_fd)
 {
 	int	fd;
 	int	status;
@@ -76,7 +76,7 @@ static int	exec_append(s_tree *tree, s_minishell *mini, int in_fd)
 	return (status);
 }
 
-int	execute_redirect(s_tree *tree, s_minishell *mini, int in_fd, int out_fd)
+int	execute_redirect(t_tree *tree, t_minishell *mini, int in_fd, int out_fd)
 {
 	int	status;
 

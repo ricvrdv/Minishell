@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/17 11:39:11 by applecore        ###   ########.fr       */
+/*   Updated: 2025/05/19 13:51:17 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static void	ft_start_sig(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	start_prompt(s_minishell **mini)
+void	start_prompt(t_minishell **mini)
 {
 	char	*line;
-	s_token	*tokens;
-	s_tree	*tree;
+	t_token	*tokens;
+	t_tree	*tree;
 	int		status;
 
 	
@@ -50,12 +50,9 @@ void	start_prompt(s_minishell **mini)
 	while (1)
 	{
 		ft_start_sig();
-		line = readline(BLUE "minishell$ " RESET);
+		line = readline(BLUE "Minishell$ " RESET);
 		if (line == NULL)
-		{
-			close_fds();
 			break ;
-		}
 		if (check_str(&line))
 			continue ;
 		add_history(line);

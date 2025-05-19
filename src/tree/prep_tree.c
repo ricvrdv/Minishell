@@ -6,41 +6,61 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:51:58 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/14 15:28:11 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:28 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	preprocess_tree(s_tree *tree, s_minishell *mini)
+static void	preprocest_tree(t_tree *tree, t_minishell *mini)
 {
 	int	counter[12];
 	int status;
-
+	pid_t pid;
+	int ret;
+	
 	rename_nodes(tree);
 	init_pipes_array(counter, 1);
 	count_pipes_redir(tree, counter);
 	init_pipes_array(counter, 0);
 	mini->root = tree;
 	mini->heredoc_count = counter[2];
-	while (mini->heredoc_count)
+	assign_heredoc_filenames(tree);
+	if (mini->heredoc_count > 0)
 	{
-		status = handle_heredocs(tree, mini);
-		if(status == -5)
+		pid = fork();
+		if(pid == 0)
 		{
-			tree->bad_herdoc = 1;
-			return ;
+			ft_sig_child_heredoc(mini);
+			ret = handle_heredocs(tree, mini);
+			ft_exit_child(mini, NULL);
+			if(ret == -5)
+				exit(130);
+			exit(0);
 		}
-		mini->heredoc_count = 0;
+		else
+		{
+			waitpid(pid, &status, 0);
+            if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+            {
+                tree->bad_herdoc = 1;
+                return;
+            }
+            else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+            {
+                tree->bad_herdoc = 1;
+                return;
+            }
+		}
 	}
 }
 
-void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
+void	prep_tree(t_tree *tree, t_minishell *mini, int *status)
 {
 	int	first_check;
 
 	first_check = 0;
-	preprocess_tree(tree, mini);
+	preprocest_tree(tree, mini);
 	if (tree->bad_herdoc == 1)
 	{
 		return ;
@@ -50,7 +70,7 @@ void	prep_tree(s_tree *tree, s_minishell *mini, int *status)
 		*status = execute_node(tree, mini, STDIN_FILENO, STDOUT_FILENO);
 }
 
-void	count_pipes_redir(s_tree *tree, int *counter)
+void	count_pipes_redir(t_tree *tree, int *counter)
 {
 	tree->file_type = 0;
 	if (tree->type == PIPE)
@@ -79,7 +99,7 @@ void	init_pipes_array(int *counter, int flag)
 		counter[0] = counter[0] + 1;
 }
 
-void	rename_nodes(s_tree *tree)
+void	rename_nodes(t_tree *tree)
 {
 	if (tree->type != WORD)
 	{
@@ -106,4 +126,17 @@ void	rename_nodes(s_tree *tree)
 		rename_nodes(tree->left);
 	if (tree->right)
 		rename_nodes(tree->right);
+}
+
+void assign_heredoc_filenames(t_tree *tree)
+{
+    if (!tree)
+        return;
+    if (tree->type == HEREDOC && tree->right)
+    {
+        if (!tree->right->hd_file)
+            tree->right->hd_file = generate_file(static_index());
+    }
+    assign_heredoc_filenames(tree->left);
+    assign_heredoc_filenames(tree->right);
 }

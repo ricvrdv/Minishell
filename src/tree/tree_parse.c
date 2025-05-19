@@ -6,17 +6,17 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:20 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 12:42:43 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:51:22 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-s_tree	*parse_pipe(s_token **tokens)
+t_tree	*parse_pipe(t_token **tokens)
 {
-	s_token	*temp;
-	s_token	*next_token;
-	s_tree	*pipe_node;
+	t_token	*temp;
+	t_token	*next_token;
+	t_tree	*pipe_node;
 
 	temp = *tokens;
 	while (*tokens && (*tokens)->next)
@@ -37,11 +37,11 @@ s_tree	*parse_pipe(s_token **tokens)
 	return (parse_redirect(&temp));
 }
 
-s_tree	*parse_redirect(s_token **tokens)
+t_tree	*parse_redirect(t_token **tokens)
 {
-	s_token	*temp;
-	s_token	*next_token;
-	s_tree	*redirect_node;
+	t_token	*temp;
+	t_token	*next_token;
+	t_tree	*redirect_node;
 
 	temp = *tokens;
 	if ((*tokens)->type >= REDIRECT_L && (*tokens)->type <= HEREDOC)
@@ -65,9 +65,9 @@ s_tree	*parse_redirect(s_token **tokens)
 	return (parse_command(&temp));
 }
 
-s_tree	*parse_command(s_token **tokens)
+t_tree	*parse_command(t_token **tokens)
 {
-	s_tree		*command_node;
+	t_tree		*command_node;
 	int			arg_count;
 
 	command_node = new_tree_node(WORD);
@@ -78,7 +78,7 @@ s_tree	*parse_command(s_token **tokens)
 	return (command_node);
 }
 
-int	count_arguments(s_token *current)
+int	count_arguments(t_token *current)
 {
 	int	arg_count;
 
@@ -91,11 +91,11 @@ int	count_arguments(s_token *current)
 	return (arg_count);
 }
 
-void	fill_command_arguments(s_tree *command_node,
-	s_token **tokens, int arg_count)
+void	fill_command_arguments(t_tree *command_node,
+	t_token **tokens, int arg_count)
 {
 	int		i;
-	s_token	*tmp;
+	t_token	*tmp;
 
 	i = 0;
 	while (i < arg_count)

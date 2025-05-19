@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:57 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 12:27:40 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:51:18 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*jump_spaces(char *str)
 	return (str);
 }
 
-s_tree	*parse_token(s_token **tokens)
+t_tree	*parse_token(t_token **tokens)
 {
 	if (!tokens || !*tokens)
 		return (NULL);

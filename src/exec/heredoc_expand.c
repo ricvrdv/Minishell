@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 23:05:41 by joaorema          #+#    #+#             */
-/*   Updated: 2025/05/13 11:50:18 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:41:54 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*generate_file(int index)
 	return (filename);
 }
 
-void	read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini)
+void	read_heredoc_expand(int fd, const char *delimiter, t_minishell *mini)
 {
 	char	*line;
 	size_t	len;
@@ -60,7 +60,7 @@ void	read_heredoc_expand(int fd, const char *delimiter, s_minishell *mini)
 	}
 }
 
-void	handle_expansion_line(int fd, s_minishell *mini, char *line)
+void	handle_expansion_line(int fd, t_minishell *mini, char *line)
 {
 	char	*expansion;
 

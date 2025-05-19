@@ -6,15 +6,15 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:35 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:36 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:26 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	print_arguments(s_tree *node, int start_index);
+static void	print_arguments(t_tree *node, int start_index);
 
-int	mini_echo(s_tree *node)
+int	mini_echo(t_tree *node)
 {
 	int	n_flag;
 	int	i;
@@ -39,7 +39,7 @@ int	mini_echo(s_tree *node)
 	return (0);
 }
 
-static void	print_arguments(s_tree *node, int start_index)
+static void	print_arguments(t_tree *node, int start_index)
 {
 	int	i;
 

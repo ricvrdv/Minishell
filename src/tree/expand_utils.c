@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/15 17:07:40 by applecore        ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_variable_name(const char **ptr, char *var_name)
 	}
 	else
 	{
-		while (ft_isalnum(**ptr) || **ptr == '_')
+		while (isalnum(**ptr) || **ptr == '_')
 		{
 			var_name[i++] = **ptr;
 			(*ptr)++;
@@ -43,9 +43,9 @@ void	get_variable_name(const char **ptr, char *var_name)
 	var_name[i] = '\0';
 }
 
-char	*find_variable(s_minishell *mini, const char *variable)
+char	*find_variable(t_minishell *mini, const char *variable)
 {
-	s_env	*env;
+	t_env	*env;
 	int		len;
 	char	*exit_status;
 
@@ -57,7 +57,7 @@ char	*find_variable(s_minishell *mini, const char *variable)
 	}
 	if (ft_strcmp(variable, "0") == 0)
 	{
-		ft_putstr_fd("minishell", 1);
+		ft_putstr_fd("Minishell", 1);
 		return (NULL);
 	}
 	env = mini->env;
@@ -74,7 +74,7 @@ bool	enclosed_single_quotes(const char *str)
 {
 	size_t	len;
 
-	len = ft_strlen(str);
+	len = strlen(str);
 	if (len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
 		return (true);
 	return (false);

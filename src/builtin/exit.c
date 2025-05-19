@@ -6,17 +6,17 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:45 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:46 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:26 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	handle_args_offset(s_tree *node);
+static int	handle_args_offset(t_tree *node);
 static bool	is_numeric_arg_valid(const char *arg);
 static void	exit_error(const char *arg, bool numeric_error);
 
-int	mini_exit(s_minishell *mini, s_tree *node)
+int	mini_exit(t_minishell *mini, t_tree *node)
 {
 	int		arg_offset;
 	long	exit_status;
@@ -43,7 +43,7 @@ int	mini_exit(s_minishell *mini, s_tree *node)
 	return ((int)exit_status);
 }
 
-static int	handle_args_offset(s_tree *node)
+static int	handle_args_offset(t_tree *node)
 {
 	if (node->argcount == 1)
 		return (-1);
@@ -84,21 +84,21 @@ static bool	is_numeric_arg_valid(const char *arg)
 
 static void	exit_error(const char *arg, bool numeric_error)
 {
-	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+	ft_putstr_fd("Minishell: exit: ", STDERR_FILENO);
 	if (numeric_error)
 	{
 		ft_putstr_fd((char *)arg, STDERR_FILENO);
-		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		exit_code(2, 1, 0);
 	}
 	else
 	{
-		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("too many arguments\n", 2);
 		exit_code(1, 1, 0);
 	}
 }
 
-int	extra_mini_exit(s_minishell *mini, s_tree *node)
+int	extra_mini_exit(t_minishell *mini, t_tree *node)
 {
 	int		arg_offset;
 	long	exit_status;

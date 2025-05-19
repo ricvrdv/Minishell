@@ -6,15 +6,15 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:54 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:55 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	remove_env_var(s_env **env, const char *key);
+static void	remove_env_var(t_env **env, const char *key);
 
-int	mini_unset(s_minishell *mini, s_tree *node)
+int	mini_unset(t_minishell *mini, t_tree *node)
 {
 	int	i;
 
@@ -30,10 +30,10 @@ int	mini_unset(s_minishell *mini, s_tree *node)
 	return (0);
 }
 
-static void	remove_env_var(s_env **env, const char *key)
+static void	remove_env_var(t_env **env, const char *key)
 {
-	s_env	*current;
-	s_env	*prev;
+	t_env	*current;
+	t_env	*prev;
 
 	if (!env || !*env || !key)
 		return ;

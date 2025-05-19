@@ -6,22 +6,22 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:47 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:48 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static s_env	**env_list_to_array(s_env *env, int count);
-static void		sort_env_array(s_env **array, int count);
-static void		print_env_entry(s_env *env);
+static t_env	**env_list_to_array(t_env *env, int count);
+static void		sort_env_array(t_env **array, int count);
+static void		print_env_entry(t_env *env);
 
-void	print_sorted_env(s_env *env)
+void	print_sorted_env(t_env *env)
 {
 	int		count;
 	int		i;
-	s_env	**array;
-	s_env	*head;
+	t_env	**array;
+	t_env	*head;
 
 	head = env;
 	count = 0;
@@ -43,12 +43,12 @@ void	print_sorted_env(s_env *env)
 	free(array);
 }
 
-static s_env	**env_list_to_array(s_env *env, int count)
+static t_env	**env_list_to_array(t_env *env, int count)
 {
-	s_env	**array;
+	t_env	**array;
 	int		i;
 
-	array = malloc(count * sizeof(s_env *));
+	array = malloc(count * sizeof(t_env *));
 	if (!array)
 		return (NULL);
 	i = 0;
@@ -61,9 +61,9 @@ static s_env	**env_list_to_array(s_env *env, int count)
 	return (array);
 }
 
-static void	sort_env_array(s_env **array, int count)
+static void	sort_env_array(t_env **array, int count)
 {
-	s_env	*temp;
+	t_env	*temp;
 	int		i;
 	int		j;
 
@@ -85,7 +85,7 @@ static void	sort_env_array(s_env **array, int count)
 	}
 }
 
-static void	print_env_entry(s_env *env)
+static void	print_env_entry(t_env *env)
 {
 	ft_putstr_fd("declare -x ", STDOUT_FILENO);
 	ft_putstr_fd(env->key, STDOUT_FILENO);

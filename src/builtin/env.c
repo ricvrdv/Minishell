@@ -6,15 +6,15 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 13:19:39 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	mini_env(s_minishell *mini, s_tree *node)
+int	mini_env(t_minishell *mini, t_tree *node)
 {
-	s_env	*current;
+	t_env	*current;
 
 	current = mini->env;
 	if (node->argcount > 1)

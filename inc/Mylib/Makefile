@@ -1,3 +1,4 @@
+
 SRCS = \
     ft_atoi.c \
     ft_bzero.c \
@@ -50,7 +51,9 @@ SRCS = \
     space.c \
     ft_is_numeric.c \
     ft_atol.c
-
+    
+    
+    
 OBJS = $(SRCS:.c=.o)
 
 NAME = libft.a
@@ -62,14 +65,14 @@ CFLAGS = -Wall -Wextra -Werror -fPIC
 all: $(NAME)
 	
 $(NAME): $(OBJS)
-	@ar rcs $(NAME) $(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
 clean:
-	@rm -f $(OBJS)
+	rm -f $(OBJS)
 	@echo "\033[0;31mObjects removed\033[0m"
-
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 	@echo "\033[0;31mLibftprintf.a removed\033[0m"
+re: fclean all
 
-re: fclean all 
+notes: 

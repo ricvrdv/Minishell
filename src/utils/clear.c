@@ -6,15 +6,15 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:14 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/13 11:51:16 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	clear_env(s_env **env)
+void	clear_env(t_env **env)
 {
-	s_env	*temp;
+	t_env	*temp;
 
 	temp = NULL;
 	while (*env)
@@ -27,9 +27,9 @@ void	clear_env(s_env **env)
 	}
 }
 
-void	clear_token(s_token **token)
+void	clear_token(t_token **token)
 {
-	s_token	*temp;
+	t_token	*temp;
 
 	temp = NULL;
 	if (token)
@@ -43,7 +43,7 @@ void	clear_token(s_token **token)
 	}
 }
 
-void	clear_tree(s_tree **tree)
+void	clear_tree(t_tree **tree)
 {
 	int	i;
 
@@ -86,7 +86,7 @@ void	clear_env_array(char ***env_array)
 	*env_array = NULL;
 }
 
-void	ft_exit(s_minishell *mini, char *error)
+void	ft_exit(t_minishell *mini, char *error)
 {
 	if (mini->created)
 		free_mini_struct(mini);
