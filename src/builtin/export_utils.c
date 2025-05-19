@@ -100,15 +100,18 @@ static void	print_env_entry(t_env *env)
 
 int	is_valid_identifier(const char *str)
 {
+	const char *ptr;
+	
+	ptr = str;
 	if (!str || !*str)
 		return (0);
-	if (*str == '=')
+	if (*ptr == '=')
 		return (0);
-	if (!ft_isalpha(*str) && *str != '_')
+	if (!ft_isalpha(*ptr) && *ptr != '_')
 		return (0);
-	while (*++str)
+	while (*++ptr && *ptr != '+' && *ptr != '=')
 	{
-		if (!ft_isalnum(*str) && *str != '_')
+		if (!ft_isalnum(*ptr) && *ptr != '_')
 			return (0);
 	}
 	return (1);

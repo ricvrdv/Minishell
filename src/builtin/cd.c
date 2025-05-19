@@ -91,7 +91,6 @@ static int	update_pwd_vars(t_minishell *mini, char *oldpwd, char *dir)
 	if (!new_pwd)
 		return (0);
 	update_env_var(&mini->env, "OLDPWD", oldpwd);
-	update_env_var(&mini->env, "PWD", new_pwd);
 	free(mini->cur_dir);
 	mini->cur_dir = new_pwd;
 	return (1);
