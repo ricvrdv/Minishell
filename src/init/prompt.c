@@ -6,13 +6,11 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 17:02:08 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:22:26 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	g_sig = 0;
 
 static void	ft_handle_sig(int signal)
 {
@@ -22,7 +20,7 @@ static void	ft_handle_sig(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_sig = 2;
+		exit_code(130, 1, 0);
 	}
 }
 

@@ -6,13 +6,13 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:28 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 14:38:54 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:19:23 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/minishell.h"  
 
-static t_minishell	*g_mini = NULL;
+static t_minishell	*g_mini = NULL;  /// nooo nooo
 
 void	ft_sig_restore(void)
 {

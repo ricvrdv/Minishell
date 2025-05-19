@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:15:03 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 		full_path = ft_strjoin(half_path, cmd);
 		free(half_path);
 		if (access(full_path, F_OK | X_OK) == 0)
-			return (full_path);
+			return (free_split(dir), full_path);
 		free(full_path);
 		i++;
 	}

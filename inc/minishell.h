@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 17:34:45 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:22:23 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ typedef struct s_token		t_token;
 typedef struct s_env		t_env;
 typedef struct s_minishell	t_minishell;
 typedef enum s_type			t_type;
-
-extern int					g_sig;
 
 typedef enum s_type
 {
