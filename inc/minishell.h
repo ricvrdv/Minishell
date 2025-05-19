@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:55:34 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:58:02 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,6 @@ int     execute_heredoc(t_tree *tree, t_minishell *mini);
 int     execute_last_command(t_tree *node, t_minishell *mini, int in_fd);
 int     create_and_fork_command(t_tree *node, t_minishell *mini, int in_fd);
 int	    handle_parent(pid_t pid);
-int	    handle_heredoc_wait(int pid,t_tree *node);
 int	    check_quotes_2(const char *str);
 char    *find_cmd_path(const char *cmd, const char *path, t_minishell *mini);
 char    *find_path_variable(t_minishell *mini);
@@ -222,14 +221,10 @@ bool	is_dollar_in_single_quotes(const char *str);
 pid_t	init_pipe_and_fork(int *pipefd);
 
 //for signals
-void	handle_ctrl_c(int a);
-void	setup_signal_handlers(void);
-void	child_ctrl_c(int sig_num);
 void	quite_heredoc(int a);
 void	ft_sig_restore(void);
 void	ft_sig_child(void);
 void	ft_sig_mute(void);
-void	ft_sig_child_handler(int signo, t_minishell *mini);
 void    ft_sigint_handler(int sig); 
 
 //for clear
@@ -249,7 +244,6 @@ int     space(int c);
 int     str_size(char *str, char end); 
 int	    exit_code(int exit_status, int write_, int exit_);
 int     report_error(int status);
-int     is_directory(const char *path);
 int	    static_index(void);
 int	    extra_mini_exit(t_minishell *mini, t_tree *node);
 int     handle_error(char *temp, const char *error_message);
@@ -266,13 +260,11 @@ void	close_fds(void);
 bool	has_any_quotes(const char *delim);
 bool    are_counts_odd(int d_count, int s_count);
 void 	ft_sig_child_heredoc(t_minishell *mini);
-void    handle_all_heredocs_in_child(t_tree *tree, t_minishell *mini);
 void    assign_heredoc_filenames(t_tree *tree);
 void    print_sigquit();
 void    print_sigint();
 void    close_pipefd(int *pipefd);
 void    check_builtin(int *status, t_tree *tree, t_minishell *mini);
-
 
 //  valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 
