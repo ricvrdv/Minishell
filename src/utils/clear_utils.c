@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:48:24 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:41:55 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:21:10 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	pre_clean_args(char **args, int *argcount)
 	j = 0;
 	while (args[i] != NULL)
 	{
-		if (args[i] == NULL || strcmp(args[i], "") == 0)
+		if (args[i] == NULL || ft_strcmp(args[i], "") == 0)
 		{
 			free(args[i]);
 			(*argcount)--;

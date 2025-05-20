@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:21:25 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ bool	enclosed_single_quotes(const char *str)
 {
 	size_t	len;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	if (len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
 		return (true);
 	return (false);

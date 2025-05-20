@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 15:05:20 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:57:34 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	read_heredoc(int fd, const char *delimiter)
 {
 	char	*line;
-	size_t	len;
-
+	
 	remove_quotes((char *)delimiter);
-	len = ft_strlen(delimiter);
 	while (1)
 	{
 		line = readline("> ");
@@ -27,7 +25,7 @@ void	read_heredoc(int fd, const char *delimiter)
 			ft_putstr_fd(HEREDOC_EOF_WARNING, 2);
 			break ;
 		}
-		if (ft_strncmp(line, delimiter, len) == 0)
+		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
 			break ;

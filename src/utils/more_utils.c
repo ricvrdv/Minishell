@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:02:23 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:41:56 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:12:57 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	check_cmd_access(const char *cmd, t_minishell *mini)
 	else if (access(cmd, F_OK) == 0)
 	{
 		ft_putstr_fd("Minishell: ", 2);
-		ft_putstr_fd(mini->root->args[0], 2);
-		ft_putstr_fd(" Permission denied\n", 2);
+		//ft_putstr_fd(mini->root->args[0], 2);
+		ft_putstr_fd("Permission denied\n", 2);
 		ft_exit_child(mini, NULL);
 		close_fds();
 		exit_code(126, 1, 1);
@@ -28,8 +28,8 @@ int	check_cmd_access(const char *cmd, t_minishell *mini)
 	else
 	{
 		ft_putstr_fd("Minishell: ", 2);
-		ft_putstr_fd(mini->root->args[0], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		//ft_putstr_fd(mini->root->args[0], 2);
+		ft_putstr_fd("No such file or directory\n", 2);
 		ft_exit_child(mini, NULL);
 		close_fds();
 		exit_code(127, 1, 1);
