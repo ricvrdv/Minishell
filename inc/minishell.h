@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 10:39:49 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:28:24 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,12 +259,13 @@ void	ft_exit_child(t_minishell *mini, char *error);
 void	close_fds(void);
 bool	has_any_quotes(const char *delim);
 bool	are_counts_odd(int d_count, int s_count);
-void	ft_sig_child_heredoc(t_minishell *mini);
+void	ft_sig_child_heredoc(void);
 void	assign_heredoc_filenames(t_tree *tree);
 void	print_sigquit(void);
 void	print_sigint(void);
 void	close_pipefd(int *pipefd);
 void	check_builtin(int *status, t_tree *tree, t_minishell *mini);
+t_minishell *clear_mini(t_minishell *mini, int flag);
 
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 
 
