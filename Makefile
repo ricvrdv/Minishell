@@ -86,6 +86,15 @@ clean:
 fclean: clean
 	@$(RM) $(NAME)
 
+.PHONY: sync
+sync : re
+	@tmux new-window  -n sync
+	@tmux send-keys 'valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell' C-m Escape
+	@tmux split-window -h
+	@tmux send-keys -t sync.2 'bash' C-m
+	@tmux select-pane -t sync.1
+	@tmux setw synchronize-panes on
+
 re: fclean all
 
 ################################################################################
@@ -102,4 +111,4 @@ valgrind: $(NAME) $(SUPPRESSION_FILE)
 run: $(NAME)
 	@./$(NAME)
 
-.PHONY: all clean fclean re valgrind run
+.PHONY: all clean fclean re valgrind run sync

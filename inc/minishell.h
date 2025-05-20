@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 18:22:23 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:39:49 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,10 +190,8 @@ int		handle_redirect_r(t_tree *tree);
 int		handle_redirect_l(t_tree *tree);
 int		handle_append(t_tree *tree);
 int		redirect_fds(int in_fd, int out_fd);
-int		handle_heredoc(t_tree *node, t_minishell *mini);
 int		count_quotes(const char *str);
 int		handle_heredocs(t_tree *tree, t_minishell *mini);
-int		execute_heredoc(t_tree *tree, t_minishell *mini);
 int		execute_last_command(t_tree *node, t_minishell *mini, int in_fd);
 int		create_and_fork_command(t_tree *node, t_minishell *mini, int in_fd);
 int		handle_parent(pid_t pid);

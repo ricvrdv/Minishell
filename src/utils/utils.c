@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 17:24:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:40:18 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,5 @@ int	found_sign(const char *str)
 		}
 		i++;
 	}
-	return (0);
-}
-
-int	handle_heredocs(t_tree *tree, t_minishell *mini)
-{
-	int	fd;
-
-	if (!tree)
-		return (0);
-	if (tree->type == HEREDOC)
-	{
-		fd = open(tree->right->hd_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd == -1)
-			return (-5);
-		if (has_any_quotes(tree->right->args[0]))
-			read_heredoc(fd, tree->right->args[0]);
-		else
-			read_heredoc_expand(fd, tree->right->args[0], mini);
-		close(fd);
-	}
-	if (handle_heredocs(tree->left, mini) == -5)
-		return (-5);
-	if (handle_heredocs(tree->right, mini) == -5)
-		return (-5);
 	return (0);
 }
