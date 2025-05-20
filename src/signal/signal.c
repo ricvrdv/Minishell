@@ -6,14 +6,21 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:28 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:41:55 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:06:59 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/minishell.h"  
 
-static t_minishell *g_mini = NULL;
-
+t_minishell *clear_mini(t_minishell *mini, int flag)
+{
+	static t_minishell *ptr;
+	
+	if(flag)
+		return(ptr);
+	ptr = mini;
+	return (ptr);
+}
 
 void	ft_sig_restore(void)
 {
@@ -27,11 +34,16 @@ void	ft_sig_child(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
-void 	ft_sig_child_heredoc(t_minishell *mini)
+void	ft_sig_child_heredoc(void)
 {
-	g_mini = mini;
-	signal(SIGINT, ft_sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	struct sigaction sa;
+
+	sa.sa_handler = ft_sigint_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+
+	signal(SIGQUIT, SIG_IGN); // still fine to use signal() for this
 }
 
 void	ft_sig_mute(void)
@@ -40,15 +52,14 @@ void	ft_sig_mute(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-
-void ft_sigint_handler(int sig) 
+void	ft_sigint_handler(int sig)
 {
-	(void)sig; // if unused
-	if (g_mini)
-	{
-		close_fds();
-		ft_exit_child(g_mini, NULL);
-	}
-	write(STDERR_FILENO, "\n", 1);
-	exit(130);
+	t_minishell	*mini = clear_mini(NULL, 1);
+
+	(void)sig;
+
+	ft_putstr_fd("\n", 1);
+	ft_exit_child(mini, NULL);
+	close_fds();
+	exit_code(130, 1, 1);
 }

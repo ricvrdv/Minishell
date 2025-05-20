@@ -6,13 +6,11 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:51:17 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:01:56 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	g_sig = 0;
 
 static void	ft_handle_sig(int signal)
 {
@@ -22,7 +20,7 @@ static void	ft_handle_sig(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_sig = 2;
+		exit_code(130, 1, 0);
 	}
 }
 
@@ -45,7 +43,6 @@ void	start_prompt(t_minishell **mini)
 	t_tree	*tree;
 	int		status;
 
-	
 	(void)mini;
 	while (1)
 	{
@@ -62,6 +59,8 @@ void	start_prompt(t_minishell **mini)
 			tree = parse_token(&tokens);
 			prep_tree(tree, *mini, &status);
 			clear_tree(&tree);
+			tokens = NULL;
 		}
+		
 	}
 }

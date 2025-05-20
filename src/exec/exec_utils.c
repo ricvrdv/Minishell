@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:59:44 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,14 @@ char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 		check_cmd_access(cmd, mini);
 		return (ft_strdup(cmd));
 	}
-	i = 0;
-	if (!path)
+	if(!path)
+	{	
+		if(!check_cmd_access(cmd, mini))
+			return (ft_strdup(cmd));
+	}
+	if (ft_strcmp(cmd, ".") == 0 || ft_strcmp(cmd, "..") == 0)
 		return (NULL);
+	i = 0;
 	dir = ft_split(path, ':');
 	while (dir[i])
 	{
@@ -48,7 +53,7 @@ char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 		full_path = ft_strjoin(half_path, cmd);
 		free(half_path);
 		if (access(full_path, F_OK | X_OK) == 0)
-			return (full_path);
+			return (free_split(dir), full_path);
 		free(full_path);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:14 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:52:04 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:00:07 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	clear_token(t_token **token)
 {
 	t_token	*temp;
 
-	temp = NULL;
-	if (token)
+	if (token && *token)
 	{
 		while (*token)
 		{
@@ -40,8 +39,10 @@ void	clear_token(t_token **token)
 			free(*token);
 			*token = temp;
 		}
+		*token = NULL;
 	}
 }
+
 
 void	clear_tree(t_tree **tree)
 {

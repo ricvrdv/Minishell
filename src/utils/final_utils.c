@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   final_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 10:40:18 by Jpedro-c         ###   ########.fr       */
+/*   Created: 2025/05/19 14:46:17 by Jpedro-c          #+#    #+#             */
+/*   Updated: 2025/05/20 15:24:56 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	error_exit(char *error)
+void	print_sigint(void)
 {
-	printf(RED"%s\n"RESET, error);
-	exit(1);
+	ft_putstr_fd("\n", 1);
+	exit_code(130, 1, 0);
 }
 
-int	found_sign(const char *str)
+void	print_sigquit(void)
 {
-	int		i;
-	char	next;
+	ft_putstr_fd("Quit (core dumped)\n", 1);
+	exit_code(131, 1, 0);
+}
 
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			next = str[i + 1];
-			if (ft_isalpha(next) || ft_isdigit(next)
-				|| next == '_' || next == '?')
-				return (1);
-			else
-				return (0);
-		}
-		i++;
-	}
-	return (0);
+void	check_builtin(int *status, t_tree *tree, t_minishell *mini) //
+{
+	*status = execute_builtin(tree, mini);
+	exit_code(*status, 1, 0);
 }

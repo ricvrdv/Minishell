@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:36:17 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:45:41 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,10 @@ int	exit_code(int exit_status, int write_, int exit_)
 	return (current_status);
 }
 
+char	*get_dir(void)
+{
+	char	*currentdir;
+
+	currentdir = getcwd(NULL, 1024);
+	return (currentdir);
+}

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 15:02:29 by rjesus-d         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:28:24 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ typedef struct s_token		t_token;
 typedef struct s_env		t_env;
 typedef struct s_minishell	t_minishell;
 typedef enum s_type			t_type;
-
-extern int					g_sig;
 
 typedef enum s_type
 {
@@ -192,10 +190,8 @@ int		handle_redirect_r(t_tree *tree);
 int		handle_redirect_l(t_tree *tree);
 int		handle_append(t_tree *tree);
 int		redirect_fds(int in_fd, int out_fd);
-int		handle_heredoc(t_tree *node, t_minishell *mini);
 int		count_quotes(const char *str);
 int		handle_heredocs(t_tree *tree, t_minishell *mini);
-int		execute_heredoc(t_tree *tree, t_minishell *mini);
 int		execute_last_command(t_tree *node, t_minishell *mini, int in_fd);
 int		create_and_fork_command(t_tree *node, t_minishell *mini, int in_fd);
 int		handle_parent(pid_t pid);
@@ -215,10 +211,11 @@ void	remove_quotes(char *arg);
 void	handle_expansion_line(int fd, t_minishell *mini, char *line);
 void	wait_for_children(int *last_status, pid_t last_pid);
 void	invalid_cmd(t_minishell *mini);
-void	invalid_path(t_minishell *mini);
+void	invalid_path(t_minishell *mini, t_tree *tree);
 void	execve_fail(t_minishell *mini);
 void	setup_cmd(t_tree *node, int in_fd, int out_fd);
 void	write_heredoc(char *str, int fd);
+void	handle_heredoc_fork(pid_t pid, t_tree *tree, t_minishell *mini);
 bool	is_quoted(const char *delim);
 bool	is_dollar_in_single_quotes(const char *str);
 pid_t	init_pipe_and_fork(int *pipefd);
@@ -262,12 +259,13 @@ void	ft_exit_child(t_minishell *mini, char *error);
 void	close_fds(void);
 bool	has_any_quotes(const char *delim);
 bool	are_counts_odd(int d_count, int s_count);
-void	ft_sig_child_heredoc(t_minishell *mini);
+void	ft_sig_child_heredoc(void);
 void	assign_heredoc_filenames(t_tree *tree);
 void	print_sigquit(void);
 void	print_sigint(void);
 void	close_pipefd(int *pipefd);
 void	check_builtin(int *status, t_tree *tree, t_minishell *mini);
+t_minishell *clear_mini(t_minishell *mini, int flag);
 
 // valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell 
 

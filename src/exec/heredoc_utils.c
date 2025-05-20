@@ -53,5 +53,3 @@ bool	has_any_quotes(const char *delim)
 	}
 	return (false);
 }
-
-

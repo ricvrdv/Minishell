@@ -58,7 +58,8 @@ SRCS = src/init/init.c \
        src/exec/heredoc_utils.c \
        src/exec/heredoc_expand.c \
        src/parse/extra_parse.c \
-       src/utils/close.c
+       src/utils/close.c \
+       src/utils/final_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -68,9 +69,9 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(MYLIB)
+$(NAME): $(OBJS)
 	@echo "\033[0;32mCompilation Successful!\033[0m"
-	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) -L$(MYLIB_DIR) -lft -o $(NAME) 
+	@$(CC) $(CFLAGS) $(OBJS) $(RLFLAGS) $(MYLIB) -o $(NAME) 
 
 $(MYLIB): $(MYLIB_DIR)
 	@make -C $(MYLIB_DIR) -s
@@ -81,11 +82,18 @@ $(MYLIB): $(MYLIB_DIR)
 
 clean:
 	@$(RM) $(OBJS)
-	@make clean -C $(MYLIB_DIR)
 
 fclean: clean
 	@$(RM) $(NAME)
-	@make fclean -C $(MYLIB_DIR)
+
+.PHONY: sync
+sync : re
+	@tmux new-window  -n sync
+	@tmux send-keys 'valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell' C-m Escape
+	@tmux split-window -h
+	@tmux send-keys -t sync.2 'bash' C-m
+	@tmux select-pane -t sync.1
+	@tmux setw synchronize-panes on
 
 re: fclean all
 
@@ -103,4 +111,4 @@ valgrind: $(NAME) $(SUPPRESSION_FILE)
 run: $(NAME)
 	@./$(NAME)
 
-.PHONY: all clean fclean re valgrind run
+.PHONY: all clean fclean re valgrind run sync

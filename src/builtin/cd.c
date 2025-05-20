@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:32 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:43:25 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:32:14 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,12 @@ static int	handle_chdir_failure(const char *dir, t_minishell *mini)
 	if (dir && ft_strcmp(dir, "-") == 0)
 		ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
 	else
-    {
-        ft_putstr_fd("Minishell: ", 2);
-        ft_putstr_fd("cd: ", 2);
-        ft_putstr_fd(mini->root->args[1], 2);
-        ft_putstr_fd(": No such file or directory\n", 2);
-        
-    }
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(mini->root->args[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 	return (1);
 }
 

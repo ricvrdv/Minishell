@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:52 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:43:27 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:13:22 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ static int	setup_heredoc(t_tree *tree, t_minishell *mini, int out_fd)
 {
 	int	fd;
 	int	status;
-	
+
 	status = 0;
-	if(!tree->right->bad_herdoc)
+	if (!tree->right->bad_herdoc)
 	{
-	
 		fd = open (tree->right->hd_file, O_RDONLY);
 		if (fd == -1)
 			return (report_error(1));
