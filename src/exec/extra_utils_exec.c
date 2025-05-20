@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:55:22 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 16:39:07 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:34:43 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	invalid_path(t_minishell *mini, t_tree *tree)
 void	execve_fail(t_minishell *mini)
 {
 	ft_putstr_fd(mini->root->args[0], 2);
-	ft_putstr_fd(" Is a directory\n", 2);
+	ft_putstr_fd(": Is a directory\n", 2);
 	close_fds();
 	ft_exit_child(mini, NULL);
 	exit_code(126, 1, 1);

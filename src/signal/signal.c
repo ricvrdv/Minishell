@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:28 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 13:59:06 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:06:59 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	ft_sigint_handler(int sig)
 	t_minishell	*mini = clear_mini(NULL, 1);
 
 	(void)sig;
-	
-	write(STDOUT_FILENO, "\n", 1);
+
+	ft_putstr_fd("\n", 1);
 	ft_exit_child(mini, NULL);
 	close_fds();
 	exit_code(130, 1, 1);

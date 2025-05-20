@@ -1,0 +1,10 @@
+echo $"user" ECHO $'USER = USER  (SHOULD EXPAND AND THEN REMOVE QUOTES AND JUST PRINT USER)
+
+Unset path then minishell shoudl open 
+
+<< eof > a cat ( fix)  << eof cat 
+
+cat << 'e'of can't close with extra spaces
+
+
+

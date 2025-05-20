@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 14:09:51 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:24:08 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	execute_pipe(t_tree *tree, t_minishell *mini)
 	}
 	last_pid = execute_last_command(tree, mini, in_fd);
 	wait_for_children(&status, last_pid);
+	if (WIFSIGNALED(status))
+		return exit_code(128 + WTERMSIG(status), 1, 0);
 	return (exit_code(WEXITSTATUS(status), 1, 0));
 }
 
@@ -89,6 +91,7 @@ void	wait_for_children(int *last_status, pid_t last_pid)
 	int		sig;
 	bool	signaled_reported;
 	pid_t	pid;
+	
 
 	signaled_reported = false;
 	ft_sig_mute();
@@ -104,7 +107,7 @@ void	wait_for_children(int *last_status, pid_t last_pid)
 			else if (sig == SIGQUIT)
 				print_sigquit();
 		}
-		if (pid == last_pid && WIFEXITED(status))
+		if (pid == last_pid)
 			*last_status = status;
 		pid = wait(&status);
 	}

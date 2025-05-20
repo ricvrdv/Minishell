@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:59:51 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:43:27 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:28:12 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	handle_redirect_l(t_tree *tree)
 	free(file);
 	if (fd == -1)
 	{
-		perror("Input redirection failed");
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(tree->right->args[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		exit_code(1, 1, 0);
 		return (-1);
 	}
@@ -42,7 +44,9 @@ int	handle_redirect_r(t_tree *tree)
 	if (fd == -1)
 	{
 		free(file);
-		perror("Output redirection failed");
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(tree->right->args[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		exit_code(1, 1, 0);
 		return (-1);
 	}
@@ -57,7 +61,9 @@ int	handle_append(t_tree *tree)
 	fd = open(tree->right->args[0], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd == -1)
 	{
-		perror("Output redirection failed");
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(tree->right->args[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		exit_code(1, 1, 0);
 		return (-1);
 	}

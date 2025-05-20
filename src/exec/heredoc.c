@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 13:45:21 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:05:20 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	handle_heredocs(t_tree *tree, t_minishell *mini)
 {
 	int	fd;
 
+	
 	if (!tree)
 		return (0);
 	if (tree->type == HEREDOC)
@@ -67,6 +68,7 @@ void	handle_heredoc_fork(pid_t pid, t_tree *tree, t_minishell *mini)
 	int	status;
 	int	ret;
 
+	ft_sig_mute();
 	if (pid == 0)
 	{
 		clear_mini(mini, 0);
@@ -81,6 +83,7 @@ void	handle_heredoc_fork(pid_t pid, t_tree *tree, t_minishell *mini)
 	if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 		|| (WIFEXITED(status) && WEXITSTATUS(status) != 0))
 		tree->bad_herdoc = 1;
+	ft_sig_restore();
 }
 
 void	assign_heredoc_filenames(t_tree *tree)
