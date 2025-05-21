@@ -45,19 +45,19 @@ void	expand_tree(t_minishell *mini, t_tree *tree)
 		expand_tree(mini, tree->right);
 }
 
-static void handle_variable(t_minishell *mini, const char **ptr, char **res_ptr)
+static void	handle_variable(t_minishell *mini, const char **ptr, char **res_ptr)
 {
-    char var_name[256];
-    char *value;
-    
-    if (ft_isdigit(*(*ptr + 1)) && *(*ptr + 1) != '0')
+	char	var_name[256];
+	char	*value;
+
+	if (ft_isdigit(*(*ptr + 1)) && *(*ptr + 1) != '0')
 	{
-        (*ptr)++;
 		(*ptr)++;
-        return ;
-    }
-    get_variable_name(ptr, var_name);
-    value = find_variable(mini, var_name);
+		(*ptr)++;
+		return ;
+	}
+	get_variable_name(ptr, var_name);
+	value = find_variable(mini, var_name);
 	if (value)
 	{
 		append_value_to_result(res_ptr, value);

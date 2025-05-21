@@ -39,7 +39,7 @@ int	mini_cd(t_minishell *mini, t_tree *node)
 			return (exit_code(0, 1, 0));
 		status = handle_chdir_failure(dir, mini);
 	}
-	else if (!update_pwd_vars(mini, oldpwd, dir))
+	if (!update_pwd_vars(mini, oldpwd, dir))
 		status = 1;
 	free(dir);
 	sync_env_array(mini);
@@ -85,11 +85,20 @@ static char	*resolve_new_pwd(const char *dir)
 static int	update_pwd_vars(t_minishell *mini, char *oldpwd, char *dir)
 {
 	char	*new_pwd;
+	t_env	*env;
 
+	env = mini->env;
 	new_pwd = resolve_new_pwd(dir);
 	if (!new_pwd)
 		return (0);
-	update_env_var(&mini->env, "OLDPWD", oldpwd);
+	while (env)
+	{
+		if (ft_strcmp(env->key, "PWD") == 0)
+			update_env_var(&mini->env, "PWD", new_pwd);
+		if (ft_strcmp(env->key, "OLDPWD") == 0)
+			update_env_var(&mini->env, "OLDPWD", oldpwd);
+		env = env->next;
+	}
 	free(mini->cur_dir);
 	mini->cur_dir = new_pwd;
 	return (1);

@@ -18,22 +18,23 @@ void	error_exit(char *error)
 	exit(1);
 }
 
-int found_sign(const char *str)
+int	found_sign(const char *str)
 {
-    int i = 0;
+	int	i;
 
-    while (str[i])
-    {
-        if (str[i] == '$')
-        {
-            if (ft_isdigit(str[i + 1]))
-                return (1);
-            if (ft_isalpha(str[i + 1]) || str[i + 1] == '_'
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			if (ft_isdigit(str[i + 1]))
+				return (1);
+			if (ft_isalpha(str[i + 1]) || str[i + 1] == '_'
 				|| str[i + 1] == '?')
-                return (1);
-            return (0);
-        }
-        i++;
-    }
-    return (0);
+				return (1);
+			return (0);
+		}
+		i++;
+	}
+	return (0);
 }
