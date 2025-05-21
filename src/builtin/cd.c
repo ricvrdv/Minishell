@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:32 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 17:32:14 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:48:03 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	mini_cd(t_minishell *mini, t_tree *node)
 			return (exit_code(0, 1, 0));
 		status = handle_chdir_failure(dir, mini);
 	}
-	if (!update_pwd_vars(mini, oldpwd, dir))
+	else if (!update_pwd_vars(mini, oldpwd, dir))
 		status = 1;
 	free(dir);
 	sync_env_array(mini);
@@ -50,7 +50,9 @@ static int	check_cd_args(t_tree *node)
 {
 	if (node->argcount > 2)
 	{
-		ft_putstr_fd(" too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(node->args[0], 2);
+		ft_putstr_fd(": too many arguments\n", STDERR_FILENO);
 		return (exit_code(1, 1, 0));
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 18:44:52 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:23:43 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,19 @@ t_tree	*create_redirection_node(t_token **tokens, t_token *temp)
 t_tree	*especial_node(t_token **tokens, t_token *temp)
 {
 	t_tree	*redi_node;
+	t_token	*redir_token;
 
+	redir_token = temp->next->next;
 	redi_node = new_tree_node((*tokens)->type);
 	*tokens = (*tokens)->next;
 	redi_node->file_type = 0;
-	//redi_node->left = parse_redirect(tokens);  /// need fixing
-	redi_node->right = create_arg_node(temp->next);
+	if (*tokens)
+		redi_node->right = create_arg_node(*tokens);
+	if (redir_token)
+		redi_node->left = parse_redirect(&redir_token);
 	redi_node->hd_file = NULL;
 	redi_node->bad_herdoc = 0;
-	free(temp->value); 
+	free(temp->value);
 	free(temp);
 	return (redi_node);
 }

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:31 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 18:57:34 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:15:27 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	read_heredoc(int fd, const char *delimiter)
 {
 	char	*line;
-	
+
 	remove_quotes((char *)delimiter);
 	while (1)
 	{
@@ -40,7 +40,6 @@ int	handle_heredocs(t_tree *tree, t_minishell *mini)
 {
 	int	fd;
 
-	
 	if (!tree)
 		return (0);
 	if (tree->type == HEREDOC)

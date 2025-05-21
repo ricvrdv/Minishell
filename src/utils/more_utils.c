@@ -19,7 +19,6 @@ int	check_cmd_access(const char *cmd, t_minishell *mini)
 	else if (access(cmd, F_OK) == 0)
 	{
 		ft_putstr_fd("Minishell: ", 2);
-		//ft_putstr_fd(mini->root->args[0], 2);
 		ft_putstr_fd("Permission denied\n", 2);
 		ft_exit_child(mini, NULL);
 		close_fds();
@@ -28,7 +27,6 @@ int	check_cmd_access(const char *cmd, t_minishell *mini)
 	else
 	{
 		ft_putstr_fd("Minishell: ", 2);
-		//ft_putstr_fd(mini->root->args[0], 2);
 		ft_putstr_fd("No such file or directory\n", 2);
 		ft_exit_child(mini, NULL);
 		close_fds();

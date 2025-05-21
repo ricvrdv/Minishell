@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:51:53 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 14:44:49 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:14:00 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_exit_child(t_minishell *mini, char *error)
 		free_mini_struct(mini);
 	if (error)
 		printf(RED "%s\n" RESET, error);
-	clear_history();
+	rl_clear_history();
 	free(mini);
 }
 

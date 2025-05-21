@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char ft_is_numeric(const char *str)
+char	ft_is_numeric(const char *str)
 {
 	if (!str || !*str)
 		return (0);

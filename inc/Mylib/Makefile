@@ -65,7 +65,7 @@ CFLAGS = -Wall -Wextra -Werror -fPIC
 all: $(NAME)
 	
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	ar rcs $(NAME) $(OBJS) -lft
 
 clean:
 	rm -f $(OBJS)
