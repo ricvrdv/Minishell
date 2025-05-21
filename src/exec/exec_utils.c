@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 17:59:44 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:47:50 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,30 @@ char	*find_path_variable(t_minishell *mini)
 	return (NULL);
 }
 
+static char	*search_path_dirs(char **dir, const char *cmd)
+{
+	char	*half_path;
+	char	*full_path;
+	int		i;
+
+	i = 0;
+	while (dir[i])
+	{
+		half_path = ft_strjoin(dir[i], "/");
+		full_path = ft_strjoin(half_path, cmd);
+		free(half_path);
+		if (access(full_path, F_OK | X_OK) == 0)
+			return (full_path);
+		free(full_path);
+		i++;
+	}
+	return (NULL);
+}
+
 char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 {
 	char	**dir;
-	char	*full_path;
-	char	*half_path;
-	int		i;
+	char	*found_path;
 
 	if (ft_strchr(cmd, '/'))
 	{
@@ -45,27 +63,11 @@ char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 	}
 	if (ft_strcmp(cmd, ".") == 0 || ft_strcmp(cmd, "..") == 0)
 		return (NULL);
-	i = 0;
 	dir = ft_split(path, ':');
-	while (dir[i])
-	{
-		half_path = ft_strjoin(dir[i], "/");
-		full_path = ft_strjoin(half_path, cmd);
-		free(half_path);
-		if (access(full_path, F_OK | X_OK) == 0)
-			return (free_split(dir), full_path);
-		free(full_path);
-		i++;
-	}
+	found_path = search_path_dirs(dir, cmd);
+	free_split(dir);
+	return (found_path);
 	return (free_split(dir), NULL);
-}
-
-void	restore_fd(int saved_stdin, int saved_stdout)
-{
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdin);
-	close(saved_stdout);
 }
 
 int	redirect_fds(int in_fd, int out_fd)
