@@ -26,46 +26,48 @@ char	*find_path_variable(t_minishell *mini)
 	return (NULL);
 }
 
-char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
+static char	*search_path_dirs(char **dir, const char *cmd)
 {
-	char	**dir;
-	char	*full_path;
 	char	*half_path;
+	char	*full_path;
 	int		i;
 
-	if (ft_strchr(cmd, '/'))
-	{
-		check_cmd_access(cmd, mini);
-		return (ft_strdup(cmd));
-	}
-	if(!path)
-	{	
-		if(!check_cmd_access(cmd, mini))
-			return (ft_strdup(cmd));
-	}
-	if (ft_strcmp(cmd, ".") == 0 || ft_strcmp(cmd, "..") == 0)
-		return (NULL);
 	i = 0;
-	dir = ft_split(path, ':');
 	while (dir[i])
 	{
 		half_path = ft_strjoin(dir[i], "/");
 		full_path = ft_strjoin(half_path, cmd);
 		free(half_path);
 		if (access(full_path, F_OK | X_OK) == 0)
-			return (free_split(dir), full_path);
+			return (full_path);
 		free(full_path);
 		i++;
 	}
-	return (free_split(dir), NULL);
+	return (NULL);
 }
 
-void	restore_fd(int saved_stdin, int saved_stdout)
+char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 {
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdin);
-	close(saved_stdout);
+	char	**dir;
+	char	*found_path;
+
+	if (ft_strchr(cmd, '/'))
+	{
+		check_cmd_access(cmd, mini);
+		return (ft_strdup(cmd));
+	}
+	if (!path)
+	{
+		if (!check_cmd_access(cmd, mini))
+			return (ft_strdup(cmd));
+	}
+	if (ft_strcmp(cmd, ".") == 0 || ft_strcmp(cmd, "..") == 0)
+		return (NULL);
+	dir = ft_split(path, ':');
+	found_path = search_path_dirs(dir, cmd);
+	free_split(dir);
+	return (found_path);
+	return (free_split(dir), NULL);
 }
 
 int	redirect_fds(int in_fd, int out_fd)

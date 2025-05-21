@@ -18,6 +18,14 @@ void	error_exit(char *error)
 	exit(1);
 }
 
+void	restore_fd(int saved_stdin, int saved_stdout)
+{
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+}
+
 int	found_sign(const char *str)
 {
 	int	i;
