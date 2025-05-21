@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:31:00 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/21 16:49:11 by jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:41:54 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,10 @@ int				count_arguments(t_token *current);
 int				found_sign(const char *str);
 char			*expand_variable(t_minishell *mini, const char *arg);
 char			*find_variable(t_minishell *mini, const char *variable);
+char			*deal_edge_case(const char *str);
 bool			enclosed_single_quotes(const char *str);
 bool			should_expand(const char *str);
+bool			is_edge_case(const char *str);
 void			fill_command_arguments(t_tree *command_node, t_token **tokens,
 					int arg_count);
 void			prep_tree(t_tree *tree, t_minishell *mini, int *status);

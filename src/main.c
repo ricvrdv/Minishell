@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:17:20 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:41:51 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:39:39 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int ac, char *av[], char **envp)
 		ft_putstr_fd("exit\n", 2);
 		free_struct(mini);
 		free(mini);
+		close_fds();
 		exit(0);
 	}
 	ft_exit(mini, "No arguments plz");

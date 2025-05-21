@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/21 14:28:07 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:34:35 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	*expand_variable(t_minishell *mini, const char *arg)
 	char		*res_ptr;
 	const char	*ptr;
 
+	if (is_edge_case(arg))
+		return (deal_edge_case(arg));
 	result = safe_malloc(1024);
 	ptr = arg;
 	res_ptr = result;

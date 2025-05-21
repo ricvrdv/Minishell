@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/21 17:47:39 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:38:58 by joaorema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,6 @@ void	error_exit(char *error)
 {
 	printf(RED"%s\n"RESET, error);
 	exit(1);
-}
-
-int	found_sign(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			if (ft_isdigit(str[i + 1]))
-				return (1);
-			if (ft_isalpha(str[i + 1]) || str[i + 1] == '_'
-				|| str[i + 1] == '?')
-				return (1);
-			return (0);
-		}
-		i++;
-	}
-	return (0);
 }
 
 void	ft_sig_mute(void)
@@ -51,4 +30,26 @@ void	restore_fd(int saved_stdin, int saved_stdout)
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdin);
 	close(saved_stdout);
+}
+
+char	*deal_edge_case(const char *str)
+{
+	const char	*ptr;
+	char		*result;
+	char		*res_ptr;
+
+	result = safe_malloc(1024);
+	res_ptr = result;
+	ptr = str + 2;
+	while (*ptr && *ptr != '"')
+		*res_ptr++ = *ptr++;
+	if (*ptr == '"')
+		ptr++;
+	*res_ptr = '\0';
+	return (result);
+}
+
+bool	is_edge_case(const char *str)
+{
+	return (str[0] == '$' && str[1] == '"');
 }
