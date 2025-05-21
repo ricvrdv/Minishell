@@ -100,8 +100,8 @@ static void	print_env_entry(t_env *env)
 
 int	is_valid_identifier(const char *str)
 {
-	const char *ptr;
-	
+	const char	*ptr;
+
 	ptr = str;
 	if (!str || !*str)
 		return (0);

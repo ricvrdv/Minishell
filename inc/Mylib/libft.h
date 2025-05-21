@@ -87,7 +87,7 @@ char	*ft_strjoingnl(char const *s1, char const *s2);
 char	*ft_strchrgnl(const char *s, int c);
 char	*ft_strndup(const char *src, size_t n);
 char	*ft_strcpy(char *dest, const char *src);
-char 	ft_is_numeric(const char *str);
+char	ft_is_numeric(const char *str);
 
 long	ft_atol(const char *nptr);
 

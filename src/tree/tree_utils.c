@@ -64,23 +64,22 @@ t_tree	*create_redirection_node(t_token **tokens, t_token *temp)
 	return (redi_node);
 }
 
-t_tree *especial_node(t_token **tokens, t_token *temp)
+t_tree	*especial_node(t_token **tokens, t_token *temp)
 {
-	t_tree *redi_node;
-	t_token *redir_token = temp->next->next;
+	t_tree	*redi_node;
+	t_token	*redir_token;
 
+	redir_token = temp->next->next;
 	redi_node = new_tree_node((*tokens)->type);
 	*tokens = (*tokens)->next;
 	redi_node->file_type = 0;
-	if(*tokens)
+	if (*tokens)
 		redi_node->right = create_arg_node(*tokens);
-	if(redir_token)               // file
-		redi_node->left = parse_redirect(&redir_token);            // command or next redirect
+	if (redir_token)
+		redi_node->left = parse_redirect(&redir_token);
 	redi_node->hd_file = NULL;
 	redi_node->bad_herdoc = 0;
 	free(temp->value);
 	free(temp);
-	return redi_node;
+	return (redi_node);
 }
-
-

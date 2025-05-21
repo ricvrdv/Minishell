@@ -24,7 +24,7 @@ void	print_sigquit(void)
 	exit_code(131, 1, 0);
 }
 
-void	check_builtin(int *status, t_tree *tree, t_minishell *mini) //
+void	check_builtin(int *status, t_tree *tree, t_minishell *mini)
 {
 	*status = execute_builtin(tree, mini);
 	exit_code(*status, 1, 0);

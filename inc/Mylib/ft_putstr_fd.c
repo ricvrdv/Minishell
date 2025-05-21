@@ -18,16 +18,15 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	ssize_t ret;
-	size_t len;
+	ssize_t	ret;
+	size_t	len;
 
 	if (!s)
-		return;
-
+		return ;
 	len = ft_strlen(s);
 	ret = write(fd, s, len);
 	if (ret == -1 && errno == EPIPE)
-		return; // Avoid SIGPIPE crash
+		return ;
 }
 
 /*

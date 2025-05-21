@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:56:27 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 15:01:56 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:12:57 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ void	start_prompt(t_minishell **mini)
 			clear_tree(&tree);
 			tokens = NULL;
 		}
-		
 	}
 }

@@ -28,7 +28,7 @@ int	execute_pipe(t_tree *tree, t_minishell *mini)
 	last_pid = execute_last_command(tree, mini, in_fd);
 	wait_for_children(&status, last_pid);
 	if (WIFSIGNALED(status))
-		return exit_code(128 + WTERMSIG(status), 1, 0);
+		return (exit_code(128 + WTERMSIG(status), 1, 0));
 	return (exit_code(WEXITSTATUS(status), 1, 0));
 }
 
@@ -91,7 +91,6 @@ void	wait_for_children(int *last_status, pid_t last_pid)
 	int		sig;
 	bool	signaled_reported;
 	pid_t	pid;
-	
 
 	signaled_reported = false;
 	ft_sig_mute();

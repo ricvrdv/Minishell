@@ -21,32 +21,32 @@ void	append_value_to_result(char **res_ptr, const char *value)
 	}
 }
 
-void get_variable_name(const char **ptr, char *var_name)
+void	get_variable_name(const char **ptr, char *var_name)
 {
-    int i;
-    
+	int	i;
+
 	i = 0;
-    if (**ptr == '$')
-        (*ptr)++;
-    if (**ptr == '?')
+	if (**ptr == '$')
+		(*ptr)++;
+	if (**ptr == '?')
 	{
-        var_name[i++] = '?';
-        (*ptr)++;
-    }
-    else if (**ptr == '0')
+		var_name[i++] = '?';
+		(*ptr)++;
+	}
+	else if (**ptr == '0')
 	{
-        var_name[i++] = '0';
-        (*ptr)++;
-    }
-    else
+		var_name[i++] = '0';
+		(*ptr)++;
+	}
+	else
 	{
-        while (**ptr && (ft_isalnum(**ptr) || **ptr == '_'))
+		while (**ptr && (ft_isalnum(**ptr) || **ptr == '_'))
 		{
-            var_name[i++] = **ptr;
-            (*ptr)++;
-        }
-    }
-    var_name[i] = '\0';
+			var_name[i++] = **ptr;
+			(*ptr)++;
+		}
+	}
+	var_name[i] = '\0';
 }
 
 char	*find_variable(t_minishell *mini, const char *variable)

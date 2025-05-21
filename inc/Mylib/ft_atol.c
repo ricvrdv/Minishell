@@ -14,27 +14,28 @@
 
 static long	atol_digit_accumulate(const char *str, int sign)
 {
-    long	result;
-    int		i;
-    int		digit;
+	long	result;
+	int		i;
+	int		digit;
 
-    result = 0;
-    i = 0;
-    while (str[i] >= '0' && str[i] <= '9')
-    {
-        digit = str[i] - '0';
-        if (result > (LONG_MAX - digit) / 10)
-        {
-            if (sign == 1)
-                return (LONG_MAX);
-            else
-                return (LONG_MIN);
-        }
-        result = result * 10 + digit;
-        i++;
-    }
-    return (result);
+	result = 0;
+	i = 0;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		digit = str[i] - '0';
+		if (result > (LONG_MAX - digit) / 10)
+		{
+			if (sign == 1)
+				return (LONG_MAX);
+			else
+				return (LONG_MIN);
+		}
+		result = result * 10 + digit;
+		i++;
+	}
+	return (result);
 }
+
 long	ft_atol(const char *nptr)
 {
 	int		i;

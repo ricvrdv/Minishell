@@ -6,18 +6,18 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:55:28 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 15:06:59 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:05:20 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"  
 
-t_minishell *clear_mini(t_minishell *mini, int flag)
+t_minishell	*clear_mini(t_minishell *mini, int flag)
 {
-	static t_minishell *ptr;
-	
-	if(flag)
-		return(ptr);
+	static t_minishell	*ptr;
+
+	if (flag)
+		return (ptr);
 	ptr = mini;
 	return (ptr);
 }
@@ -36,28 +36,21 @@ void	ft_sig_child(void)
 
 void	ft_sig_child_heredoc(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = ft_sigint_handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
-
-	signal(SIGQUIT, SIG_IGN); // still fine to use signal() for this
-}
-
-void	ft_sig_mute(void)
-{
-	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
 
 void	ft_sigint_handler(int sig)
 {
-	t_minishell	*mini = clear_mini(NULL, 1);
+	t_minishell	*mini;
 
 	(void)sig;
-
+	mini = clear_mini(NULL, 1);
 	ft_putstr_fd("\n", 1);
 	ft_exit_child(mini, NULL);
 	close_fds();

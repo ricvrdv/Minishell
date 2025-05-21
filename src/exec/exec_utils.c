@@ -38,9 +38,9 @@ char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 		check_cmd_access(cmd, mini);
 		return (ft_strdup(cmd));
 	}
-	if(!path)
-	{	
-		if(!check_cmd_access(cmd, mini))
+	if (!path)
+	{
+		if (!check_cmd_access(cmd, mini))
 			return (ft_strdup(cmd));
 	}
 	if (ft_strcmp(cmd, ".") == 0 || ft_strcmp(cmd, "..") == 0)

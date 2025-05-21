@@ -15,7 +15,7 @@
 void	read_heredoc(int fd, const char *delimiter)
 {
 	char	*line;
-	
+
 	remove_quotes((char *)delimiter);
 	while (1)
 	{

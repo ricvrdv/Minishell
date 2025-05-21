@@ -43,7 +43,6 @@ void	clear_token(t_token **token)
 	}
 }
 
-
 void	clear_tree(t_tree **tree)
 {
 	int	i;
