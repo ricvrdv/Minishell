@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
+/*   By: applecore <applecore@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:12 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 13:43:28 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:59:19 by applecore        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	is_expandable(const char *ptr)
 {
 	return (*ptr == '$' && *(ptr + 1)
-		&& *(ptr + 1) != '\'' && *(ptr + 1) != '"' && *(ptr + 1) != ' ');
+		&& !(*(ptr + 1) == '\'' || *(ptr + 1) == '"' || *(ptr + 1) == ' '));
 }
 
 void	expand_tree(t_minishell *mini, t_tree *tree)
@@ -45,20 +45,25 @@ void	expand_tree(t_minishell *mini, t_tree *tree)
 		expand_tree(mini, tree->right);
 }
 
-static void	handle_variable(t_minishell *mini, const char **ptr, char **res_ptr)
+static void handle_variable(t_minishell *mini, const char **ptr, char **res_ptr)
 {
-	char	var_name[256];
-	char	*value;
-
-	get_variable_name(ptr, var_name);
-	value = find_variable(mini, var_name);
-	if (ft_strcmp(var_name, "?") == 0)
+    char var_name[256];
+    char *value;
+    
+    if (ft_isdigit(*(*ptr + 1)) && *(*ptr + 1) != '0')
+	{
+        (*ptr)++;
+		(*ptr)++;
+        return ;
+    }
+    get_variable_name(ptr, var_name);
+    value = find_variable(mini, var_name);
+	if (value)
 	{
 		append_value_to_result(res_ptr, value);
-		free(value);
+		if (ft_strcmp(var_name, "?") == 0 || ft_strcmp(var_name, "0") == 0)
+			free(value);
 	}
-	else
-		append_value_to_result(res_ptr, value);
 }
 
 static void	handle_plain_char(const char **ptr, char **res_ptr)
