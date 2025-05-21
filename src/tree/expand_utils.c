@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:08 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/20 17:21:25 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:27:30 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,32 @@ void	append_value_to_result(char **res_ptr, const char *value)
 	}
 }
 
-void	get_variable_name(const char **ptr, char *var_name)
+void get_variable_name(const char **ptr, char *var_name)
 {
-	int	i;
-
+    int i;
+    
 	i = 0;
-	(*ptr)++;
-	if (**ptr == '?')
+    if (**ptr == '$')
+        (*ptr)++;
+    if (**ptr == '?')
 	{
-		var_name[i++] = '?';
-		(*ptr)++;
-	}
-	else
+        var_name[i++] = '?';
+        (*ptr)++;
+    }
+    else if (**ptr == '0')
 	{
-		while (isalnum(**ptr) || **ptr == '_')
+        var_name[i++] = '0';
+        (*ptr)++;
+    }
+    else
+	{
+        while (**ptr && (ft_isalnum(**ptr) || **ptr == '_'))
 		{
-			var_name[i++] = **ptr;
-			(*ptr)++;
-		}
-	}
-	var_name[i] = '\0';
+            var_name[i++] = **ptr;
+            (*ptr)++;
+        }
+    }
+    var_name[i] = '\0';
 }
 
 char	*find_variable(t_minishell *mini, const char *variable)
@@ -57,8 +63,7 @@ char	*find_variable(t_minishell *mini, const char *variable)
 	}
 	if (ft_strcmp(variable, "0") == 0)
 	{
-		ft_putstr_fd("Minishell", 1);
-		return (NULL);
+		return (ft_strdup("Minishell"));
 	}
 	env = mini->env;
 	while (env)

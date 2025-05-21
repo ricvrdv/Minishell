@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:32 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 17:32:14 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:48:03 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ static int	check_cd_args(t_tree *node)
 {
 	if (node->argcount > 2)
 	{
-		ft_putstr_fd(" too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(node->args[0], 2);
+		ft_putstr_fd(": too many arguments\n", STDERR_FILENO);
 		return (exit_code(1, 1, 0));
 	}
 	return (0);
@@ -85,11 +87,20 @@ static char	*resolve_new_pwd(const char *dir)
 static int	update_pwd_vars(t_minishell *mini, char *oldpwd, char *dir)
 {
 	char	*new_pwd;
+	t_env	*env;
 
+	env = mini->env;
 	new_pwd = resolve_new_pwd(dir);
 	if (!new_pwd)
 		return (0);
-	update_env_var(&mini->env, "OLDPWD", oldpwd);
+	while (env)
+	{
+		if (ft_strcmp(env->key, "PWD") == 0)
+			update_env_var(&mini->env, "PWD", new_pwd);
+		if (ft_strcmp(env->key, "OLDPWD") == 0)
+			update_env_var(&mini->env, "OLDPWD", oldpwd);
+		env = env->next;
+	}
 	free(mini->cur_dir);
 	mini->cur_dir = new_pwd;
 	return (1);
