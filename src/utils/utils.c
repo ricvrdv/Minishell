@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:53:38 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/21 23:38:58 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:41:05 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,39 @@ char	*deal_edge_case(const char *str)
 	const char	*ptr;
 	char		*result;
 	char		*res_ptr;
+	char		quote;
 
+	ptr = str;
 	result = safe_malloc(1024);
 	res_ptr = result;
-	ptr = str + 2;
-	while (*ptr && *ptr != '"')
-		*res_ptr++ = *ptr++;
-	if (*ptr == '"')
-		ptr++;
+	while (*ptr)
+	{
+		if (*ptr == '$' && (ptr[1] == '"' || ptr[1] == '\''))
+		{
+			quote = ptr[1];
+			ptr += 2;
+			while (*ptr && *ptr != quote)
+				*res_ptr++ = *ptr++;
+			if (*ptr == quote)
+				ptr++;
+		}
+		else
+			*res_ptr++ = *ptr++;
+	}
 	*res_ptr = '\0';
 	return (result);
 }
 
 bool	is_edge_case(const char *str)
 {
-	return (str[0] == '$' && str[1] == '"');
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\''))
+			return (true);
+		i++;
+	}
+	return (false);
 }

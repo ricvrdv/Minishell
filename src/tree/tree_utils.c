@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaorema <joaorema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:29 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/21 23:38:46 by joaorema         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:27:37 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	found_sign(const char *str)
 	{
 		if (str[i] == '$')
 		{
-			if (str[i + 1] == '"')
+			if ((str[i + 1] == '"') || (str[i + 1] == '\''))
 				return (1);
 			if (ft_isdigit(str[i + 1]))
 				return (1);
