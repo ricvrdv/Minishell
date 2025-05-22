@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/22 13:47:51 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:53:07 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	export_argument(t_minishell *mini, char *arg)
 	plus_sign = ft_strchr(arg, '+');
 	if (plus_sign && plus_sign + 1 == equal_sign)
 		return (append_to_env_var(mini, arg, plus_sign));
-	else	
+	else
 		return (assign_env_var(mini, arg, equal_sign));
 }
 
