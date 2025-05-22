@@ -8,7 +8,7 @@
             "name": "minishell",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/joaorema/github/Minishell/minishell",
+            "program": "/home/jpedro-c/minishell/minishell",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:50 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/19 17:33:05 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:47:51 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	export_argument(t_minishell *mini, char *arg)
 	plus_sign = ft_strchr(arg, '+');
 	if (plus_sign && plus_sign + 1 == equal_sign)
 		return (append_to_env_var(mini, arg, plus_sign));
-	else
+	else	
 		return (assign_env_var(mini, arg, equal_sign));
 }
 
@@ -111,6 +111,8 @@ static int	assign_env_var(t_minishell *mini, char *arg, char *equal_sign)
 
 	return_value = 1;
 	key = ft_substr(arg, 0, equal_sign - arg);
+	if (ft_strchr(key, '+'))
+		return (handle_invalid_identifier(arg), free (key), 0);
 	value = ft_strdup(equal_sign + 1);
 	if (!key || !value)
 		return (free(key), free(value), 0);
@@ -122,10 +124,7 @@ static int	assign_env_var(t_minishell *mini, char *arg, char *equal_sign)
 		return_value = 0;
 	}
 	if (return_value && !is_valid_identifier(key))
-	{
-		handle_invalid_identifier(arg);
-		return (free(key), free(value), 0);
-	}
+		return (handle_invalid_identifier(arg), free(key), free(value), 0);
 	if (return_value)
 		update_env_var(&mini->env, key, value);
 	return (free(key), free(value), return_value);

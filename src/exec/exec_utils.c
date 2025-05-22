@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:00:21 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/21 17:47:50 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:03:15 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*find_path_variable(t_minishell *mini)
 	while (env)
 	{
 		if (ft_strncmp(env->key, "PATH", 4) == 0)
-			return (env->value + 5);
+			return (env->value);
 		env = env->next;
 	}
 	return (NULL);
@@ -67,7 +67,6 @@ char	*find_cmd_path(const char *cmd, const char *path, t_minishell *mini)
 	found_path = search_path_dirs(dir, cmd);
 	free_split(dir);
 	return (found_path);
-	return (free_split(dir), NULL);
 }
 
 int	redirect_fds(int in_fd, int out_fd)

@@ -6,7 +6,7 @@
 /*   By: Jpedro-c <joaopcrema@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:32 by Jpedro-c          #+#    #+#             */
-/*   Updated: 2025/05/21 15:48:03 by Jpedro-c         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:27:18 by Jpedro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static int	handle_chdir_failure(const char *dir, t_minishell *mini)
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(mini->root->args[1], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putstr_fd(": ", 2);
+		perror("");
 	}
 	return (1);
 }
