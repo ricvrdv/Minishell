@@ -90,7 +90,7 @@ fclean: clean
 
 sync : re
 	@tmux new-window  -n sync
-	@tmux send-keys 'valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all --track-fds=yes --show-below-main=no ./minishell' C-m Escape
+	@tmux send-keys './minishell' C-m Escape
 	@tmux split-window -h
 	@tmux send-keys -t sync.2 'bash' C-m
 	@tmux select-pane -t sync.1
