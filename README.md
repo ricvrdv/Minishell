@@ -44,8 +44,8 @@ Input line: cat file.txt | grep hello > out.txt
      ARG         /   \
     file.txt    CMD   FILENAME
              "grep"  "out.txt"
-              ARG
-            "hello"
+               ARG
+              "hello"
 
 
 Executing the tree:
