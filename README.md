@@ -10,8 +10,8 @@ I choose to do the parsing/execution and to achive that i divided what i needed 
 
 Syntax Check
 
-    -It detects unclosed quotes, misplaced pipes/redirections, usage of unsuppported operators (&& and ||);
-    -Reports error message and avoid running on unecessary inputs.
+    It detects unclosed quotes, misplaced pipes/redirections, usage of unsuppported operators (&& and ||);
+    Reports error message and avoid running on unecessary inputs.
 
 Tokenization 
 
