@@ -9,8 +9,8 @@ We divided the project into 2 big parts parsing/execution and Builtin-ins.
 I choose to do the parsing/execution and to achive that i divided what i needed to do into smaller problems to be easier to manage.
 
 Syntax Check
-    It detects unclosed quotes, misplaced pipes/redirections, usage of unsuppported operators (&& and ||);
-    Reports error message and avoid running on unecessary inputs.
+    -It detects unclosed quotes, misplaced pipes/redirections, usage of unsuppported operators (&& and ||);
+    -Reports error message and avoid running on unecessary inputs.
 
 Tokenization 
     It keeps track of quotes to avoid splitting words;
