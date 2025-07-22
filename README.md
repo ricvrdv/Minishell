@@ -42,7 +42,7 @@ Input line: cat file.txt | grep hello > out.txt
      CMD       REDIR_OUT
     "cat"         ">"
      ARG         /   \
-   file.txt    CMD   FILENAME
+    file.txt    CMD   FILENAME
              "grep"  "out.txt"
               ARG
             "hello"
