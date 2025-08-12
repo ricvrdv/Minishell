@@ -1,12 +1,22 @@
-This was a group project and it was done with Ricardo Garcia
+This was a group project and it was done with [Joao Rema](https://github.com/joaorema/Minishell).
 
-## Minishell
+# 42 - MINISHELL
+
+### SUMMARY
 
 Minishell is a minimal Unix shell implemented in C, designed to replicate core shell functionalities and provide a hands-on understanding of shell. 
 It supports command parsing, execution, pipelines, redirections, environment variable management, and several built-in commands.
 
-We divided the project into 2 big parts parsing/execution and Builtin-ins.
-I choose to do the parsing/execution and to achive that i divided what i needed to do into smaller problems to be easier to manage.
+We divided the project into 2 big parts parsing/execution and builtin-in commands (`cd`, `echo`, `pwd`, `env`, `unset`, `exit`, `export`).
+
+I implemented the built-in commands and adjusted the execution flow to incorporate these commands.
+
+### REPOSITORY STRUCTURE
+
+- `inc/`: Contains the header file `minishell.h` and `Mylib/`, which contains a custom library for utility functions.
+- `src/`: Contains the source code for the program.
+- `Makefile`: Compiles the project.
+- `README.md`: Project overview and usage instructions.
 
 Syntax Check
 
