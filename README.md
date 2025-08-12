@@ -18,6 +18,8 @@ I implemented the built-in commands and adjusted the execution flow to incorpora
 - `Makefile`: Compiles the project.
 - `README.md`: Project overview and usage instructions.
 
+### KEY FEATURES
+
 Syntax Check
 
     It detects unclosed quotes, misplaced pipes/redirections, usage of unsuppported operators (&& and ||);
@@ -42,9 +44,9 @@ Node Types:
       Arguments: Command nodes store argument arrays, in position 0 is the cmd.
       Redirection Info: Redirection nodes store file info and heredoc filenames.
 
-BINARY TREE EXAMPLE
+Binary tree example:
 
-Input line: cat file.txt | grep hello > out.txt
+Input line: `cat file.txt | grep hello > out.txt`
 
           PIPE
           "|"
@@ -98,8 +100,6 @@ Executing the tree:
 
       Wait for all child processes to finish and collect their exit statuses.
 
-After finishing this part me and ricardo worked together on setting :
-
 Signal Handling
 
     SIGINT (Ctrl+C)
@@ -111,8 +111,14 @@ Exit Code
     Set the correct exit code;
     By expanding $? exit codes can be checked;
 
- 
- Build & Run
+### USAGE
 
+1. **Compile the program:**
+```
 make
+```
+
+2. **Run the program with no arguments:**
+```
 ./minishell
+```
