@@ -15,7 +15,7 @@ I implemented the built-in commands and adjusted the execution flow to incorpora
 
 - `inc/`: Contains the header file `minishell.h` and `Mylib/`, which contains a custom library for utility functions.
 - `src/`: Contains the source code for the program.
-- `Makefile`: Tells `make` how to compile and link a program.
+- `Makefile`: Tells `make` how to compile and link the program.
 - `README.md`: Project overview and usage instructions.
 
 ### KEY FEATURES
